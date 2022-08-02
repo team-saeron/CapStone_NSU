@@ -1,6 +1,6 @@
 # CapStone_NSU
 
-## 팀원
+## 👨‍💻팀원
 <p>
 <a href="https://github.com/shyeon4643">
   <img src="https://avatars.githubusercontent.com/u/62410059?v=4" width="100">
