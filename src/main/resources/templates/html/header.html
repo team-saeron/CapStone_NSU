@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet"  href="/css/header.css" type="text/css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Together</title>
+</head>
+<header>
+    <div id="header__wrapper">
+        <div class="header__colum">
+            <h1 id="header_logo"><a href=""><i class="fa-solid fa-house"></i>Together</a></h1>
+        </div>
+        <div class="header__colum">
+            <a href=""><i class="fa-solid fa-bars"></i></a>
+        </div>
+        <div class="header__colum">
+            <ul class="login_header">
+                <c:choose>
+                    <c:when test="!loggerUser">
+                        <li><a href="">로그인</a></li>
+                        <li><a href="">회원가입</a></li>
+                        <li><a href=""><i class="fa-solid fa-bell"></i></a></li>
+                        <li><a href=""><i class="fa-solid fa-user"></i></a></li>
+                        <li><a href=""><i class="fa-solid fa-heart"></i></a></li>
+                        <li><a href=""><i class="fa-solid fa-pencil"></i></a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="">로그아웃</a></li>
+                        <li><a href=""><i class="fa-solid fa-bell"></i></a></li>
+                        <li><a href=""><i class="fa-solid fa-user"></i></a></li>
+                        <li><a href=""><i class="fa-solid fa-heart"></i></a></li>
+                        <li><a href=""><i class="fa-solid fa-pencil"></i></a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div>
+    </div>
+</header>
+</html>
