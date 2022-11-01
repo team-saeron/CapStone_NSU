@@ -3,28 +3,21 @@
 padding : 0;
 margin : 0;
 }
+.header__header{
+display:flex;
+justify-content:space-between;
+}
 
 .login_header{
-    list-style:none;
-    width:100%;
-    display:inline;
-    text-align:right;
-    margin:10;
-    float:right;
+list-style:none;
+
 }
 
 li{
 display:inline;
 }
 
-.header_logo{
-display:inline-block;
+#personal_icons{
+display:flex;
+justify-content:flex-end;
 }
-
-
-.header__colum{
-display:inline-block;
-}
-
-#category{
-display : block;}
