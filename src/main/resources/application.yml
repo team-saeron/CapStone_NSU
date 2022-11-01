@@ -1,2 +1,7 @@
-spring.mvc.view.prefix=/WEB-INF/jsp/
-spring.mvc.view.suffix=.jsp
+#thymeleaf:
+#    prefix=classpath: templates/
+#    suffix: .html
+#    check-template-location: true
+#    cache: false
+#  mvc:
+#    static-path-pattern: "/static/**"

@@ -1,18 +1,15 @@
 package togethers.togethers;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class TogetherController {
-
+public class HomeController {
     @RequestMapping("/")
     public String main(Model model) {
-        model.addAttribute("data","hello!!!!");
+        model.addAttribute("data","2022");
         return "html/footer";
     }
 
@@ -20,5 +17,4 @@ public class TogetherController {
     public String home() {
         return "html/header";
     }
-
 }

@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head id="header" th:fragment="headerFragment">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet"  href="/css/header.css" type="text/css"/>
+    <link rel="stylesheet"  th:href="@{/css/header.css}" type="text/css"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Together</title>
 </head>
-<header>
-    <div id="header__wrapper">
+<body>
+    <div class="header__wrapper">
         <div class="header__colum">
             <h1 id="header_logo"><a href=""><i class="fa-solid fa-house"></i>Together</a></h1>
-        </div>
-        <div class="header__colum">
-            <a href=""><i class="fa-solid fa-bars"></i></a>
         </div>
         <div class="header__colum">
             <ul class="login_header">
@@ -35,6 +32,9 @@
                 </c:choose>
             </ul>
         </div>
+        <div id="category" class="header__colum">
+            <a href=""><i class="fa-solid fa-bars"></i></a>
+        </div>
     </div>
-</header>
+</body>
 </html>
