@@ -5,16 +5,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
+
 @Controller
 public class HomeController {
     @RequestMapping("/")
     public String main(Model model) {
-        model.addAttribute("data","2022");
-        return "html/footer";
+        //String strYear = (String)request.getAttribute("strYear");
+        model.addAttribute("date","2022");
+        return "home";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home() {
-        return "html/header";
+        return "home";
     }
 }
