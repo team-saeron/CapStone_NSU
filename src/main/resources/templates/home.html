@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<th:block th:replace="fragments/head ::headFragment"></th:block>
-<body>
-<div>
-    <th:block th:replace="fragments/header :: headerFragment"></th:block>
-    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
-</div>
-</body>
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout/default_layout">
+<th:block layout:fragment="content">
+    <div id="search">지역 또는 단지명을 입력하세요.</div>
+</th:block>
 </html>

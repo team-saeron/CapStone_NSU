@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+*{
+padding : 0;
+margin : 0;
+}
+.header__header{
+display:flex;
+justify-content:space-between;
+}
+
+
+li{
+display:inline;
+list-style:none;
+}
+
+#personal_icons{
+display:flex;
+justify-content:flex-end;
+color:#183153
+}
+
+.login{
+    border:solid 1px #5B9BD5;
+    background-color:#5B9BD5;
+}
+
+a{
+ text-decoration:none;
+ color:white;
+}
+.bell{
+color:#183153
+}
+
+#header_category{
+color:#183153;
+}
+
+#header_logo{
+color:#5B9BD5;
+}
+
+.icon{
+color:#183153;
+margin-left:10px;
+}
