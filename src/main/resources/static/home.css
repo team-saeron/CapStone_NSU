@@ -3,11 +3,9 @@
 display:flex;
 justify-content:center;
 }
-
 #search_box{
 display:relative;
 }
-
 #search{
 padding:25px;
 padding-left:60px;
