@@ -5,6 +5,7 @@ justify-content:center;
 }
 
 #search_box{
+
 position:relative;
 }
 
@@ -20,8 +21,8 @@ border-radius:7px;
 
 #search_icon{
     position:absolute;
-    top:22px;
-    left:18px;
+    top:24px;
+    left:19px;
 
 }
 
