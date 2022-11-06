@@ -46,3 +46,8 @@ color:#5B9BD5;
 color:#183153;
 margin-left:10px;
 }
+
+#footer_text{
+display:flex;
+justify-content:center;
+}
