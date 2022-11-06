@@ -3,12 +3,10 @@
 display:flex;
 justify-content:center;
 }
-
 #search_box{
 
 position:relative;
 }
-
 #search{
 padding:25px;
 padding-left:60px;
@@ -34,7 +32,6 @@ width:300px;
 height:200px;
 margin-right:30px;
 }
-
 .colum{
 display:flex;
 justify-content:center;
