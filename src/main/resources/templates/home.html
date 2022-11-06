@@ -7,29 +7,26 @@ layout:decorate="layout/default_layout">
 </th:block>
 <th:block layout:fragment="content">
     <div class="home__wrapper">
-        <div class="home_colum">
+        <div class="home_column">
             <div class="search_box">
-                <i id="search_icon" class="fa-solid fa-magnifying-glass  fa-2x"></i>
+                <i id="search_icon" class="fa-solid fa-magnifying-glass fa-2x"></i>
                     <input id="search_text" input="text" name="search-area" placeholder="지역 또는 단지명을 입력하세요."/>
             </div>
         </div>
-    </div>
-    <div class="home_colum">
         <div class="section_box">
-            <div class="notice_box">
+    <div class="home_column">
+            <div id="notice_box" class="section__box">
+                <i class="fa-solid fa-plus"></i>
                 <span id="notice_icon" class="fa-solid fa-pius">공지사항</span>
-            </div>
         </div>
         </div>
-    <div class="home_colum">
-        <div class="section_box">
-            <div class="map_box">
+    <div class="home_column">
+            <div id="map_box" class="section__box">
                 </div>
             </div>
         </div>
-    <div class="home_colum">
-    <div class="section_box">
-    <div class="ad_box">
+    <div class="home_column">
+    <div id="ad_box" class="section__box">
     </div>
     </div>
     </div>
