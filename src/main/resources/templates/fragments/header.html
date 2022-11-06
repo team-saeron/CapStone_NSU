@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <th:block th:fragment="headerFragment">
-      <div class="header">
         <div class="header__wrapper">
             <div class="header__header">
-                <div id="header_header" class="header__colum header__left">
-                    <h1 id="header__logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-xl"></i></a>
-                        <a id="header_logo" href=""><i class="fa-solid fa-house fa-xl "></i>Together</a></h1>
+                <div id="header_header" class="header__colum">
+                    <h1 id="header__logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg"></i></a>
+                        <a id="header_logo" href=""><i class="fa-solid fa-house"></i>Together</a></h1>
                 </div>
                 <div class="header__colum">
                     <ul class="login_header">
@@ -25,14 +24,13 @@
                 </div>
             </div>
         </div>
-        <div id="personal_icons" class="header__colum header__bottom" >
-            <ul class="login_header header__icon">
+        <div id="personal_icons" class="header__colum">
+            <ul class="login_header">
                 <li><a class="icon" href=""><i class="fa-solid fa-user fa-2x"></i></a></li>
                 <li><a class="icon" href=""><i class="fa-solid fa-heart fa-2x"></i></a></li>
                 <li><a class="icon" href=""><i class="fa-solid fa-pencil fa-2x"></i></a></li>
             </ul>
         </div>
         </div>
-      </div>
     </th:block>
 </html>

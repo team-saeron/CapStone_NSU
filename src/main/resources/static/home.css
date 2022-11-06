@@ -1,13 +1,11 @@
 @CHARSET "UTF-8";
 .search__colum{
-margin-top:25px;
 display:flex;
 justify-content:center;
 }
 
 #search_box{
-
-position:relative;
+display:relative;
 }
 
 #search{
@@ -22,9 +20,8 @@ border-radius:7px;
 
 #search_icon{
     position:absolute;
-    top:22px;
-    left:18px;
-
+    top:100px;
+    left:340px;
 }
 
 .main__colum{
@@ -38,7 +35,7 @@ margin-right:30px;
 .colum{
 display:flex;
 justify-content:center;
-margin:45px;
+margin:25px;
 }
 
 .ad_box{
@@ -46,7 +43,6 @@ border:solid 2px #5B9BD5;
 background-color:#5B9BD5;
 width:700px;
 height:150px;
-margin-bottom:25px;
 }
 
 .ad__colum{

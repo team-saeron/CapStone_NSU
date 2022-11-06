@@ -3,20 +3,12 @@
 padding : 0;
 margin : 0;
 }
-
-.header{
-border-bottom:1px solid rgba(0,0,0,0.5);
-padding-bottom:20px;
-}
-.header__colum{
-margin: 10px 15px 0px;
-
-}
 .header__header{
 display:flex;
 justify-content:space-between;
-position:relative
 }
+
+
 li{
 display:inline;
 list-style:none;
@@ -26,11 +18,9 @@ list-style:none;
 display:flex;
 justify-content:flex-end;
 color:#183153
-
 }
 
 .login{
-
     border:solid 1px #5B9BD5;
     background-color:#5B9BD5;
 }
@@ -54,17 +44,4 @@ color:#5B9BD5;
 .icon{
 color:#183153;
 margin-left:10px;
-}
-
-.header__bottom{
-position:relative
-
-}
-.header__icon{
-position:absolute;
-top:-18px;
-
-}
-#footer_text{
-text-align:center;
 }
