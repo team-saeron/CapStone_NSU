@@ -3,13 +3,13 @@
 padding : 0;
 margin : 0;
 }
-.header__colum{
-margin: 10px 15px 0px;
-}
 .header__header{
+
 display:flex;
 justify-content:space-between;
 }
+
+
 li{
 display:inline;
 list-style:none;
@@ -45,8 +45,4 @@ color:#5B9BD5;
 .icon{
 color:#183153;
 margin-left:10px;
-}
-
-#footer_text{
-text-align:center;
 }
