@@ -15,6 +15,11 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/join")
+    public String join(){
+        return "join";
+    }
+
     @GetMapping("/")
     public String home() {
         return "home";
