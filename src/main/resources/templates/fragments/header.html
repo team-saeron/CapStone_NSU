@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <th:block th:fragment="headerFragment">
+        <body>
         <div class="header__wrapper">
             <div class="header__header">
                 <div class="header__colum">
@@ -11,7 +12,20 @@
                     <ul class="login_header">
                         <c:choose>
                             <c:when test="!loggerUser">
-                                <li><a class="login" href="">로그인</a></li>
+                                <li><a data-toggle="modal" href="#myModal" class="login">로그인</a>
+                                <div class="modal fade" id="myModal" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">x</button>
+                                            </div>
+                                            <div class="modal-body">
+                                    <th:block th:replace="~{/login::setLogin(~{this::login})}"></th:block >
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </li>
                                 <li><a class="login" href="">회원가입</a></li>
                                 <li><a class="bell" href=""><i class="fa-solid fa-bell fa-lg"></i></a></li>
                             </c:when>
@@ -31,5 +45,6 @@
             </ul>
         </div>
         </div>
+        </body>
     </th:block>
 </html>
