@@ -27,13 +27,14 @@ color:#183153
 }
 
 .login{
-    border:solid 1px #5B9BD5;
-    background-color:#5B9BD5;
+     text-decoration:none;
+     color:black;
+     margin-right:3px
 }
 
-.login{
- text-decoration:none;
- color:white;
+.login_header{
+padding:10 10 0 0;
+margin:5 5 0 0;
 }
 
 #header_category{
