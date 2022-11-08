@@ -1,0 +1,7 @@
+!DOCTYPE html
+
+.article__box{
+display:flex;
+justify-content:center;
+flex-direction:column;
+}
