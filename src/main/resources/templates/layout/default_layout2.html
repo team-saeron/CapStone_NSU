@@ -3,9 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/head ::headFragment"></th:block>
 <body>
-    <th:block th:replace="fragments/header :: headerFragment"></th:block>
-    <th:block layout:fragment="content"></th:block>
-    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+<th:block th:replace="fragments/otherheader :: Header"></th:block>
+<th:block layout:fragment="content"></th:block>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 
 
 
