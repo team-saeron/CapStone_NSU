@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="layout/default_layout2">
-<th:block layout:fragment="css">
-    <link rel="stylesheet" href="/home.css" />
-</th:block>
-<th:block layout:fragment="content">
-
-
-
-</th:block>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet"  th:href="@{/fragments/layout.css}" type="text/css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Together| Join</title>
+</head>
+<body>
+<div class="header__colum">
+    <h1 id="header_logo"> <a id="header_category" href=""></a>
+        <a id="header__logo" href=""><i class="fa-solid fa-house fa-lg"></i>Together</a></h1>
+</div>
+</body>
 </html>
