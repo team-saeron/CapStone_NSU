@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/home.css" />
+</th:block>
+<th:block layout:fragment="content">
+
+    <div class="home__wrapper">
+        <div class="home_column">
+            <div class="search_box">
+                <i id="search_icon" class="fa-solid fa-magnifying-glass fa-2x"></i>
+                    <input id="search_text" input="text" name="search-area" placeholder="지역 또는 단지명을 입력하세요."/>
+            </div>
+        </div>
+        <div class="section_box">
+    <div class="home_column">
+            <div id="notice_box" class="section__box">
+                <i class="fa-solid fa-plus"></i>
+                <span id="notice_icon" class="fa-solid fa-pius">공지사항</span>
+        </div>
+        </div>
+    <div class="home_column">
+            <div id="map_box" class="section__box">
+                </div>
+            </div>
+        </div>
+    <div class="home_column">
+    <div id="ad_box" class="section__box">
+    </div>
+    </div>
+    </div>
+
+</th:block>
+</html>
