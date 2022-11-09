@@ -1,7 +1,8 @@
-!DOCTYPE html
+@CHARSET "UTF-8";
 
-.article__box{
-display:flex;
-justify-content:center;
-flex-direction:column;
+div{
+      margin:0 auto;
+}
+.input_chk{
+vertical-align:center;
 }
