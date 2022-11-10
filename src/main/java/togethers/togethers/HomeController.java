@@ -21,6 +21,11 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/agree")
+    public String agree(){
+        return "member/agree";
+    }
+
     @GetMapping("/join")
     public String join(){
         return "member/join";
