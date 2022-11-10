@@ -5,7 +5,10 @@
 #    cache: false
 #  mvc:
 #    static-path-pattern: "/static/**"
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> aff2bb1da86941373135a1cdbb44706dc94ba6bc
 server:
  port: 8081
