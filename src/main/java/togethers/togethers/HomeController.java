@@ -21,14 +21,12 @@ public class HomeController {
         return "home";
     }
 
-<<<<<<< HEAD
-=======
+
     @GetMapping("/agree")
     public String agree(){
         return "member/agree";
     }
 
->>>>>>> aff2bb1da86941373135a1cdbb44706dc94ba6bc
     @GetMapping("/join")
     public String join(){
         return "member/join";
