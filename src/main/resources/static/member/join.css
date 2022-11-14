@@ -14,8 +14,18 @@ height:100%;
 
 .join__logo{
 display:flex;
+border-bottom:1px solid #7F7F7F;
 }
 
+.select{
+padding:3px;
+width:200px;
+height:32px;
+border:1.5px solid #7F7F7F;
+border-radius:10px;
+font-size:13px;
+font-weight:bold;
+}
 h2{
 margin:30px;
 
@@ -51,7 +61,7 @@ border:1px solid #black;
 
 li{
 list-style-type:none;
-width:80%;
+width:90%;
 height:60%;
 border:1px solid #7F7F7F;
 margin:5px;
