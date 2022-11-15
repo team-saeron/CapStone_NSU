@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">>
+<html xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/member/agree.css}"  type="text/css"/>
 </th:block>
@@ -9,7 +9,7 @@
 </head>
 <body>
 
-     <form>
+   <form>
 
 
      <div class="article__box" style="overflow:scroll; width:500px; height:200px;">
@@ -35,10 +35,10 @@
          </p>
       </div>
      </div>
-         <div class="input_chk">
-             <input type="checkbox" id="termsService" name="termsService" class="chk">
-             <label for="termsService">Together 이용약관 동의<span class="terms_necessary">(필수)</span></label>
-         </div>
+       <div class="input_chk">
+           <input type="checkbox" id="termsService" name="termsService" class="chk" required>
+           <label for="termsService">Together 이용약관 동의<span class="terms_necessary">(필수)</span></label>
+       </div>
 
 
          <div class="article">
@@ -56,10 +56,12 @@
 
           </div>
          </div>
-         <div class="input_chk">
-         <input type="checkbox" id="privacy" name="termsService" class="chk">
-         <label for="termsService">Together 이용약관 동의<span class="terms_necessary">(필수)</span></label>
-     </div>
+       <div class="input_chk">
+           <input type="checkbox" id="privacy" name="termsService" class="chk" required>
+           <label for="termsService">Together 이용약관 동의<span class="terms_necessary">(필수)</span></label>
+       </div>
+
+
 
          <div class="article__box" style="overflow:scroll; width:500px; height:200px;">
          <h3 class="article__title">together 서비스 이용과 관련하여 몇 가지 주의사항이 있습니다.</h3>
@@ -95,14 +97,15 @@
          </ul>
          </div>
          </div>
-         <div class="input_chk">
-         <input type="checkbox" id="warning" name="termsService" class="chk">
-         <label for="termsService">Together 이용약관 동의<span class="terms_necessary">(필수)</span></label>
-     </div>
+       <div class="input_chk">
+           <input type="checkbox" id="warning" name="termsService" class="chk" required>
+           <label for="termsService">Together 이용약관 동의<span class="terms_necessary">(필수)</span></label>
+       </div>
+       <span class="error" id="agreeMsg" style="display:none">네이버 이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요.</span>
               <a name='agreeBottom'></a>
              <div class="btn_area double">
-                 <span><a href="/" id="btnCancel" class="btn_type btn_default" role="button">취소</a></span>
-                 <span><a href="/join" id="btnAgree" class="btn_type btn_primary" role="button">확인</a></span>
+                 <button type="button" onclick="location.href='/'" id="btnCancel" class="btn_type btn_default" >취소</button>
+                 <button id="btnAgree" onclick="location.href='/join'" class="btn_type btn_primary" >확인</button>
              </div>
          </form>
 

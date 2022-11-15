@@ -1,1 +1,8 @@
-!DOCTYPE html
+@CHARSET "UTF-8";
+
+.join_wrap{
+      margin:0 auto;
+}
+.header-join__logo{
+color:#5B9BD5;
+}
