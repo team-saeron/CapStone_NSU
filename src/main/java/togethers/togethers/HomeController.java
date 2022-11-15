@@ -31,6 +31,8 @@ public class HomeController {
     public String join(){
         return "member/join";
     }
+    @GetMapping("/member/mypage")
+    public String mypage(){ return "member/mypage";}
 
 }
 
