@@ -33,6 +33,8 @@ public class HomeController {
     }
     @GetMapping("/member/mypage")
     public String mypage(){ return "member/mypage";}
+    @GetMapping("/member/introduction")
+    public String introduction(){ return "member/introduction";}
 
 }
 
