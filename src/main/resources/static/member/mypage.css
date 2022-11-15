@@ -10,7 +10,7 @@ width:30%;
 height:100%;
 }
 
-.self_column{
+.editPicture_column{
 display:flex;
 }
 
@@ -18,7 +18,10 @@ display:flex;
 border:1px solid black;
 border-radius:100%;
 padding:30px;
-margin:10px;
+margin-right:10px;
+margin-bottom:10px;
+width:80%;
+height:80%;
 }
 
 #picture_icon{
@@ -36,7 +39,7 @@ font-weight:bold;
 }
 
 input{
-width:80%;
+width:90%;
 heigh:30%;
 font-size:15px;
 font-weight:bold;
@@ -65,8 +68,7 @@ display:block;
 }
 
 textarea{
-width:80%;
-height:80%;
+width:90%;
 margin-top:5px;
 margin-bottom:5px;
 padding:5px;
@@ -74,9 +76,18 @@ border:2px solid lightgray;
 border-radius:5px;
 }
 
-.nickname button{
+.nickname input[type="submit"]{
+font-family:FontAwesome;
+font-size:20px;
+width:20%;
+height:80%;
 border:none;
 background-color:white;
+}
+
+.button{
+border:1px solid lightgray;
+color:black;
 
 }
 
