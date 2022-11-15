@@ -27,10 +27,10 @@ public class HomeController {
         return "member/agree";
     }
 
-
     @GetMapping("/join")
     public String join(){
         return "member/join";
     }
+
 }
 
