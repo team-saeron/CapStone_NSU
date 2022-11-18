@@ -1,0 +1,102 @@
+!DOCTYPE html
+*{
+margin:0px auto;
+}
+
+.container{
+justify-content:center;
+align-items:center;
+width:30%;
+height:100%;
+}
+
+.editPicture_column{
+display:flex;
+}
+
+.editPicture{
+border:1px solid black;
+border-radius:100%;
+padding:30px;
+margin-right:10px;
+margin-bottom:10px;
+width:80%;
+height:80%;
+}
+
+#picture_icon{
+font-size:100px;
+}
+.editNickname{
+display: absolute;
+margin-top:80px;
+margin-left:20px;
+}
+
+.id{
+font-size:20px;
+font-weight:bold;
+}
+
+input{
+width:90%;
+heigh:30%;
+font-size:15px;
+font-weight:bold;
+margin-top:5px;
+margin-bottom:5px;
+padding:5px;
+border:2px solid lightgray;
+border-radius:5px;
+}
+
+.nickname{
+font-size:25px;
+font-weight: bold;
+width:250px;
+height:40px;
+border-radius: 10px;
+}
+
+h4{
+font-weight:bold;
+}
+
+
+.edit_password{
+display:block;
+}
+
+textarea{
+width:90%;
+margin-top:5px;
+margin-bottom:5px;
+padding:5px;
+border:2px solid lightgray;
+border-radius:5px;
+}
+
+.nickname input[type="submit"]{
+font-family:FontAwesome;
+font-size:20px;
+width:20%;
+height:80%;
+border:none;
+background-color:white;
+}
+
+.button{
+border:1px solid lightgray;
+color:black;
+
+}
+
+.edit_member button{
+font-size:15px;
+font-weight:bold;
+border:1px solid black;
+padding:5px;
+margin-top:5px;
+margin:5px;
+border-radius:10px;
+}

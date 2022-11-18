@@ -3,7 +3,6 @@
 .home__wrapper{
 margin: 0 auto;
 }
-
 .home_column{
 display:flex;
 justify-content:center;
@@ -11,7 +10,6 @@ width:200%
 height:200%;
 margin-bottom:10px;
 }
-
 #search_text{
 padding:25px;
 padding-left:60px;
@@ -23,8 +21,8 @@ border-radius:7px;
 
 #search_icon{
  position:relative;
- top:12px;
- left:60px;
+ top:8px;
+ left:50px;
 }
 
 .section_box{
@@ -47,4 +45,5 @@ height:120px;
 
 #notice_box{
 margin-right:60px;
+ border-top solid 35px;
 }

@@ -23,12 +23,13 @@ public class HomeController {
 
     @GetMapping("/agree")
     public String agree(){
-        return "member/agree";
+        return "agree";
     }
 
     @GetMapping("/join")
     public String join(){
-        return "member/join";
+        return "join";
     }
+
 }
 
