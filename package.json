@@ -1,0 +1,19 @@
+{
+  "name": "capstone_nsu",
+  "version": "1.0.0",
+  "description": "<p>\r <a href=\"https://github.com/shyeon4643\">\r   <img src=\"https://avatars.githubusercontent.com/u/62410059?v=4\" width=\"100\">\r </a>\r <a href=\"https://github.com/Kor-YJ\">\r   <img src=\"https://avatars.githubusercontent.com/u/101186255?s=60&v=4\" width=\"100\">\r </a>\r <a href=\"https://github.com/bhcvanvanmumani\">\r   <img src=\"https://avatars.githubusercontent.com/u/101186255?s=60&v=4\" width=\"100\">\r </a>\r <a href=\"https://github.com/hokyun-tazo\">\r   <img src=\"https://avatars.githubusercontent.com/u/101186255?s=60&v=4\" width=\"100\">\r </a>\r </p>",
+  "main": "introduction.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-saeron/CapStone_NSU.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/team-saeron/CapStone_NSU/issues"
+  },
+  "homepage": "https://github.com/team-saeron/CapStone_NSU#readme"
+}
