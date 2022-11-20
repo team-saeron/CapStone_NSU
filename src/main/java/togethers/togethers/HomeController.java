@@ -31,5 +31,13 @@ public class HomeController {
         return "join";
     }
 
+    @GetMapping("/write")
+    public String write(){
+        return "write";
+    }
+
+
+
+
 }
 

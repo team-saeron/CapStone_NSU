@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <th:block th:fragment="headerFragment">
-        <body>
-        <div class="header__wrapper">
-            <div class="header__header">
-                <div class="header__colum">
-                    <h1 id="header_logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg"></i></a>
+<th:block th:fragment="headerFragment">
+    <body>
+    <div class="header__wrapper">
+        <div class="header__header">
+            <div class="header__colum">
+                <h1 id="header_logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg"></i></a>
 
-                        <a id="header__logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a></h1>
+                    <a id="header__logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a></h1>
 
-                </div>
-                <div class="header__colum">
-                    <ul class="login_header">
-                        <c:choose>
-                            <c:when test="!loggerUser">
-                                <li><a data-toggle="modal" href="#myModal" class="login">로그인</a>
+            </div>
+            <div class="header__colum">
+                <ul class="login_header">
+                    <c:choose>
+                        <c:when test="!loggerUser">
+                            <li><a data-toggle="modal" href="#myModal" class="login">로그인</a>
                                 <div class="modal fade" id="myModal" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">x</button>
+                                                <button type="button" class="close" data-dismiss="modal">x</button>
                                             </div>
                                             <div class="modal-body">
-                                    <th:block th:replace="~{member/login::setLogin(~{this::login})}"></th:block >
-                                                </div>
+                                                <th:block th:replace="~{member/login::setLogin(~{this::login})}"></th:block >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                </li>
+                            </li>
 
-                                <li><a class="login" href="/agree">회원가입</a></li>
-                                <li><a class="icon" href=""><i class="fa-solid fa-bell fa-lg"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a class="login" href="">로그아웃</a></li>
-                                <li><a class="icon" href=""><i class="fa-solid fa-bell fa-lg"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </div>
+                            <li><a class="login" href="/agree">회원가입</a></li>
+                            <li><a class="icon" href=""><i class="fa-solid fa-bell fa-lg"></i></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a class="login" href="">로그아웃</a></li>
+                            <li><a class="icon" href=""><i class="fa-solid fa-bell fa-lg"></i></a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
             </div>
+        </div>
         <div id="personal_icons" class="header__colum">
             <ul class="login_header">
                 <li><a class="icon" href="member/mypage"><i class="fa-solid fa-user fa-2x"></i></a></li>
                 <li><a class="icon" href=""><i class="fa-solid fa-heart fa-2x"></i></a></li>
-                <li><a class="icon" href=""><i class="fa-solid fa-pencil fa-2x"></i></a></li>
+                <li><a class="icon" href="/write"><i class="fa-solid fa-pencil fa-2x"></i></a></li>
             </ul>
         </div>
-        </div>
-        </body>
-    </th:block>
+    </div>
+    </body>
+</th:block>
 </html>
