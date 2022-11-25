@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/default_layout">
+
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/member/introduction.css" />
 </th:block>
@@ -29,15 +30,17 @@
         <div class="introduction_column">
                 <h4>보증금 예산(필수)</h4>
             <div class="column">
-                <input class="deposit_value" type="range" name="deposit" step="100" min="200" max="100000000">
+                <input class="deposit_value" type="range" name="deposit" step="100" min="200" max="100000000" oninput="document.getElementById('deposit_value').innerHTML=this.value;">
                 <span id="deposit_value">200</span>
+                </input>
             </div>
         </div>
         <div class="introduction_column">
                 <h4>월세 예산(필수)</h4>
             <div class="column">
-                    <input class="monthlyRent_value" type="range" name="monthly_rent" step="10" min="40" max="200">
+                <input class="monthlyRent_value" type="range" name="monthly_rent" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
                 <span id="monthlyRent_value">40</span>
+                </input>
 </div>
         </div>
         <div class="introduction_column">
@@ -85,7 +88,7 @@
             </div>
         </div>
         <div class="introduction_column">
-                <h4>내가 원하는 룸페이트</h4>
+                <h4>내가 원하는 룸메이트</h4>
             <div class="column">
                 <textarea cols="50" rows="10"></textarea>
                 <input class="button" type="button" value="확인"/>
@@ -93,6 +96,7 @@
         </div>
 </form>
 </div>
-    <script src="js/introduction.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/introduction.js}"></script>
 </th:block>
 </html>
