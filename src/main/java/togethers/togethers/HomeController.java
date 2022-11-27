@@ -36,6 +36,13 @@ public class HomeController {
         return "write";
     }
 
+    @GetMapping("/choose")
+    public String choose(){
+        return "choose";
+    }
+
+
+
 
 
 

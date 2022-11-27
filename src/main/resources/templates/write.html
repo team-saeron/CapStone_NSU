@@ -6,7 +6,10 @@
   <link rel="stylesheet" href="/write.css" />
 </th:block>
 
+
 <th:block layout:fragment="content">
+
+  <div class="write_container">
   <form class="write_column" th:action="@{/auth/writeContentProc}" th:method="POST">
 <div class="write_wrapper">
   <div class="write__content">
@@ -35,7 +38,7 @@
       <input class="write__price" type="text" placeholder="관리비">
     </div>
     <div class="write_location">
-      <input class="location" type="text">
+      <input class="location" type="text" placeholder="위치">
     </div>
     <div class="house_img">
       <img id="write-img" src="https://www.zipdeco.co.kr/upload/2017/07/21/EDITOR_201707210201236390_YQJAH"/>
@@ -43,6 +46,7 @@
     </div>
   </div>
 </div>
+
     </form>
   </div>
 
