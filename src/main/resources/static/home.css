@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
 
 .home__wrapper{
+background-color:#f1eaf1;
 margin: 0 auto;
 }
 .home_column{
@@ -13,7 +14,7 @@ margin-bottom:10px;
 #search_text{
 padding:25px;
 padding-left:60px;
-border:solid 5px #183153;
+border:solid 5px #a98eda;
 width:800px;
 height:20px;
 border-radius:7px;
@@ -34,7 +35,7 @@ margin-bottom:10px;
 }
 
 .section__box{
-background-color:#5B9BD5;
+
 width:400px;
 height:300px}
 
