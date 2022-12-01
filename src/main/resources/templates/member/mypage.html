@@ -9,8 +9,8 @@
     <div class="container">
         <div class="self_column">
             <form class="editPicture_column" th:action="@{/auth/editPictureProc}" th:method="POST">
-                <div class="editPicture">
-                    <i id="picture_icon" class="fa-solid fa-user"></i>
+            <div class="editPicture">
+                <i id="picture_icon" class="fa-solid fa-user"></i>
                 </div>
                 <div class="editNickname">
                     <div class="nickname">밀크야살빼자 님
@@ -19,28 +19,36 @@
 
                 </div>
             </form>
-        </div>
+            </div>
         <div class="edit_member">
             <h4>아이디</h4>
             <div class="id">saeron2022</div>
             <div class="edit_password">
                 <form class="editPassword_column" th:action="@{/auth/editPasswordProc}" th:method="POST">
-                    <h4>비밀번호 수정</h4>
-                    <input type="password" class="present_password" placeholder="현재 비밀번호 입력하세요.">
-                    <input type="password" class="edit_password" placeholder="변경할 비밀번호"/>
-                    <input type="password" class="check_password" placeholder="비밀번호 확인"/>
-                    <input class="button" type="submit" value="변경하기">
+                <h4>비밀번호 수정</h4>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="password" class="form-control" placeholder="현재 비밀번호 입력하세요." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="password" class="form-control" placeholder="변경할 비밀번호" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="password" class="form-control" placeholder="비밀번호 확인" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block">가입하기</button>
                 </form>
             </div>
 
         </div>
         <div class="edit_detail">
             <form class="editPassword_column" th:action="@{/auth/editPasswordProc}" th:method="POST">
-                <h4>세부사항 수정</h4>
-                <textarea class="detail_self" cols="30" rows="5"></textarea>
-                <input class="button" type="submit" value="수정하기">
+                <div class="form-group">
+                    <h4 for="exampleFormControlTextarea1">세부사항 수정</h4>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg btn-block">수정하기</button>
             </form>
         </div>
-    </div>
+        </div>
 </th:block>
 </html>
