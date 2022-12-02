@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script  type="text/javascript" th:src="@{/member/category.js}"></script>
+    <script  type="text/javascript" src="/member/category.css"></script>
+    <script type="javascript"></script>
+</head>
     <th:block th:fragment="headerFragment">
         <body>
         <div class="header__wrapper">
             <div class="header__header">
                 <div class="header__colum">
-                    <h1 id="header_logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg"></i></a>
+<!--                    <button id="category_button"></button>-->
+                    <h1 id="header_logo"> <a id="header_category"data-toggle="modal" data-target="#Modal" href="#Modal"><i class="fa-solid fa-bars fa-lg"></i>
+                    <!--여기에다가  만들기-->
+                    <div class="modal fade" id="Modal" role="dialog">
+                        <div class="modal_dialog">
+                        <th:block th:replace="~{fragments/category::setCategory(~{this::category})}"> </th:block>
+                        </div>
+                    </div>
 
-                        <a id="header__logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a></h1>
+                    </a></h1>
+
+                    <h1> <a id="header__logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a></h1>
 
                 </div>
                 <div class="header__colum">
