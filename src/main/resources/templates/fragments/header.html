@@ -1,66 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head>
-    <script  type="text/javascript" th:src="@{/member/category.js}"></script>
-    <script  type="text/javascript" src="/member/category.css"></script>
-    <script type="javascript"></script>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:display="http://www.w3.org/1999/xhtml">
     <th:block th:fragment="headerFragment">
+        <style>
+         .header__colum{
+         display:flex;
+         justify-content:space-between;
+         }
+
+        </style>
         <body>
         <div class="header__wrapper">
-            <div class="header__header">
                 <div class="header__colum">
-<!--                    <button id="category_button"></button>-->
-                    <h1 id="header_logo"> <a id="header_category"data-toggle="modal" data-target="#Modal" href="#Modal"><i class="fa-solid fa-bars fa-lg"></i>
-                    <!--여기에다가  만들기-->
-                    <div class="modal fade" id="Modal" role="dialog">
-                        <div class="modal_dialog">
-                        <th:block th:replace="~{fragments/category::setCategory(~{this::category})}"> </th:block>
-                        </div>
-                    </div>
-
-                    </a></h1>
-
-                    <h1> <a id="header__logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a></h1>
-
-                </div>
-                <div class="header__colum">
-                    <ul class="login_header">
-                        <c:choose>
-                            <c:when test="!loggerUser">
-                                <li><a data-toggle="modal" href="#myModal" class="login">로그인</a>
-                                <div class="modal fade" id="myModal" role="dialog">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">x</button>
-                                            </div>
-                                            <div class="modal-body">
-                                    <th:block th:replace="~{member/login::setLogin(~{this::login})}"></th:block >
-                                                </div>
+                    <h1 id="header_logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg"></i></a>
+                        <a id="header__logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a>
+                    </h1>
+                    <h4>
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="modal" data-target="#myModal">로그인</a>
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">x</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <th:block th:replace="~{member/login::setLogin(~{this::login})}"></th:block >
                                         </div>
                                     </div>
                                 </div>
-                                </li>
+                            </div>
 
-                                <li><a class="login" href="/join">회원가입</a></li>
-                                <li><a class="icon" href=""><i class="fa-solid fa-bell fa-lg"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a class="login" href="">로그아웃</a></li>
-                                <li><a class="icon" href=""><i class="fa-solid fa-bell fa-lg"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/join">회원가입</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-bell fa-lg"></i></a>
+                        </li>
                     </ul>
+                    </h4>
                 </div>
-            </div>
-        <div id="personal_icons" class="header__colum">
-            <ul class="login_header">
-                <li><a class="icon" href="member/mypage"><i class="fa-solid fa-user fa-2x"></i></a></li>
-                <li><a class="icon" href=""><i class="fa-solid fa-heart fa-2x"></i></a></li>
-                <li><a class="icon" href=""><i class="fa-solid fa-pencil fa-2x"></i></a></li>
-            </ul>
         </div>
+        <div id="personal_icons" class="header_colum">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" href="member/mypage"><i class="fa-solid fa-user fa-2x"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-heart fa-2x"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-solid fa-pencil fa-2x"></i></a>
+                </li>
+            </ul>
         </div>
         </body>
     </th:block>

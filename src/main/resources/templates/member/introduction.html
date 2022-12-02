@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/default_layout">
+
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/member/introduction.css" />
 </th:block>
@@ -29,15 +30,17 @@
         <div class="introduction_column">
                 <h4>보증금 예산(필수)</h4>
             <div class="column">
-                <input class="deposit_value" type="range" name="deposit" step="100" min="200" max="100000000">
+                <input class="deposit_value" type="range" name="deposit" step="100" min="200" max="100000000" oninput="document.getElementById('deposit_value').innerHTML=this.value;">
                 <span id="deposit_value">200</span>
+                </input>
             </div>
         </div>
         <div class="introduction_column">
                 <h4>월세 예산(필수)</h4>
             <div class="column">
-                    <input class="monthlyRent_value" type="range" name="monthly_rent" step="10" min="40" max="200">
+                <input class="monthlyRent_value" type="range" name="monthly_rent" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
                 <span id="monthlyRent_value">40</span>
+                </input>
 </div>
         </div>
         <div class="introduction_column">
@@ -64,35 +67,63 @@
         <div class="introduction_column">
                 <h4>반려동물과의 동거에 대해</h4>
             <div class="column">
-                <input type="checkbox" name="like" value="좋아요">좋아요</input>
-                <input type="checkbox" name="like" value="싫어요">싫어요</input>
-                <input type="checkbox" name="like" value="상관없어요">상관없어요</input>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox6">좋아요</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option2">
+                    <label class="form-check-label" for="inlineCheckbox7">싫어요</label>
+                </div><div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option1">
+                <label class="form-check-label" for="inlineCheckbox8">상관없어요</label>
+            </div>
             </div>
         </div>
         <div class="introduction_column">
                 <h4>흡연</h4>
             <div class="column">
-                <input type="checkbox" name="like" value="좋아요">좋아요</input>
-                <input type="checkbox" name="like" value="싫어요">싫어요</input>
-                <input type="checkbox" name="like" value="상관없어요">상관없어요</input>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox3">좋아요</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
+                    <label class="form-check-label" for="inlineCheckbox4">싫어요</label>
+                </div><div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option1">
+                <label class="form-check-label" for="inlineCheckbox5">상관없어요</label>
+            </div>
+
         </div>
         </div>
         <div class="introduction_column">
                 <h4>생활패턴</h4>
             <div class="column">
-                <input type="checkbox" name="livePattern" value="아침형">아침형</input>
-                <input type="checkbox" name="livePattern" value="야행성">야행성</input>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1">아침형</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                    <label class="form-check-label" for="inlineCheckbox2">야행성</label>
+                </div>
+
             </div>
         </div>
         <div class="introduction_column">
-                <h4>내가 원하는 룸페이트</h4>
+                <h4>내가 원하는 룸메이트</h4>
             <div class="column">
-                <textarea cols="50" rows="10"></textarea>
-                <input class="button" type="button" value="확인"/>
+                <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-lg btn-block">확인</button>
         </div>
         </div>
 </form>
 </div>
-    <script src="js/introduction.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/introduction.js}"></script>
 </th:block>
 </html>

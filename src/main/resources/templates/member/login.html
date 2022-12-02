@@ -1,5 +1,117 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="setLogin(login)">
+    <style>
+        .member_login{
+width:100%;
+height: 100%;
+display:flex;
+justify-content:center;
+}
+
+.login_sns_icon{
+ text-decoration: none;
+  color: black;
+}
+
+.login_sns{
+display:flex;
+justify-content:center;
+}
+
+.login_sns a{
+border-radius:50px;
+width: 50px;
+height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 10px;
+border-radius: 50px;
+background: white;
+font-size: 20px;
+margin:10px;
+box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
+
+}
+.login_id{
+width:80%;
+}
+
+.login_pw{
+width:80%;
+}
+
+.login_sns li{
+padding:0px 15px;
+}
+
+.forgot_pw a{
+color:black;
+}
+
+.login_etc{
+padding: 10px;
+width: 80%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 14px;
+font-weight: bold;
+color:black;
+}
+
+.login_column h4{
+font-weight: bold;
+}
+
+.login_column h1{
+font-weight:bold;
+  color: #183153;
+  font-size: 2em;
+}
+
+.login_input{
+  width: 100%;
+  height: 50px;
+  border-radius: 30px;
+  margin-top: 5px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+  font-size: 14px;
+}
+
+.submit{
+margin-top:50px;
+margin-bottom:20px;
+width:80%;
+}
+
+.submit input{
+  width: 100%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: linear-gradient(to left, rgb(24, 49, 83), rgb(24, 100, 84));
+  color: white;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
+
+.login_column{
+  width: 100%;
+  height: 600px;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+    </style>
     <body>
     <div class="member_login">
         <form class="login_column" th:action="@{/auth/loginProc}" th:method="POST">
@@ -19,7 +131,8 @@
                     <input type="checkbox" name="" id=""/> 아이디 저장
                 </div>
                 <div class="forgot_pw">
-                    <a href="">비밀번호 찾기</a>
+                    <a href="/find/choose">아이디 찾기</a>
+                    <a href="/find/password">비밀번호 찾기</a>
                 </div>
             </div>
             <div class="submit">

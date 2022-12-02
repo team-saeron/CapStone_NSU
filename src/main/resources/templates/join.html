@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet"  th:href="@{/css/bootstrap.css}" type="text/css"/>
     <link rel="stylesheet"  th:href="@{/member/join.css}" type="text/css"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Together | 회원가입</title>
@@ -10,57 +11,76 @@
 
 <th:block layout:fragment="content">
         <div class="join__logo">
-                <h1><a href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a>
-                    <h2 > 회원가입</h2>
+                <h1><a href="/"><i class="fa-solid fa-house fa-lg"></i>Together </a>
+                    <h2 >   회원가입</h2>
                 </h1>
         </div>
     <div class="container">
         <form class="join_column" th:action="@{/auth/joinProc}" th:method="POST">
-        <div class="join__column" id="join_id">
-            <h4>아이디</h4>
-            <input type="text" placeholder="아이디"/>
-            <button class="check_id">중복확인</button>
+            <h5>이름</h5>
+            <div class="join__column" id="join_name">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2">
+            </div>
+            </div>
+            <h5>아이디</h5>
+            <div class="join__column" id="join_id">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                </div>
+            </div>
+
         </div>
+            <h5>비밀번호</h5>
         <div class="join__column" id="join_passward">
-            <h4>비밀번호</h4>
-            <input type="text" placeholder="비밀번호"/>
-            <input type="text" placeholder="비밀번호 확인"/>
+            <input type="text" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2">
+            <input type="text" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2">
         </div>
         <div class="join__column" id="join_birth">
-            <h4>생년월일</h4>
+            <h5>생년월일</h5>
             <input type="date" name="생년월일"/>
         </div>
         <div class="join__column" id="join_tel">
-            <h4>전화번호</h4>
-            <input type="tel" name="전화번호"/>
-            <button >본인 인증</button>
+            <h5>전화번호</h5>
+            <div class="input-group mb-3">
+                <input type="tel" class="form-control" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-secondary">본인인증</button>
+                </div>
+            </div>
         </div>
+            <h5>이메일</h5>
         <div class="join__column" id="join_email">
-            <h4>이메일</h4>
-            <input type="text" name="이메일" maxlength="18"/>@
-            <select class="select" title="이메일 도메인 주소 선택" onclick="setEmailDomain(this.value);return false;">
-                <option value="">-선택-</option>
-                <option value="naver.com">naver.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="hanmail.net">hanmail.net</option>
-                <option value="hotmail.com">hotmail.com</option>
-                <option value="korea.com">korea.com</option>
-                <option value="nate.com">nate.com</option>
-                <option value="yahoo.com">yahoo.com</option>
-            </select>
+            <input type="text" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="button-addon2">@
+            <div class="input-group">
+                <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <option value="">-선택-</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="hanmail.net">hanmail.net</option>
+                    <option value="hotmail.com">hotmail.com</option>
+                    <option value="korea.com">korea.com</option>
+                    <option value="nate.com">nate.com</option>
+                    <option value="yahoo.com">yahoo.com</option>
+                </select>
+            </div>
         </div>
-            <button class="join">가입하기</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block">가입하기</button>
             <div class="join__column">
-                <span>----------------------------- or -------------------------------------</span>
+                <span>------------------------------------------- or --------------------------------------------</span>
             </div>
             <div class="join_sns">
-                <li><a class="login_sns_icon" href=""><i class="fa-brands fa-google"></i> 구글 계정으로 로그인하기</a></li>
-                <li><a class="login_sns_icon" href=""><i class="fab fa-facebook-f"></i> 페이스북 계정으로 로그인하기</a></li>
-                <li><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i> 트위터 계정으로 로그인하기</a></li>
+                <ul class="list-group">
+                    <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fa-brands fa-google"></i> 구글 계정으로 로그인하기</a></li>
+                    <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fab fa-facebook-f"></i> 페이스북 계정으로 로그인하기</a></li>
+                    <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i> 트위터 계정으로 로그인하기</a></li>
+                </ul>
             </div>
         </form>
     </div>
-
+    </div>
 </th:block>
 </body>
 </html>
