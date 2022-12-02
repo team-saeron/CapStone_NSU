@@ -11,9 +11,10 @@
 
 <th:block layout:fragment="content">
         <div class="join__logo">
-                <h1><a href="/"><i class="fa-solid fa-house fa-lg"></i>Together </a>
-                    <h2 >   회원가입</h2>
-                </h1>
+            <h1 id="join__logo">
+                <a id="join_logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together  </a>
+                <span> 회원가입</span>
+            </h1>
         </div>
     <div class="container">
         <form class="join_column" th:action="@{/auth/joinProc}" th:method="POST">
