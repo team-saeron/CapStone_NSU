@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/write.css" />
+</th:block>
+
+
+<th:block layout:fragment="content">
+
+  <div class="write_container">
+  <form class="write_column" th:action="@{/auth/writeContentProc}" th:method="POST">
+<div class="write_wrapper">
+  <div class="write__content">
+  <div class="write_column">
+    <select class="select_type">
+      <option selected>방과 함께 룸메이트 찾기</option>
+      <option>룸메이트 찾기</option>
+    </select>
+    <input class="write_submit" type="submit" value="글올리기">
+    </div>
+
+
+
+
+    <div class="title_column">
+      <input class="write_title" type="text" placeholder="제목">
+    </div>
+    <div class="choose_type">
+      <input type="radio" style="font-size:20pt;width:30px;height:30px;" id="month" name="chk_type" value="월세"  checked="checked"></input>
+        <label for="month">월세</label>
+      <input type="radio" style="font-size:20px;width:30px;height:30px;" id="all" name="chk_type" value="전세"></input>
+     <label for="all">전세</label>
+    </div>
+    <div class="write_price">
+      <input class="write_price" type="text" placeholder="가격">
+      <input class="write__price" type="text" placeholder="관리비">
+    </div>
+    <div class="write_location">
+      <input class="location" type="text" placeholder="위치">
+    </div>
+    <div class="house_img">
+      <img id="write-img" src="https://www.zipdeco.co.kr/upload/2017/07/21/EDITOR_201707210201236390_YQJAH"/>
+      <textarea class="house_detail" cols="37" rows="7"></textarea>
+    </div>
+  </div>
+</div>
+
+    </form>
+  </div>
+
+
+
+
+
+</th:block>
+</body>
+</html>
