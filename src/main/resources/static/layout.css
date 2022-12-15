@@ -1,6 +1,5 @@
 *{
    margin:0 auto;
-   color:#432874;
    justify-content:center;
    align-items:center;
 }
@@ -12,6 +11,10 @@ width:100%;
 .header__colum{
     display:flex;
     justify-content:space-between;
+}
+
+#header_category{
+color:#432874;
 }
 
 #header__logo{
@@ -50,4 +53,9 @@ display:inline-block;
 
 .nav-link{
 color:#432874;
+}
+
+.nav-link:hover{
+background-color:white;
+color:black;
 }

@@ -1,4 +1,4 @@
-package togethers.togethers.member;
+package togethers.togethers.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
