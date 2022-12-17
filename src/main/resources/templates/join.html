@@ -11,9 +11,10 @@
 
 <th:block layout:fragment="content">
         <div class="join__logo">
-                <h1><a href="/"><i class="fa-solid fa-house fa-lg"></i>Together </a>
-                    <h2 >   회원가입</h2>
-                </h1>
+            <h1 id="join__logo">
+                <a id="join_logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together  </a>
+                <span> 회원가입</span>
+            </h1>
         </div>
     <div class="container">
         <form class="join_column" th:action="@{/auth/joinProc}" th:method="POST">
@@ -23,12 +24,18 @@
                 <input type="text" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2">
             </div>
             </div>
+            <h5>닉네임</h5>
+            <div class="join__column" id="join_nickname">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="닉네임" aria-label="Recipient's username" aria-describedby="button-addon2">
+                </div>
+            </div>
             <h5>아이디</h5>
             <div class="join__column" id="join_id">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
                 </div>
             </div>
 
