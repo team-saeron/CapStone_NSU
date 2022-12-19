@@ -14,14 +14,13 @@ public class Member {
 
     @Id
     @GeneratedValue
-    private Long seq;
-
     @Column(name="member_id")
-    private Long email;
-
-    @NotEmpty
+    @NotEmpty(message = "이메일을 입력해주세요.")
+    private String email;
+    private boolean rememberEmail;
+    @NotEmpty(message = "이름을 입력해주세요.")
     private String name;
-    @NotEmpty
+    @NotEmpty(message="비밀번호를 입력해주세요.")
     private String password;
 
     private String phoneNum;
