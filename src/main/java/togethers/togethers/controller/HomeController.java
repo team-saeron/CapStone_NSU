@@ -16,20 +16,11 @@ public class HomeController {
     }
 
 
-    @GetMapping("/")
-    public String home() {
-        return "home";
-    }
-
     @GetMapping("/agree")
     public String agree(){
         return "agree";
     }
 
-    @GetMapping("/join")
-    public String join(){
-        return "join";
-    }
 
     @GetMapping("/write")
     public String write(){

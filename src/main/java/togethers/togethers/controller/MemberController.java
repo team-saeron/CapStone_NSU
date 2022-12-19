@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
+
     @GetMapping("/member/mypage")
     public String mypage(){ return "member/mypage";}
 
