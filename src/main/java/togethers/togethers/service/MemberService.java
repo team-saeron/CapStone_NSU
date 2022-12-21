@@ -16,8 +16,6 @@ import java.util.List;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-
-
     @Transactional
     public String join(Member member){
         memberRepository.save(member);
