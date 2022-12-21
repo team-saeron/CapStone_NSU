@@ -1,60 +1,68 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:display="http://www.w3.org/1999/xhtml">
-    <th:block th:fragment="headerFragment">
-        <style>
-         .header__colum{
-         display:flex;
-         justify-content:space-between;
-         }
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerFragment">
+    <style>
+        .header__wrapper{
+        background-color:white;
 
-        </style>
-        <body>
-        <div class="header__wrapper">
-                <div class="header__colum">
-                    <h1 id="header_logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg"></i></a>
-                        <a id="header__logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together</a>
-                    </h1>
-                    <h4>
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="modal" data-target="#myModal">로그인</a>
-                            <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">x</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <th:block th:replace="~{member/login::setLogin(~{this::login})}"></th:block >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        }
+    </style>
 
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/join">회원가입</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-bell fa-lg"></i></a>
-                        </li>
-                    </ul>
-                    </h4>
-                </div>
-        </div>
-        <div id="personal_icons" class="header_colum">
+    <div class="header__wrapper">
+        <nav class="navbar">
+            <h1 id="header_logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg"></i></a>
+                <a id="header__logo" href="/"><img src="https://cdn139.imgdb.in/kBRR.jpg" width="175" height ="100" ></a>
+            </h1>
+        </nav>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </nav>
+        <nav class="navbar">
             <ul class="nav justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link active" href="member/mypage"><i class="fa-solid fa-user fa-2x"></i></a>
+                    <a class="nav-link active" data-toggle="modal" data-target="#myModal">로그인</a>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                </div>
+                                <div class="modal-body">
+                                    <th:block th:replace="~{member/login::setLogin(~{this::login})}"></th:block >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-heart fa-2x"></i></a>
+                    <a class="nav-link" href="/join">회원가입</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-pencil fa-2x"></i></a>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-bell fa-lg"></i></a>
                 </li>
             </ul>
-        </div>
-        </body>
-    </th:block>
+            </h4>
+            <div id="personal_icons" class="header_colum">
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/member/mypage"><i class="fa-solid fa-user fa-2x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-heart fa-2x"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/write"><i class="fa-solid fa-pencil fa-2x"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+</th:block>
 </html>

@@ -41,8 +41,10 @@ margin:5 5 0 0;
 color:#183153;
 }
 
-#header__logo{
-color:#6610f2;
+
+.header__wrapper img{
+width:150px;
+height:100px;
 }
 
 .icon{
@@ -50,10 +52,7 @@ color:#183153;
 margin-left:10px;
 }
 
-#footer_text{
-display:flex;
-justify-content:center;
-}
+
 
 .member_login{
 width:100%;
@@ -163,5 +162,4 @@ width:80%;
   align-items: center;
   flex-direction: column;
 }
-
 
