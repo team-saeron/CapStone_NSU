@@ -5,10 +5,13 @@
 <th:block layout:fragment="css">
   <link rel="stylesheet" href="/write.css" />
 </th:block>
-
-
 <th:block layout:fragment="content">
-
+<style>
+  .write_container{
+  margin-top:-20px;
+  }
+</style>
+<body>
   <div class="write_container">
   <form class="write_column" th:action="@{/auth/writeContentProc}" th:method="POST">
 <div class="write_wrapper">
@@ -52,7 +55,7 @@
 
 
 
-
+</body>
 
 </th:block>
 </body>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/post/detailPost.css" />
+</th:block>
+
+<th:block layout:fragment="content">
+
+  <body>
+  <div class="container">
+
+    <div class="slider"> <!--이미지를 담고 있는 div-->
+
+      <div class="slider__item">
+        <img class="post_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000" alt="null">
+      </div>
+
+      <div class="slider__item">
+        <img class="post_img" src="https://img.freepik.com/free-photo/3d-rendering-mock-up-wood-decor-in-living-room-with-leather-sofa_105762-2207.jpg?w=1060&t=st=1671599477~exp=1671600077~hmac=29ccb061847fc646fbe3d5d654b010f2c505b55b3a5fb337d3c9979e2f33070c" alt="null">
+      </div>
+
+      <div class="slider__item">
+        <img class="post_img" src="https://img.freepik.com/free-photo/3d-contemporary-living-room-interior-and-modern-furniture_1048-10261.jpg?w=1380&t=st=1671599493~exp=1671600093~hmac=e9245221a8580e66f229bbcab5bad33af4290464b64262ca72bfb1cf17188530" alt="null">
+      </div>
+
+      <div class="slider__item">
+        <img class="post_img" src="https://img.freepik.com/premium-photo/3d-rendering-wood-minimal-style-bedroom-with-view-from-window_105762-20.jpg?w=1060" alt="null">
+      </div>
+
+    </div>
+
+    <div class="Like">
+      <table>
+        <tr>
+          <td>
+            <addr title="매칭률"><i class="fa-solid fa-fire fa-2x"></i></addr>
+            80%
+          </td>
+          <td>
+            <i class="fa-solid fa-heart fa-2x"></i>
+          </td>
+        </tr>
+      </table>
+
+
+    </div>
+
+    <hr>
+
+    <!--방과 사람 정보-->
+    <div class="explain">
+
+      <div class="room_explain">
+        <table class="ex_table">
+          <caption><strong>방 정보</strong></caption>
+          <tr>
+            <td>보증금</td>
+            <td>1000만원</td>
+          </tr>
+
+          <tr>
+            <td>월세</td>
+            <td>30만원</td>
+          </tr>
+
+          <tr>
+            <td>위치</td>
+            <td>서울시 강남구</td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div class="personal_explain">
+
+        <table class="ex_table">
+          <caption><strong>작성자 정보</strong></caption>
+          <tr>
+            <td>성별</td>
+            <td>남자</td>
+          </tr>
+          <tr>
+            <td>성격</td>
+            <td>활발함</td>
+          </tr>
+          <tr>
+            <td>나이</td>
+            <td>20세</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- 댓글 html-->
+    <div class="comment">
+
+      <!-- 내가 적는 댓글 칸-->
+      <div class="my_comment">
+        <form action="post">
+          <fieldset>
+            <div class="my_inner_commnet">
+
+              <div class="my_id">
+                <i class="fa-solid fa-user fa fa-2x"></i>
+                마몽
+              </div>
+              <div class="my_text">
+                    <textarea rows="3" cols="30" placeholder="댓글을 작성하세요"
+                              class="my_textarea"></textarea>
+              </div>
+              <div class="text_submit">
+                <button type="submit">등록</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+
+      <!--다른 사람이 작성한 댓글 칸 -->
+      <div class="other_comment">
+        <ul>
+          <legend><strong>댓글</strong></legend>
+          <li>
+            <div class="other_inner_comment">
+              <div class="other_id">
+                <i class="fa-solid fa-user fa fa-2x"></i>
+                정호균
+              </div>
+              <div class="other_text">
+                <span >이집 마음에 들어요!</span>
+              </div>
+            </div>
+          </li>
+
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- script 구역 -->
+  <script>
+        const SHOWING_CLASS = "showing";
+        const firstslide = document.querySelector(".slider__item:first-child");
+        function slide()
+        {
+          const currentslide = document.querySelector(`.${SHOWING_CLASS}`);
+          if(currentslide)
+          {
+                currentslide.classList.remove(SHOWING_CLASS);
+                const nextSlide = currentslide.nextElementSibling;
+                if(nextSlide){
+                    nextSlide.classList.add(SHOWING_CLASS);
+                }else{
+                    firstslide.classList.add(SHOWING_CLASS);
+                }
+          }else{
+            firstslide.classList.add(SHOWING_CLASS);
+          }
+        }
+        slide();
+        setInterval(slide,3000);
+    </script>
+
+
+
+
+  </body>
+</th:block>
+</html>
