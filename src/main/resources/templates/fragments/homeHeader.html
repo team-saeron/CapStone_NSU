@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="homeHeaderFragment">
+  <style>
+        .header__wrapper{
+background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd, #f1eaf1);
+       height:70vh;
+
+        }
+        .header-wrap_top{
+        display:flex;
+        margin-left:-20vh;
+          margin-right:-10vh;
+
+        }
+
+        .search_div{
+        margin:10vh;}
+        .search_text{
+         color:white;
+         font-size:30px;
+        }
+    </style>
+
+  <div class="header__wrapper">
+    <div class="header-wrap_top">
+    <div class="header_left">
+    <nav class="navbar">
+      <h1 id="header_logo"> <a id="header_category" href=""><i class="fa-solid fa-bars fa-lg" style="color:white;"></i></a>
+        <a id="header__logo" href="/"><img src="https://cdn139.imgdb.in/kBRR.jpg" width="175" height ="100" ></a>
+      </h1>
+    </nav>
+    </div>
+  <div class="header_right">
+
+    <nav class="navbar">
+
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link active" href="/member/mypage" style="color:white;">마이페이지</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color:white;">관심목록</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/write" style="color:white;">작성하기</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/join" style="color:white;" >회원가입</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="modal" data-target="#myModal" style="color:white;">로그인</a>
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">x</button>
+                </div>
+                <div class="modal-body">
+                  <th:block th:replace="~{member/login::setLogin(~{this::login})}"></th:block >
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa-solid fa-bell fa-lg" style="color:white;"></i></a>
+        </li>
+      </ul>
+      </h4>
+
+    </nav>
+  </div>
+    </div>
+    <div class="search_div">
+      <div class="search_text">어느 지역을 찾으세요?</div>
+    <nav class="navbar">
+      <div class="container-fluid">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
+          <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass" style="color:white;"></i></button>
+        </form>
+      </div>
+    </nav>
+    </div>
+  </div>
+
+</th:block>
+</html>
