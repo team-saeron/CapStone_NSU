@@ -4,10 +4,20 @@ margin :5;
 padding:0;
 }
 
-.join__logo{
-display:flex;
+#join_logo{
+color:#432874;
 }
-.join__logo h2{
+
+#join__logo span{
+color:black;
+}
+
+#join__logo{
+display:flex;
+color:#432874;
+}
+.join__logo h1{
+color:#432874;
 padding :5px;
 margin : 5px;
 }
@@ -57,4 +67,24 @@ border:1px solid lightgray;
 width:100%;
 height:40px;
 border-radius:5px;
+}
+
+.btn-primary{
+background-color:#432874;
+color:white;
+border:1px solid #432874;
+}
+
+.btn-primary:hover{
+background-color:white;
+color:black;
+border:1px solid #432874;
+}
+
+.login_sns_icon{
+color:#432874;
+}
+
+.login_sns_icon:hover{
+color:#432874;
 }

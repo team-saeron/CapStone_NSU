@@ -1,16 +1,20 @@
 *{
-    margin:0 auto;
-   color:#432874;
+   margin:0 auto;
    justify-content:center;
    align-items:center;
 }
 .header__wrapper{
+text-align:center;
 background-color:none;
 width:100%;
 }
 .header__colum{
     display:flex;
     justify-content:space-between;
+}
+
+#header_category{
+color:#432874;
 }
 
 #header__logo{
@@ -45,4 +49,13 @@ width:800px;
 
 .navbar{
 display:inline-block;
+}
+
+.nav-link{
+color:#432874;
+}
+
+.nav-link:hover{
+background-color:white;
+color:black;
 }

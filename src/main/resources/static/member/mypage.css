@@ -70,3 +70,14 @@ background-color:white;
 }
 
 
+.btn-primary{
+background-color:#432874;
+color:white;
+border:1px solid #432874;
+}
+
+.btn-primary:hover{
+background-color:white;
+color:black;
+border:1px solid #432874;
+}
