@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/default_layout">
+      layout:decorate="layout/home_layout">
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/home.css" />
 </th:block>
-<th:block layout:fragment="content">
 
+
+
+<th:block layout:fragment="content">
+    <div class="gradient_box"></div>
     <div class="home__wrapper">
+
         <div class="section_box">
             <div class="home_column">
                 <div id="notice_box" class="section__box">
