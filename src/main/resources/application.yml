@@ -1,5 +1,5 @@
 server:
- port: 1000
+ port: 8081
 spring:
  devtools:
   livereload:
@@ -8,16 +8,16 @@ spring:
    cache: false
  datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://localhost:8081/together?serverTimezone=Asia/Seoul
+  url: jdbc:mysql://localhost:3306/together?serverTimezone=Asia/Seoul
   username: root
-  password: hyeon4643!!@
+  password: 1234
  jpa:
-   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-   open-in-view: false
-   show-sql: true
-   hibernate:
-    format_sql: true
-    ddl-auto: create
+  database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  open-in-view: false
+  show-sql: true
+  hibernate:
+   format_sql: true
+   ddl-auto: create
 
 logging:
  level:
