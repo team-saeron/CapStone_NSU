@@ -8,6 +8,8 @@ import togethers.togethers.domain.Member;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
@@ -18,9 +20,16 @@ public class MemberRepository {
         em.persist(member);
     }
 
-    public Member findOne(Long id){
-        return em.find(Member.class, id);
+   public Member findId(String id){
+         return em.find(Member.class, id);
+
     }
 
+    public Member findPassword(String password) {
+
+
+      return em.find(Member.class, password);
+
+    }
 
 }

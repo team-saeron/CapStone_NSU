@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 public class MemberForm {
@@ -19,7 +19,7 @@ public class MemberForm {
     private String nickname;
     private String phoneNum;
 
-    //private Date birth;
+    private Date birth;
 
 
 

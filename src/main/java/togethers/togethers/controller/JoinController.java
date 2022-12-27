@@ -30,7 +30,7 @@ public class JoinController {
         member.setPassword(form.getPassword());
         member.setNickname(form.getNickname());
         member.setPhoneNum(form.getPhoneNum());
-       // member.setBirth(form.getBirth());
+        member.setBirth(form.getBirth());
         member.setId(form.getId());
 
         memberService.join(member);
