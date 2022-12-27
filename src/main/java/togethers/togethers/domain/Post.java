@@ -10,9 +10,10 @@ import java.util.List;
 @Entity
 @Data
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private Long post_id;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)

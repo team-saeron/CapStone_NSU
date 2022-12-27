@@ -11,6 +11,7 @@ public class MemberDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false,unique = true)
     private Long memberdetail_id;
 
 

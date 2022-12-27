@@ -11,6 +11,7 @@ public class Room implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false,unique = true)
     private Long room_id;
 
     private int monthly;

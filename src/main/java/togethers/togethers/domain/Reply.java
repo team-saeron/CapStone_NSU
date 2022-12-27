@@ -10,7 +10,7 @@ import java.util.Date;
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private Long reply_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
