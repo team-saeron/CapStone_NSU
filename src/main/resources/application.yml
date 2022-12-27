@@ -10,7 +10,7 @@ spring:
   driver-class-name: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://localhost:3306/together?serverTimezone=Asia/Seoul
   username: root
-  password: hyun0128@
+  password: 1234
  jpa:
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   open-in-view: false
