@@ -2,11 +2,12 @@
 
 
 .home__wrapper{
-background-color:#f1eaf1;
+background-color:white;
 margin: 0 auto;
-background-color:#f1eaf1;
+
 
 }
+
 .home_column{
 display:flex;
 justify-content:center;

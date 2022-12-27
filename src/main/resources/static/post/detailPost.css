@@ -1,0 +1,193 @@
+
+
+body{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f1eaf1;
+
+}
+.post_img{
+    width: 100%;
+    height: 100%;
+}
+
+container{
+    font-weight: bold;
+    font-size: 1em;
+    margin: 20px;
+    margin: 0 auto;
+}
+.slider{
+
+    height: 400px;
+    position: relative;
+    margin: 0 auto;
+
+
+
+}
+.slider__item{
+    width: 72%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: absolute;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    transform: scale(0.9);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.slider__item:nth-child(odd)
+{
+    background-color: #8e44ad;
+}
+.slider__item:nth-child(even)
+{
+    background-color: #3498db;
+}
+.showing{
+    z-index: 1;
+    opacity: 1;
+}
+
+.Like{
+    margin: 0 auto;
+    width: 50%;
+    height: 50px;
+
+    margin-top: 10px;
+}
+
+.Like table{
+    width: 100%;
+   text-align: left;
+   margin: 10px;
+   border-bottom: none;
+   text-align: center;
+}
+.Like tr td{
+    border-bottom: none;
+    border-left: none;
+}
+
+.explain{
+    width: 80%;
+    height: 300px;
+    display: flex;
+    Justify-content: center;
+    margin: 0 auto;
+    margin-top: 50px;
+
+
+
+    }
+
+.room_explain{
+    width: 43.5%;
+    height: 300px;
+    margin: 20px;
+    }
+.personal_explain{
+
+    width: 43.5%;
+    height: 300px;
+    margin: 20px;
+    }
+.ex_table{
+    width: 100%;
+    margin: 10px;
+    border-top: 1px solid #444444;
+    border-collapse: collapse ;
+}
+.ex_table th,td{
+    border-bottom: 1px solid #444444;
+    border-left: 1px solid #444444;
+    padding: 10px;
+}
+.ex_table th:first-child, td:first-child {
+    border-left: none;
+  }
+
+thead{
+
+    font-size: 20px;
+}
+caption {
+    margin: 10px;
+    font-size: 20px;
+}
+.comment{
+    margin: 0 auto;
+    width: 80%;
+    height: auto;
+    padding: 30px;
+}
+.my_comment{
+
+    margin: 0 auto;
+    display: block;
+    width: 65%;
+}
+.my_id{
+    width: 100%;
+    height: 33px;
+    padding: 10px;
+}
+.my_text{
+    width: 100%;
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.text_submit{
+    width: 100%;
+    height: 33px;
+    padding: 10px;
+}
+
+.my_textarea{
+    width: 80%;
+    height: 80%;
+    resize: none;
+}
+
+.other_comment{
+    margin: 0 auto;
+    width: 80%;
+    height: auto;
+}
+.other_comment ul{
+    list-style: none;
+    padding: 10px;
+}
+.other_comment li:not(:first-child){
+    border-top: 1px solid lightgray;
+}
+.other_inner_comment {
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 5px;
+
+}
+.other_id{
+    width: 100%;
+    height: 33px;
+    padding: 5px;
+}
+.other_text{
+    width: 100%;
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 5px;
+}

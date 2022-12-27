@@ -1,7 +1,10 @@
-!DOCTYPE html
-*{
-margin:0 auto;
+@CHARSET "UTF-8";
+
+.write_container{
+background-color:#f1eaf1;
+margin: 0 auto;
 }
+
 .write_wrapper{
 display:flex;
 justify-content:center;
@@ -11,9 +14,7 @@ width:50%;
 height:100%;
 
 }
-.write__content{
 
-}
 .write_submit{
 width:15%;
 height:50px;
