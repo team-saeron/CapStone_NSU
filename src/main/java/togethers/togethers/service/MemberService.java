@@ -21,14 +21,7 @@ public class MemberService {
         memberRepository.save(member);
         return member.getId();
     }
-    @Transactional
-    public boolean login(String id, String password) {
-        if (memberRepository.findId(id).equals(id)){
 
-        }
-
-
-    }
 
 }
 

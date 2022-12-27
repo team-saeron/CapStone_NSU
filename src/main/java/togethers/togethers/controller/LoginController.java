@@ -26,12 +26,7 @@ public class LoginController {
     }
 
 
-    @PostMapping("/login")
-    public Member login(LoginForm loginForm) {
-        memberService.login(loginForm.getId(),loginForm.getPassword());
 
-
-    }
 
 
 }

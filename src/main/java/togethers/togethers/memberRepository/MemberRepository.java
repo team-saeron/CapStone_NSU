@@ -25,11 +25,5 @@ public class MemberRepository {
 
     }
 
-    public Member findPassword(String password) {
-
-
-      return em.find(Member.class, password);
-
-    }
 
 }
