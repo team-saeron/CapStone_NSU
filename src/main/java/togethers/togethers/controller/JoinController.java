@@ -5,7 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import togethers.togethers.domain.Member;
+import togethers.togethers.entity.Member;
+import togethers.togethers.form.MemberForm;
 import togethers.togethers.service.MemberService;
 
 import javax.validation.Valid;
@@ -30,7 +31,7 @@ public class JoinController {
         member.setPassword(form.getPassword());
         member.setNickname(form.getNickname());
         member.setPhoneNum(form.getPhoneNum());
-       // member.setBirth(form.getBirth());
+        member.setBirth(form.getBirth());
         member.setId(form.getId());
 
         memberService.join(member);

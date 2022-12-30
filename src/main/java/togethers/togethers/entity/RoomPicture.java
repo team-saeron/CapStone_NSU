@@ -1,4 +1,4 @@
-package togethers.togethers.domain;
+package togethers.togethers.entity;
 
 import lombok.Data;
 
@@ -17,8 +17,8 @@ public class RoomPicture{
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", nullable = false)
-    private Room room;
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
     @Lob
     private byte[] pictures_1;

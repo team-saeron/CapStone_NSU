@@ -1,4 +1,4 @@
-package togethers.togethers.domain;
+package togethers.togethers.entity;
 
 import lombok.Data;
 
@@ -28,4 +28,6 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="post_id")
     private Post post;
+
+
 }

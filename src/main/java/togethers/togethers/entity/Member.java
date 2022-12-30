@@ -1,12 +1,9 @@
-package togethers.togethers.domain;
+package togethers.togethers.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,10 +12,9 @@ import java.util.List;
 @Data
 @Table(name = "member")
 //회원 정보
-public class Member implements Serializable {
+public class Member {
 
-    //length = varchar의 길이
-    // nullable = false 는 notNull 제약조건
+
     @Id
     @Column(name="member_id", length = 50 ,nullable = false, unique = true)
     private String id;
@@ -48,12 +44,29 @@ public class Member implements Serializable {
     private int age;
 
     // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
+
+
+
+
+
+
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<Like>likes = new ArrayList<>();
+
+
+
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private MemberDetail memberDetail;
+
+
 
     // 사용자가 댓글을 달은 DB와 연관관계 설정
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<Reply>replyes = new ArrayList<>();
+
+
+
 
 
     // 사용자가 작성한 게시물과 연관관계 설정

@@ -1,4 +1,4 @@
-package togethers.togethers.domain;
+package togethers.togethers.entity;
 
 
 import lombok.Data;

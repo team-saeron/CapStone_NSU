@@ -22,10 +22,7 @@ public class HomeController {
     }
 
 
-    @GetMapping("/write")
-    public String write(){
-        return "write";
-    }
+
 
     @GetMapping("/choose")
     public String choose(){

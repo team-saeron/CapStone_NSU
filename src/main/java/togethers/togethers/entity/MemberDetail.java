@@ -1,4 +1,4 @@
-package togethers.togethers.domain;
+package togethers.togethers.entity;
 
 
 import lombok.Data;
@@ -19,6 +19,8 @@ public class MemberDetail {
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id",nullable = false)
     private Member member;
+
+
 
     @Column(nullable = false)
     private int mbti;
