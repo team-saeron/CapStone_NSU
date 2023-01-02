@@ -9,7 +9,9 @@ import javax.persistence.*;
 @Data
 public class Category {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = true,unique = true)
     private Long area_id;
 
     @Column(length = 50, nullable = false)

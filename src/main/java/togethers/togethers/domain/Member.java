@@ -20,7 +20,7 @@ public class Member implements Serializable {
     //length = varchar의 길이
     // nullable = false 는 notNull 제약조건
     @Id
-    @Column(name="member_id",length = 30, nullable = false)
+    @Column(name="member_id", length = 50 ,nullable = false, unique = true)
     private String id;
 
     private String loginId;
@@ -57,12 +57,10 @@ public class Member implements Serializable {
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<Reply>replyes = new ArrayList<>();
 
+
     // 사용자가 작성한 게시물과 연관관계 설정
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
-
-
-
 
 }
