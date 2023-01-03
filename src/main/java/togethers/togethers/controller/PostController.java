@@ -6,9 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import togethers.togethers.entity.Member;
 import togethers.togethers.entity.Post;
 import togethers.togethers.form.Postform;
 import togethers.togethers.service.MemberService;
+import togethers.togethers.test.Album;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -45,5 +47,19 @@ public class PostController {
     public String detailPost()
     {
         return "post/detailPost";
+    }
+
+    @GetMapping("/test")
+    public void test_save()
+    {
+
+
+
+    }
+
+    public void comp(Member m1, Member m2){
+
+        System.out.println(m1 instanceof Member);
+        System.out.println(m2 instanceof Member);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.entity.Member;
 import togethers.togethers.entity.Post;
 import togethers.togethers.memberRepository.MemberRepository;
+import togethers.togethers.test.Album;
 
 
 @Service
@@ -26,6 +27,14 @@ public class MemberService {
         memberRepository.post_save(post);
         return post.getPost_id();
     }
+
+    @Transactional
+    public void test(Object ob)
+    {
+        memberRepository.test_save(ob);
+    }
+
+
 
 
 }

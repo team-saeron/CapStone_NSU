@@ -16,8 +16,7 @@ public class MemberDetail {
 
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id",nullable = false)
+    @OneToOne(mappedBy = "memberDetail")
     private Member member;
 
 

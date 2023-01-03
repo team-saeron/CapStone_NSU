@@ -29,7 +29,18 @@ public class MemberRepository {
     public void post_save(Post post)
     {
         em.persist(post);
+
     }
+
+
+    public void test_save(Object ob)
+    {
+       Member m1 = em.find(Member.class,member1.getId());
+       Member m2 = em.getReference(Member.class,member1.getId());
+
+    }
+
+
 
 
 }

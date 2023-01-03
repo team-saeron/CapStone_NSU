@@ -8,7 +8,7 @@ spring:
    cache: false
  datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/together?serverTimezone=Asia/Seoul
+  url: jdbc:mysql://127.0.0.1:3306/temp?serverTimezone=Asia/Seoul
   username: root
   password: 1234
  jpa:
