@@ -1,6 +1,7 @@
-package togethers.togethers.domain;
+package togethers.togethers.entity;
 
 import lombok.Data;
+import togethers.togethers.form.Postform;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,31 +20,66 @@ public class Post {
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     private Member member;
 
-    @Column(nullable = false)
+
     private String title;
 
-    @Column(nullable = false)
-    @Lob
+
+
+    @Column(columnDefinition = "TEXT")
     private String context;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
     private Date publishDate;
+
+
+    private String monthly;
+
+
+    private String lease;
+
+
+    private int get_type;
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like>likes = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    private Room room;
+
+    @OneToOne
+    @JoinColumn(name = "roomType_id")
+    private RoomType roomType;
+
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private Category area;
 
+
+
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Reply>replies = new ArrayList<>();
+
+    //postForm을 받아와 Post생성자를 통해 DB에 저장할 Post 생성
+
+    public Post(){};
+    public Post(Postform postform)
+    {
+        this.title = postform.getTitle();
+        if(postform.isGetType()==true)
+        {
+            this.get_type = 0;
+        }
+        else {
+            this.get_type = 1;
+        }
+
+        this.monthly = postform.getMouthly();
+        this.lease = postform.getLease();
+        this.context = postform.getText();
+        this.publishDate = new Date();
+
+    }
 
 
 }

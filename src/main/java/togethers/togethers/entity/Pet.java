@@ -1,4 +1,4 @@
-package togethers.togethers.domain;
+package togethers.togethers.entity;
 
 import lombok.Data;
 
@@ -6,13 +6,12 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Sex {
+public class Pet {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true)
-    private Long sex_id;
+    private Long pet_id;
 
-    private int sex_value;
-
-    private String member_id;
+    private int pet_value;
 }
