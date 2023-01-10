@@ -5,6 +5,7 @@
     <link rel="stylesheet"  th:href="@{/css/bootstrap.css}" type="text/css"/>
     <link rel="stylesheet"  th:href="@{/member/join.css}" type="text/css"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" th:src="@{/js/join.js}"></script>
     <title>Together | 회원가입</title>
 </head>
 <body>
@@ -12,28 +13,28 @@
 <th:block layout:fragment="content">
         <div class="join__logo">
             <h1 id="join__logo">
-                <a id="join_logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together  </a>
+                <a id="join_logo" href="/"><img src="../image/logo2.jpg" width="175" height ="100" >  </a>
                 <span> 회원가입</span>
             </h1>
         </div>
     <div class="container">
-        <form class="join_column" th:action="@{/members/new}" th:object="${memberForm}" th:method="POST">
+        <form class="join_column" th:action="@{/auth/joinProc}" th:method="POST">
             <h5>이름</h5>
             <div class="join__column" id="join_name">
             <div class="input-group mb-3">
-                <input type="text" name="name" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2">
             </div>
             </div>
             <h5>닉네임</h5>
             <div class="join__column" id="join_nickname">
                 <div class="input-group mb-3">
-                    <input type="text"  name="nickname" class="form-control" placeholder="닉네임" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <input type="text" class="form-control" placeholder="닉네임" aria-label="Recipient's username" aria-describedby="button-addon2">
                 </div>
             </div>
             <h5>아이디</h5>
             <div class="join__column" id="join_id">
             <div class="input-group mb-3">
-                <input type="text"  name="id" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
                 </div>
@@ -42,17 +43,19 @@
         </div>
             <h5>비밀번호</h5>
         <div class="join__column" id="join_passward">
-            <input type="text" name="password" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2">
-            <input type="text" name="checkPassword" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2">
+            <input type="password" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2">
+            <i class="fas fa-eye"></i>
+            <input type="password" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2">
+            <i class="fas fa-eye" id="show-password"></i>
         </div>
         <div class="join__column" id="join_birth">
             <h5>생년월일</h5>
-            <input type="date" name="birth"/>
+            <input type="date" name="생년월일"/>
         </div>
         <div class="join__column" id="join_tel">
             <h5>전화번호</h5>
             <div class="input-group mb-3">
-                <input type="tel"  name="phoneNum" class="form-control" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="tel" class="form-control" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button type="button" class="btn btn-outline-secondary">본인인증</button>
                 </div>
@@ -60,7 +63,7 @@
         </div>
             <h5>이메일</h5>
         <div class="join__column" id="join_email">
-            <input  type="text" name="email" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="button-addon2">@
+            <input type="text" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="button-addon2">@
             <div class="input-group">
                 <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <option value="">-선택-</option>
@@ -74,7 +77,7 @@
                 </select>
             </div>
         </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">가입하기</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block">가입하기</button>
             <div class="join__column">
                 <span>------------------------------------------- or --------------------------------------------</span>
             </div>
@@ -85,9 +88,15 @@
                     <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i> 트위터 계정으로 가입하기</a></li>
                 </ul>
             </div>
+
+		</script>
         </form>
     </div>
     </div>
+
+    <script type="text/javascript" th:src="@{/js/join.js}"></script>
 </th:block>
+
 </body>
+
 </html>
