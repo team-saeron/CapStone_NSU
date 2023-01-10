@@ -1,6 +1,10 @@
 package togethers.togethers.entity;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import togethers.togethers.form.MemberForm;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -8,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "member")
@@ -44,6 +49,9 @@ public class Member {
     @Column(nullable = false)
     private int age;
 
+    @Enumerated
+    private Role role;
+
     // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
 
 
@@ -74,5 +82,29 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
+
+//    @Builder
+//    public Member(String name, String email, String password, String id, String phoneNum, String nickname, Role role, int age ){
+//        this.name = name;
+//        this.email = email;
+//        this.password = password;
+//        this.id = id;
+//        this.role = role;
+//        this.age = age;
+//        this.phoneNum = phoneNum;
+//        this.nickname = nickname;
+//    }
+//
+//    public static Member createMember(MemberForm form, PasswordEncoder passwordEncoder){
+//        Member member = Member.builder()
+//                .name(form.getName())
+//                .email(form.getEmail())
+//                .password(passwordEncoder.encode(form.getPassword()))
+//                .id(form.getId())
+//                .phoneNum(form.getPhoneNum())
+//                .nickname(form.getNickname())
+//                .build();
+//        return member;
+//    }
 
 }

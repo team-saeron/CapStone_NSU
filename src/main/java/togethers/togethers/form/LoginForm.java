@@ -1,16 +1,16 @@
 package togethers.togethers.form;
 
+import lombok.Builder;
 import lombok.Data;
-
+import togethers.togethers.entity.Role;
 
 import javax.validation.constraints.NotEmpty;
 
 @Data
 public class LoginForm {
-    @NotEmpty
-    private String loginId;
 
-    @NotEmpty
-    private String loginPw;
+   private String loginId;
+   private String pw;
+
 
 }

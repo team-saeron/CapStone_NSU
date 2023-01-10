@@ -1,6 +1,7 @@
 package togethers.togethers.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +16,19 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class JoinController {
     private final MemberService memberService;
+    //private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("/members/new")
+    @GetMapping("/join")
     public String createForm(Model model){
         model.addAttribute("memberForm",new MemberForm());
         return "join";
     }
 
 
-    @PostMapping("/members/new")
+    @PostMapping("/join")
     public String create(@Valid MemberForm form){
+
+        //String password = passwordEncoder.encode(form.getPassword());
         Member member = new Member();
         member.setName(form.getName());
         member.setEmail(form.getEmail());
@@ -36,6 +40,19 @@ public class JoinController {
 
         memberService.join(member);
         return "redirect:/";
+
+//        if(bindingResult.hasErrors()){
+//            return "/join";
+//        }
+//
+//        try{
+//            Member member = Member.createMember(form, passwordEncoder);
+//            memberService.save(member);
+//        }catch(IllegalStateException e){
+//            model.addAttribute("errorMessage", e.getMessage());
+//            return "/join";
+//        }
+//        return "redirect:/";
 
 
     }

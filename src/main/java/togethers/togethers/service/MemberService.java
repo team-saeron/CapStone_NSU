@@ -9,22 +9,25 @@ import togethers.togethers.memberRepository.MemberRepository;
 
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
     public String join(Member member){
+
         memberRepository.save(member);
         return member.getId();
     }
 
-    public Member login(String loginId, String password){
-        return memberRepository.findByLoginId(loginId)
-                .filter(m->m.getPassword().equals(password))
-                .orElse(null);
-    }
+
+
+//    public Member login(String loginId, String password){
+//        return memberRepository.findByLoginId(loginId)
+//                .filter(m->m.getPassword().equals(password))
+//                .orElse(null);
+//    }
 
     @Transactional
     public Long post_write(Post post)

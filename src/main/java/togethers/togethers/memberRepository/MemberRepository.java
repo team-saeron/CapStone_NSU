@@ -22,7 +22,7 @@ public class MemberRepository {
         em.persist(member);
     }
 
-    public Member findId(String id){
+    public Member findById(String id){
         return store.get(id);
     }
 
