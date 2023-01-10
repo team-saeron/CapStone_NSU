@@ -5,6 +5,7 @@
     <link rel="stylesheet"  th:href="@{/css/bootstrap.css}" type="text/css"/>
     <link rel="stylesheet"  th:href="@{/member/join.css}" type="text/css"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" th:src="@{/js/join.js}"></script>
     <title>Together | 회원가입</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
 <th:block layout:fragment="content">
         <div class="join__logo">
             <h1 id="join__logo">
-                <a id="join_logo" href="/"><i class="fa-solid fa-house fa-lg"></i>Together  </a>
+                <a id="join_logo" href="/"><img src="../image/logo2.jpg" width="175" height ="100" >  </a>
                 <span> 회원가입</span>
             </h1>
         </div>
@@ -42,8 +43,10 @@
         </div>
             <h5>비밀번호</h5>
         <div class="join__column" id="join_passward">
-            <input type="text" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2">
-            <input type="text" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2">
+            <input type="password" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2">
+            <i class="fas fa-eye"></i>
+            <input type="password" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2">
+            <i class="fas fa-eye" id="show-password"></i>
         </div>
         <div class="join__column" id="join_birth">
             <h5>생년월일</h5>
@@ -85,9 +88,15 @@
                     <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i> 트위터 계정으로 가입하기</a></li>
                 </ul>
             </div>
+
+		</script>
         </form>
     </div>
     </div>
+
+    <script type="text/javascript" th:src="@{/js/join.js}"></script>
 </th:block>
+
 </body>
+
 </html>
