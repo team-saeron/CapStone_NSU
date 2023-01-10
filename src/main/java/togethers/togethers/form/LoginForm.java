@@ -1,7 +1,7 @@
-package togethers.togethers.controller;
+package togethers.togethers.form;
 
 import lombok.Data;
-import togethers.togethers.domain.Member;
+
 
 import javax.validation.constraints.NotEmpty;
 
@@ -11,6 +11,6 @@ public class LoginForm {
     private String loginId;
 
     @NotEmpty
-    private String password;
+    private String loginPw;
 
 }

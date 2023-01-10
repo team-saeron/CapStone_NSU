@@ -20,6 +20,12 @@ public class MemberService {
         return member.getId();
     }
 
+    public Member login(String loginId, String password){
+        return memberRepository.findByLoginId(loginId)
+                .filter(m->m.getPassword().equals(password))
+                .orElse(null);
+    }
+
     @Transactional
     public Long post_write(Post post)
     {

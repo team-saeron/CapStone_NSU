@@ -19,7 +19,6 @@ public class Member {
     @Column(name="member_id", length = 50 ,nullable = false, unique = true)
     private String id;
 
-    private String loginId;
 
     @Column(name="member_pw", length = 30,nullable = false)
     @NotEmpty(message="비밀번호를 입력해주세요.")
