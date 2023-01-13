@@ -1,26 +1,34 @@
 package togethers.togethers.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import togethers.togethers.form.MemberForm;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import togethers.togethers.data.dto.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
 @Table(name = "member")
 //회원 정보
-public class Member {
+public class Member implements UserDetails {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="member_id", length = 50 ,nullable = false, unique = true)
     private String id;
 
@@ -46,33 +54,31 @@ public class Member {
     @Column(length = 30,nullable = false)
     private String nickname;
 
-    @Column(nullable = false)
-    private int age;
-
-    @Enumerated
-    private Role role;
-
-    // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
+//    @Column(nullable = false)
+//    private int age;
 
 
-
-
-
-
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
-    private List<Like>likes = new ArrayList<>();
-
-
-
-
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private MemberDetail memberDetail;
-
-
-
-    // 사용자가 댓글을 달은 DB와 연관관계 설정
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
-    private List<Reply>replyes = new ArrayList<>();
+//    // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
+//
+//
+//
+//
+//
+//
+//    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+//    private List<Like>likes = new ArrayList<>();
+//
+//
+//
+//
+//    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+//    private MemberDetail memberDetail;
+//
+//
+//
+//    // 사용자가 댓글을 달은 DB와 연관관계 설정
+//    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+//    private List<Reply>replyes = new ArrayList<>();
 
 
 
@@ -83,28 +89,42 @@ public class Member {
     @JoinColumn(name = "post_id")
     private Post post;
 
-//    @Builder
-//    public Member(String name, String email, String password, String id, String phoneNum, String nickname, Role role, int age ){
-//        this.name = name;
-//        this.email = email;
-//        this.password = password;
-//        this.id = id;
-//        this.role = role;
-//        this.age = age;
-//        this.phoneNum = phoneNum;
-//        this.nickname = nickname;
-//    }
-//
-//    public static Member createMember(MemberForm form, PasswordEncoder passwordEncoder){
-//        Member member = Member.builder()
-//                .name(form.getName())
-//                .email(form.getEmail())
-//                .password(passwordEncoder.encode(form.getPassword()))
-//                .id(form.getId())
-//                .phoneNum(form.getPhoneNum())
-//                .nickname(form.getNickname())
-//                .build();
-//        return member;
-//    }
+    @ElementCollection(fetch=FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    @JsonProperty(access=Access.WRITE_ONLY)
+    @Override
+    public String getUsername(){
+        return this.id;
+    }
+
+    @JsonProperty(access=Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonExpried(){
+        return true;
+    }
+
+    @JsonProperty(access=Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonLocked(){
+        return true;
+    }
+    @JsonProperty(access=Access.WRITE_ONLY)
+    @Override
+    public boolean isCredentialsNonExpried(){
+        return true;
+    }
+
+    @JsonProperty(access=Access.WRITE_ONLY)
+    @Override
+    public boolean isEnabled(){
+        return true;
+    }
 
 }

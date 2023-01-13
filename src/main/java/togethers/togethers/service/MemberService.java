@@ -14,20 +14,17 @@ import togethers.togethers.memberRepository.MemberRepository;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    @Transactional
-    public String join(Member member){
-
+    public void saveMember(Member member){
+        validateDuplicateMember(member);
         memberRepository.save(member);
-        return member.getId();
     }
 
-
-
-//    public Member login(String loginId, String password){
-//        return memberRepository.findByLoginId(loginId)
-//                .filter(m->m.getPassword().equals(password))
-//                .orElse(null);
-//    }
+     private void validateDuplicateMember(Member member){
+        Member findMember = memberRepository.findById(member.getId());
+        if(findMember != null){
+            throw new IllegalStateException("이미 가입된 회원입니다.");
+        }
+     }
 
     @Transactional
     public Long post_write(Post post)

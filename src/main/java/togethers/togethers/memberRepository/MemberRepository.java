@@ -1,6 +1,7 @@
 package togethers.togethers.memberRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import togethers.togethers.entity.Member;
 import togethers.togethers.entity.Post;
@@ -10,40 +11,9 @@ import java.util.*;
 
 
 @Repository
-@RequiredArgsConstructor
-public class MemberRepository {
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    Member getById(String id);
 
-    private final EntityManager em;
-
-    private static Map<String, Member> store = new HashMap<>();
-    private static long sequence =0L;
-
-    public void save(Member member){
-        em.persist(member);
-    }
-
-    public Member findById(String id){
-        return store.get(id);
-    }
-
-    public Optional<Member> findByLoginId(String loginId){
-        return findAll().stream()
-                .filter(m->m.getId().equals(loginId)).findFirst();
-
-    }
-
-    public List<Member> findAll(){
-        return new ArrayList<>(store.values());
-    }
-
-    public void clearStore(){
-        store.clear();
-    }
-
-    public void post_save(Post post)
-    {
-        em.persist(post);
-    }
 
 
 
