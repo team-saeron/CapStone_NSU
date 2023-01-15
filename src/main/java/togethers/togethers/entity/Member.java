@@ -22,26 +22,28 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @AllArgsConstructor
-@Table(name = "member")
+@Table
 //회원 정보
 public class Member implements UserDetails {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="member_id", length = 50 ,nullable = false, unique = true)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable=false, unique=true)
+    private String uid;
 
 
-    @Column(name="member_pw", length = 30,nullable = false)
+    @Column(length = 30,nullable = false)
     @NotEmpty(message="비밀번호를 입력해주세요.")
     private String password;
 
-    @Column(name="member_name", length = 30, nullable = false)
+    @Column(length = 30, nullable = false)
     @NotEmpty(message = "이름을 입력해주세요.")
     private String name;
 
-    @Column(name="phone_num", length = 20, nullable = false)
+    @Column(length = 20, nullable = false)
     private String phoneNum;
 
     @Column(length = 30,nullable = false)
@@ -98,30 +100,30 @@ public class Member implements UserDetails {
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    @JsonProperty(access=Access.WRITE_ONLY)
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername(){
-        return this.id;
+        return this.uid;
     }
 
-    @JsonProperty(access=Access.WRITE_ONLY)
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
-    public boolean isAccountNonExpried(){
+    public boolean isAccountNonExpired(){
         return true;
     }
 
-    @JsonProperty(access=Access.WRITE_ONLY)
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isAccountNonLocked(){
         return true;
     }
-    @JsonProperty(access=Access.WRITE_ONLY)
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
-    public boolean isCredentialsNonExpried(){
+    public boolean isCredentialsNonExpired(){
         return true;
     }
 
-    @JsonProperty(access=Access.WRITE_ONLY)
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isEnabled(){
         return true;

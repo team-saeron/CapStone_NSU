@@ -1,5 +1,6 @@
 package togethers.togethers.controller.member;
 
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class SignController {
             @ApiParam(value="닉네임", required = true) @RequestParam String nickname,
             @ApiParam(value="이메일", required = true) @RequestParam String email,
             @ApiParam(value="생일", required = true) @RequestParam Date birth,
-            @ApiParam(value="전화번호", required = true) @RequestParam String phoneNum,
+            @ApiParam(value="전화번호", required = true) @RequestParam String phoneNum
 
 
     ){

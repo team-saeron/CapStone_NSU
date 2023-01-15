@@ -12,7 +12,7 @@ import java.util.*;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Member getById(String id);
+    Member getByUid(String id);
 
 
 
