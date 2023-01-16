@@ -1,10 +1,7 @@
 package togethers.togethers.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import togethers.togethers.data.dto.UserDetails;
@@ -19,12 +16,13 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @Table
 //회원 정보
-public class Member implements UserDetails {
+public class User implements UserDetails {
 
 
     @Id
@@ -37,6 +35,7 @@ public class Member implements UserDetails {
 
     @Column(length = 30,nullable = false)
     @NotEmpty(message="비밀번호를 입력해주세요.")
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(length = 30, nullable = false)
@@ -55,41 +54,6 @@ public class Member implements UserDetails {
 
     @Column(length = 30,nullable = false)
     private String nickname;
-
-//    @Column(nullable = false)
-//    private int age;
-
-
-//    // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
-//
-//
-//
-//
-//
-//
-//    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
-//    private List<Like>likes = new ArrayList<>();
-//
-//
-//
-//
-//    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-//    private MemberDetail memberDetail;
-//
-//
-//
-//    // 사용자가 댓글을 달은 DB와 연관관계 설정
-//    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
-//    private List<Reply>replyes = new ArrayList<>();
-
-
-
-
-
-    // 사용자가 작성한 게시물과 연관관계 설정
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
-    private Post post;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default

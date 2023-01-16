@@ -54,7 +54,7 @@ public class SignController {
 
 
     ){
-        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}",id, name, role);
+        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, nickname : {}, email : {}, birth : {}, phoneNum : {}",id, name, role, password, nickname, email, birth, phoneNum);
         SignUpResultDto signUpResultDto = signService.signUp(id, password, name, nickname, email, birth, phoneNum, role);
 
         LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", id);

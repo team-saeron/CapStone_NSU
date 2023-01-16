@@ -1,6 +1,9 @@
 server:
  port: 1000
 spring:
+ mvc:
+  pathmatch:
+   matching-strategy: ant_path_matcher
  jwt:
   secret: flature!@#
  devtools:
