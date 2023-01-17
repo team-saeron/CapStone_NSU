@@ -17,13 +17,12 @@ public class Reply {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Lob //@Lob이란 String을 넘어서는 큰 데이터를 나타내는것 MySQL의 text type이라고 보면됩니다
-    @Column(nullable = false)
+
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date comment_publishedDate;
+    private Date publishedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="post_id")

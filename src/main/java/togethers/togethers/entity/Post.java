@@ -1,7 +1,7 @@
 package togethers.togethers.entity;
 
 import lombok.Data;
-import togethers.togethers.form.Postform;
+import togethers.togethers.service.form.Postform;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Post {
     @Column(nullable = false,unique = true)
     private Long post_id;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
     private Member member;
 
 
@@ -32,7 +32,7 @@ public class Post {
     private Date publishDate;
 
 
-    private String monthly;
+    private String mouthly;
 
 
     private String lease;
@@ -54,6 +54,9 @@ public class Post {
     @JoinColumn(name = "area_id")
     private Category area;
 
+    @OneToMany(mappedBy = "post")
+    private List<RoomPicture>images = new ArrayList<>();
+
 
 
 
@@ -74,11 +77,19 @@ public class Post {
             this.get_type = 1;
         }
 
-        this.monthly = postform.getMouthly();
+        this.mouthly = postform.getMouthly();
         this.lease = postform.getLease();
         this.context = postform.getText();
         this.publishDate = new Date();
+    }
 
+    public Post(Long post_id, String title, String context, Date publishDate, String mouthly, String lease) {
+        this.post_id = post_id;
+        this.title = title;
+        this.context = context;
+        this.publishDate = publishDate;
+        this.mouthly = mouthly;
+        this.lease = lease;
     }
 
 

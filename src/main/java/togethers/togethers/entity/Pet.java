@@ -13,5 +13,5 @@ public class Pet {
     @Column(nullable = false,unique = true)
     private Long pet_id;
 
-    private int pet_value;
+    private Integer pet_value;
 }

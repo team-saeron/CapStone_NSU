@@ -13,5 +13,5 @@ public class LifeCycle {
     @Column(nullable = false, unique = true)
     private Long lifeCycle_id;
 
-    private int lifeCycle_value;
+    private Integer lifeCycle_value;
 }

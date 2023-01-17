@@ -16,8 +16,7 @@ public class MemberDetail {
 
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id",nullable = false)
+    @OneToOne(mappedBy = "memberDetail")
     private Member member;
 
 
@@ -59,7 +58,7 @@ public class MemberDetail {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "sex_id")
-    private Sex sex;
+    private Gender sex;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id")
