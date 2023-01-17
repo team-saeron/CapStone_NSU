@@ -1,5 +1,6 @@
 package togethers.togethers.config;
 
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import io.swagger.models.HttpMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf().disable()
+        http.httpBasic().disable().csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS

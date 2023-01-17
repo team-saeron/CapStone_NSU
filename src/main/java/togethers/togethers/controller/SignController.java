@@ -1,6 +1,7 @@
-package togethers.togethers.controller.member;
+package togethers.togethers.controller;
 
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,16 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/sign-api")
+@RequiredArgsConstructor
+
 public class SignController {
     private final Logger LOGGER = LoggerFactory.getLogger(SignController.class);
     private final SignService signService;
 
-    @Autowired
-    public SignController(SignService signService) {
-        this.signService = signService;
-    }
+//    @Autowired
+//    public SignController(SignService signService) {
+//        this.signService = signService;
+//    }
 
     @PostMapping(value = "/sign-in")
     public SignInResultDto signIn(
@@ -49,13 +52,13 @@ public class SignController {
             @ApiParam(value="권한", required = true) @RequestParam String role,
             @ApiParam(value="닉네임", required = true) @RequestParam String nickname,
             @ApiParam(value="이메일", required = true) @RequestParam String email,
-            @ApiParam(value="생일", required = true) @RequestParam Date birth,
+//            @ApiParam(value="생일", required = true) @RequestParam Date birth,
             @ApiParam(value="전화번호", required = true) @RequestParam String phoneNum
 
 
     ){
-        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, nickname : {}, email : {}, birth : {}, phoneNum : {}",id, name, role, password, nickname, email, birth, phoneNum);
-        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, nickname, email, birth, phoneNum, role);
+        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",id, name, role, email, password, nickname, phoneNum);
+        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, nickname, email, phoneNum, role);
 
         LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", id);
         return signUpResultDto;
@@ -67,7 +70,7 @@ public class SignController {
     }
 
     @ExceptionHandler(value=RuntimeException.class)
-    public ResponseEntity<Map<String, String>> ExceptionHandler(RuntimeException e){
+    public ResponseEntity<Map<String, String>>  handle(RuntimeException e){
         HttpHeaders responseHeaders = new HttpHeaders();
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
