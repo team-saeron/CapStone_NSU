@@ -8,40 +8,33 @@
     <script type="text/javascript" th:src="@{/js/join.js}"></script>
     <title>Together | 회원가입</title>
 </head>
-<header>
-    <div class="join__logo">
-    <h1 id="join__logo">
-        <a id="join_logo" href="/"><img src="../image/logo2.jpg" width="175" height ="100" >  </a>
-    </h1>
-</div>
-</header>
 <body>
 
 <th:block layout:fragment="content">
-
-    <div class="container">
-
-        <div class="join__tit">
-            <h1 class="join_title"><span> 회원가입</span></h1>
+        <div class="join__logo">
+            <h1 id="join__logo">
+                <a id="join_logo" href="/"><img src="../image/logo2.jpg" width="175" height ="100" >  </a>
+                <span> 회원가입</span>
+            </h1>
         </div>
-        </h1>
-        <form class="join_column" th:action="@{/auth/joinProc}" th:method="POST">
+    <div class="container">
+        <form class="join_column" th:action="@{/members/new}" th:object="${memberForm}" th:method="POST">
             <h5>이름</h5>
             <div class="join__column" id="join_name">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <input type="text" name="name" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2">
             </div>
             </div>
             <h5>닉네임</h5>
             <div class="join__column" id="join_nickname">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="닉네임" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <input type="text"  name="nickname" class="form-control" placeholder="닉네임" aria-label="Recipient's username" aria-describedby="button-addon2">
                 </div>
             </div>
             <h5>아이디</h5>
             <div class="join__column" id="join_id">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <input type="text"  name="id" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
                 </div>
@@ -50,19 +43,24 @@
         </div>
             <h5>비밀번호</h5>
         <div class="join__column" id="join_passward">
-            <input type="password" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2" required>
+<<<<<<<<< Temporary merge branch 1
+            <input type="text" name="password" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2">
+            <input type="text" name="checkPassword" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2">
+=========
+            <input type="password" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2">
             <i class="fas fa-eye"></i>
-            <input type="password" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2" required>
+            <input type="password" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2">
             <i class="fas fa-eye" id="show-password"></i>
+>>>>>>>>> Temporary merge branch 2
         </div>
         <div class="join__column" id="join_birth">
             <h5>생년월일</h5>
-            <input type="date" name="생년월일" required/>
+            <input type="date" name="birth"/>
         </div>
         <div class="join__column" id="join_tel">
             <h5>전화번호</h5>
             <div class="input-group mb-3">
-                <input type="tel" class="form-control" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <input type="tel"  name="phoneNum" class="form-control" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button type="button" class="btn btn-outline-secondary">본인인증</button>
                 </div>
@@ -70,7 +68,7 @@
         </div>
             <h5>이메일</h5>
         <div class="join__column" id="join_email">
-            <input type="text" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="button-addon2" required>
+            <input  type="text" name="email" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="button-addon2">@
             <div class="input-group">
                 <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <option value="">-선택-</option>
@@ -84,17 +82,15 @@
                 </select>
             </div>
         </div>
-            <div class="join__submit">
             <button type="submit" class="btn btn-primary btn-lg btn-block">가입하기</button>
-            </div>
-                <div class="join__column">
-                <span>--------------------------------------- or ---------------------------------------</span>
+            <div class="join__column">
+                <span>------------------------------------------- or --------------------------------------------</span>
             </div>
             <div class="join_sns">
                 <ul class="list-group">
-                    <li class="list-group-item"><a class="login_sns_icon"  href=""><i class="fa-brands fa-google" ></i> 구글 계정으로 가입하기</a></li>
-                    <li class="list-group-item"><a class="login_sns_icon"  href=""><i class="fab fa-facebook-f"></i> 페이스북 계정으로 가입하기</a></li>
-                    <li class="list-group-item"><a class="login_sns_icon"  href=""><i class="fab fa-twitter"></i> 트위터 계정으로 가입하기</a></li>
+                    <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fa-brands fa-google"></i> 구글 계정으로 가입하기</a></li>
+                    <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fab fa-facebook-f"></i> 페이스북 계정으로 가입하기</a></li>
+                    <li class="list-group-item"><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i> 트위터 계정으로 가입하기</a></li>
                 </ul>
             </div>
 
@@ -102,8 +98,10 @@
         </form>
     </div>
     </div>
+<<<<<<<<< Temporary merge branch 1
+=========
 
-
+>>>>>>>>> Temporary merge branch 2
     <script type="text/javascript" th:src="@{/js/join.js}"></script>
 </th:block>
 
