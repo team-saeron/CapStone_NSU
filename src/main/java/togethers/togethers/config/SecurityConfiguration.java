@@ -1,6 +1,7 @@
 package togethers.togethers.config;
 
 import io.swagger.models.HttpMethod;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,17 +17,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+@RequiredArgsConstructor
+@EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
-    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider){
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+//    @Autowired
+//    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider){
+//        this.jwtTokenProvider = jwtTokenProvider;
+//    }
 
     @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(
@@ -50,6 +52,7 @@ public class SecurityConfiguration {
     }
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) ->web.ignoring().antMatchers("/css/**","/js/**","/img/**","script/**");
+        return (web) ->web.ignoring().antMatchers("/css/**","/js/**","/img/**","script/**","/swagger-resources/**",
+                "/swagger-ui.html", "/webjars/**", "/swagger/**","/v2/api-docs");
     }
 }

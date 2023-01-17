@@ -1,13 +1,15 @@
 package togethers.togethers.config;
 
+import groovy.util.logging.Slf4j;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,26 +19,33 @@ import togethers.togethers.service.UserDetailsService;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-
     private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsService userDetailsService;
+
     @Value("${spring.jwt.secret}")
     private String secretKey = "secretKey";
     private final long tokenValidMillisecond = 1000L *60*60;
+//    private final Key key;
 
     @PostConstruct
     protected void init(){
         LOGGER.info("[init] JwtTokenProvider 내 secretKey 초기화 시작");
+//        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+//        key = Keys.hmacShaKeyFor(keyBytes);
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
+
 
         LOGGER.info("[init] JwtTokenProvider 내  secretKey 초기화 완료");
 
@@ -52,7 +61,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime()+tokenValidMillisecond))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.ES256, secretKey)
                 .compact();
 
         LOGGER.info("[createToken] 토큰 생성 완료");
@@ -68,7 +77,7 @@ public class JwtTokenProvider {
 
     public String getUsername(String token){
         LOGGER.info("[getUsername] 토큰 기반 회원 구별 정보 추출");
-        String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        String info = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
         LOGGER.info("[getUsername] 토큰 기반 회언 구별 정보 추출 완료, info : {}", info);
         return info;
     }
@@ -81,7 +90,7 @@ public class JwtTokenProvider {
     public boolean validateToken(String token){
         LOGGER.info("[validateToken] 토큰 유효 체크 시작");
         try{
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
 
             return !claims.getBody().getExpiration().before(new Date());
         }catch(Exception e){
