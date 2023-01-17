@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import togethers.togethers.entity.Member;
 import togethers.togethers.entity.MemberDetail;
 import togethers.togethers.entity.Reply;
 import togethers.togethers.form.MemberDetailForm;

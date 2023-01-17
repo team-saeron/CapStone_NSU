@@ -9,8 +9,7 @@ public class MemberDetailForm {
     int mbti;
     String selfIntro;
     String wish_roommate;
-    Member member;
-
+    User user;
     String mouthly_fee;
     String lease_fee;
     int area_id;
