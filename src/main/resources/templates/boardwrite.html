@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/write.css" />
+</th:block>
+<th:block layout:fragment="content">
+    <style>
+
+        .layout{
+        width : 500px;
+        margin : 0 auto;
+        margin-top: 40px;
+        }
+
+        .layout input{
+        width: 100%;
+        box-sizing: border-box;
+        }
+        .layout textarea{
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+        }
+</style>
+    <body>
+
+    <div class="layout">
+        <form action="/board/writepro" method="post" enctype="multipart/form-data">
+            <input name="title" type="text">
+            <textarea name="content"></textarea>
+            <input type="file" name="file">
+            <button type="submit">작성</button>
+        </form>
+    </div>
+
+
+    </body>
+
+</th:block>
+</body>
+</html>

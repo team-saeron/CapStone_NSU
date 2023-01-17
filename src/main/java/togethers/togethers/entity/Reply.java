@@ -1,5 +1,6 @@
 package togethers.togethers.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,25 +11,21 @@ import java.util.Date;
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private Long reply_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "id")
+    private User user;
 
 
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date comment_publishedDate;
+    private Date publishedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="post_id")
     private Post post;
-
-
 }

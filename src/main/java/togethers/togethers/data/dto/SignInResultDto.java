@@ -6,6 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode(callSuper=false)
 public class SignInResultDto extends SignUpResultDto{
 
     private String token;
