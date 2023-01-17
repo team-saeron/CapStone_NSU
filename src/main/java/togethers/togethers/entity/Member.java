@@ -66,12 +66,16 @@ public class Member {
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<Reply>replyes = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Gender gender;
+
 
 
 
 
     // 사용자가 작성한 게시물과 연관관계 설정
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "post_id")
     private Post post;
 

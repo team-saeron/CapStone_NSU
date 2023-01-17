@@ -57,12 +57,12 @@
           <caption><strong>방 정보</strong></caption>
           <tr>
             <td>보증금</td>
-            <td>1000만원</td>
+            <td th:text="${post.lease}">1000만원</td>
           </tr>
 
           <tr>
             <td>월세</td>
-            <td>30만원</td>
+            <td th:text="${post.mouthly}"></td>
           </tr>
 
           <tr>
@@ -78,16 +78,16 @@
         <table class="ex_table">
           <caption><strong>작성자 정보</strong></caption>
           <tr>
-            <td>성별</td>
-            <td>남자</td>
-          </tr>
-          <tr>
-            <td>성격</td>
-            <td>활발함</td>
+            <td>닉네임</td>
+            <td th:text="${member.nickname}"></td>
           </tr>
           <tr>
             <td>나이</td>
-            <td>20세</td>
+            <td th:text="${member.age}"></td>
+          </tr>
+          <tr>
+            <td>이름</td>
+            <td th:text="${member.name}"></td>
           </tr>
         </table>
       </div>
@@ -99,7 +99,7 @@
 
       <!-- 내가 적는 댓글 칸-->
       <div class="my_comment">
-        <form action="post">
+        <form th:action="@{/detailPost}" th:form="${ReplyForm}" th:method="POST">
           <fieldset>
             <div class="my_inner_commnet">
 
@@ -108,8 +108,7 @@
                 마몽
               </div>
               <div class="my_text">
-                    <textarea rows="3" cols="30" placeholder="댓글을 작성하세요"
-                              class="my_textarea"></textarea>
+                <textarea rows="3" cols="30" class="my_textarea" th:field="*{comment}" ></textarea>
               </div>
               <div class="text_submit">
                 <button type="submit">등록</button>

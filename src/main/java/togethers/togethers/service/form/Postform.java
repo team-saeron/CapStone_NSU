@@ -1,4 +1,4 @@
-package togethers.togethers.form;
+package togethers.togethers.service.form;
 import lombok.Data;
 import java.sql.Date;
 
