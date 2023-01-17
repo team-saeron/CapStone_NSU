@@ -2,7 +2,10 @@ package togethers.togethers.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @Entity
@@ -10,7 +13,6 @@ public class LifeCycle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
     private Long lifeCycle_id;
 
     private Integer lifeCycle_value;

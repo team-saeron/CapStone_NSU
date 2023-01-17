@@ -1,6 +1,11 @@
 server:
- port: 8081
+ port: 1000
 spring:
+ mvc:
+  pathmatch:
+   matching-strategy: ant_path_matcher
+ jwt:
+  secret: flature!@#
  devtools:
   livereload:
    enabled: true
@@ -8,9 +13,9 @@ spring:
    cache: false
  datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/temp?serverTimezone=Asia/Seoul
+  url: jdbc:mysql://localhost:8081/together?serverTimezone=Asia/Seoul
   username: root
-  password: 1234
+  password: hyeon4643!!@
  jpa:
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   open-in-view: false
@@ -18,7 +23,6 @@ spring:
   hibernate:
    format_sql: true
    ddl-auto: update
-
 logging:
  level:
   org:

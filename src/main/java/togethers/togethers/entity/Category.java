@@ -1,6 +1,8 @@
 package togethers.togethers.entity;
 
 
+
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,9 +11,7 @@ import javax.persistence.*;
 @Data
 public class Category {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = true,unique = true)
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long area_id;
 
     @Column(length = 50, nullable = false)

@@ -10,12 +10,12 @@ import java.util.Date;
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private Long reply_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private User user;
 
 
     @Column(columnDefinition = "TEXT")
@@ -27,6 +27,4 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="post_id")
     private Post post;
-
-
 }
