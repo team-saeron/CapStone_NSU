@@ -16,5 +16,5 @@ public class Gender {
     private Integer gender_value;
 
 
-    private String member_id;
+    private String user_id;
 }

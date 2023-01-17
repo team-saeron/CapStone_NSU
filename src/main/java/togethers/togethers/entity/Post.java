@@ -18,7 +18,7 @@ public class Post {
     private Long post_id;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
-    private Member member;
+    private User user;
 
 
     private String title;

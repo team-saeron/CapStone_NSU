@@ -7,17 +7,17 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class MemberDetail {
+public class UserDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true)
-    private Long memberdetail_id;
+    private Long userDetail_id;
 
 
 
-    @OneToOne(mappedBy = "memberDetail")
-    private Member member;
+    @OneToOne(mappedBy = "userDetail")
+    private User user;
 
 
 

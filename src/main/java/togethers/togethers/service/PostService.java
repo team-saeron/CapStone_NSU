@@ -1,14 +1,15 @@
 package togethers.togethers.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import togethers.togethers.entity.Member;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.RoomPicture;
-import togethers.togethers.memberRepository.MemberRepository;
-import togethers.togethers.memberRepository.PostRepository;
-import togethers.togethers.memberRepository.RoompictureRepository;
+import togethers.togethers.entity.User;
+import togethers.togethers.repository.PostRepository;
+import togethers.togethers.repository.RoompictureRepository;
+import togethers.togethers.repository.UserRepository;
 import togethers.togethers.service.form.Postform;
 
 import java.io.File;
@@ -17,10 +18,13 @@ import java.util.UUID;
 @Service
 public class PostService {
 
+    @Autowired
     private PostRepository postRepository;
 
-    private MemberRepository memberRepository;
+    @Autowired
+    private UserRepository userRepository;
 
+    @Autowired
     private RoompictureRepository roompictureRepository;
 
 
@@ -29,7 +33,7 @@ public class PostService {
     {
         Post post = new Post(postform);
         RoomPicture roomPicture = new RoomPicture();
-        Member member = memberRepository.findOne("akahd135");
+        User user = userRepository.findById(1L).get();
 
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
@@ -42,10 +46,10 @@ public class PostService {
         roomPicture.setFilename(fileName);
         roomPicture.setFilepath("/files/"+fileName);
 
-        member.setPost(post);
+        user.setPost(post);
         roomPicture.setPost(post);
 
-        memberRepository.save(member);
+        userRepository.save(user);
         roompictureRepository.save(roomPicture);
         postRepository.save(post);
     }

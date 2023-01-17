@@ -1,5 +1,6 @@
 package togethers.togethers.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ public class Reply {
     private Long reply_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "id")
     private User user;
 
 

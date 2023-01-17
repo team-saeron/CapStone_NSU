@@ -6,12 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
-import togethers.togethers.entity.Member;
-import togethers.togethers.entity.Post;
+import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
+import togethers.togethers.service.UserService;
 import togethers.togethers.service.form.Postform;
-
-import togethers.togethers.service.MemberService;
 
 import javax.validation.Valid;
 
@@ -19,7 +17,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final MemberService memberService;
+    private UserService userService;
 
 
     private final PostService postService;
@@ -56,17 +54,17 @@ public class PostController {
     @GetMapping("/detailPost")
     public String detailPost(Model model)
     {
-        Member member = memberService.findMember("akahd135"); //회원의 아이디를 조회
+        User user = userService.findMember("akahd135");//회원의 아이디를 조회
 
 
-        Long post_id = member.getPost().getPost_id();
+        Long post_id = user.getPost().getPost_id();
 
 
         //회원이 작성한 post를 memberPost에 받아옴
 //        Post memberPost = memberService.findPost(post_id);
 
 //        model.addAttribute("post",memberPost);
-        model.addAttribute("member",member);
+        model.addAttribute("member",user);
 
         return "post/detailPost";
 
