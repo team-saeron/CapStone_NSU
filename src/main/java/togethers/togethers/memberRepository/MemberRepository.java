@@ -2,10 +2,11 @@ package togethers.togethers.memberRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import togethers.togethers.entity.Member;
+import togethers.togethers.entity.User;
 import togethers.togethers.entity.MemberDetail;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.Reply;
+import togethers.togethers.entity.User;
 import togethers.togethers.form.MemberDetailForm;
 import togethers.togethers.form.replyForm;
 
@@ -15,12 +16,12 @@ import javax.persistence.EntityManager;
 @RequiredArgsConstructor
 public class MemberRepository {
     private final EntityManager em;
-    public void save(Member member){
-        em.persist(member);
+    public void save(User user){
+        em.persist(user);
     }
 
-    public Member findOne(Long id){
-        return em.find(Member.class, id);
+    public User findOne(Long id){
+        return em.find(User.class, id);
     }
 
 
