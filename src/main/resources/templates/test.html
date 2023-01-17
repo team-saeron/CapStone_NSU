@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/write.css" />
+</th:block>
+<th:block layout:fragment="content">
+    <style>
+  .write_container{
+  margin-top:-20px;
+  }
+  .test_div{
+  height: 200px;
+  weight: 200px;
+  }
+</style>
+    <body>
+
+    <div>
+        <form th:action="@{/detailPost}" th:object="${ReplyForm}" th:method="POST">
+            <input class="test_div" type="text" th:field="*{reply}" placeholder="입력">
+        </form>
+
+    </div>
+
+
+    </form>
+    </body>
+
+</th:block>
+</body>
+</html>

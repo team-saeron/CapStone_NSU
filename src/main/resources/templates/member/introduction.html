@@ -10,23 +10,29 @@
 <div class="container">
 <!--    <form class="introduction_form" th:action="@{/auth/introductionProc}" th:method="POST">-->
 
+    <form th:action="@{/member/introduction}" th:object="${MemberDetailForm}" th:method="POST">
+        <table>
+    <!-- 회원가입 페이지에서 닉네임 작성하기 떄문에 필요없음 -->
+<!--            <tr ><td class="detail_name" ><h4>닉네임</h4></td>-->
+<!--                <div class="column">-->
+<!--                    <td><input type="text" placeholder="닉네임" th:field="*{memberDetail_Id}"></td>-->
+<!--                </div>-->
 
-        <table >
-            <tr><td class="detail_name"><h4>닉네임</h4></td>
-                <div class="column">
-                    <td><input type="text" placeholder="닉네임"></td>
-                </div>
-            </tr>
-            <tr><td class="detail_name"><h4>성별(필수)</h4></td>
+<!--            </tr>-->
+
+            <tr><td class="detail_name" ><h4>성별(필수)</h4></td>
         <div class="column">
-            <td><input type="radio" name="chk_info" value="남">남</input>
-            <input type="radio" name="chk_info" value="여">여</input></td>
+            <td><input type="radio" name="chk_info"  value="남">남</input>
+            <input type="radio" name="chk_info"  value="여">여</input></td>
             </div>
             </tr>
+
             <tr>
                 <td class="detail_name"><h4>희망지역</h4></td>
+
             <div class="column">
-            <td><select class="select" title="지역 선택">
+<!--                th:field="*{area_id}"-->
+            <td><select class="select" title="지역 선택" >
                 <option value="">-선택-</option>
                 <option value="강남구">강남구</option>
                 <option value="송파구">송파구</option>
@@ -35,26 +41,24 @@
                 </div>
             </tr>
 
-
-               <tr><td class="detail_name"><h4>보증금 예산(필수)</h4></td>
-            <div class="column">
-                <td><input class="deposit_value" type="range" name="deposit" step="100" min="200" max="100000000" oninput="document.getElementById('deposit_value').innerHTML=this.value;">
+                <tr><td class="detail_name" ><h4>보증금 예산(필수)</h4></td>
+                    <div class="column">
+                <td><input class="deposit_value" type="range" th:field="*{lease_fee}" name="deposit" step="100" min="200" max="100000000" oninput="document.getElementById('deposit_value').innerHTML=this.value;">
                 <span id="deposit_value">200</span>
                 </input></td>
-            </div>
+                    </div>
                </tr>
 
-               <tr> <td class="detail_name"><h4>월세 예산(필수)</h4></td>
+               <tr> <td class="detail_name" ><h4>월세 예산(필수)</h4></td>
             <div class="column">
-               <td> <input class="monthlyRent_value" type="range" name="monthly_rent" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
+               <td> <input class="monthlyRent_value" type="range" th:action="*{mouthly_fee}" name="monthly_rent" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
                    <span id="monthlyRent_value">40</span></td>
                 </input>
 </div>
             </tr>
-
-
+<!--            th:action="*{mbti}"-->
             <tr>
-                <td class="detail_name"><h4>Mbti(필수)</h4></td>
+                <td class="detail_name" ><h4>Mbti(필수)</h4></td>
                 <div class="column">
                 <td><div class="mbti_chk">
                     <input type="radio" name="chk_info" value="외향적(E)">외향적(E)</input>
@@ -74,9 +78,9 @@
                     </div></td>
                 </div></tr>
 
-
             <tr>
-                <td class="detail_name"><h4>반려동물과의 동거에 대해</h4></td>
+<!--                th:action="*{pet}"-->
+                <td class="detail_name" ><h4>반려동물과의 동거에 대해</h4></td>
 
                 <div class="column">
                     <td>
@@ -95,11 +99,12 @@
                 </td>
 
 
+
                 </div></tr>
 
-
+<!--            th:action="*{smoking}"-->
        <tr>
-           <td class="detail_name"><h4>흡연</h4></td>
+           <td class="detail_name" ><h4>흡연</h4></td>
            <div class="column">
                <td><div class="form-check form-check-inline">
                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option1">
@@ -109,15 +114,15 @@
                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
                    <label class="form-check-label" for="inlineCheckbox4">싫어요</label>
                </div><div class="form-check form-check-inline">
-               <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option1">
+               <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option3">
                <label class="form-check-label" for="inlineCheckbox5">상관없어요</label>
            </div>
                </td>
            </div></tr>
 
-
         <tr>
-                <td class="detail_name"><h4>생활패턴</h4></td>
+<!--            th:action="*{lifeCycle)"-->
+                <td class="detail_name" ><h4>생활패턴</h4></td>
             <div class="column">
                 <td><div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
@@ -130,18 +135,21 @@
                 </td>
             </div>
        </tr>
+
         <tr>
-                <td class="detail_name"><h4>내가 원하는 룸메이트</h4></td>
+                <td class="detail_name" ><h4>내가 원하는 룸메이트</h4></td>
             <div class="column">
                 <td><div class="form-group">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" th:action="*{wish_roommate}" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
-
-                <button type="button" class="btn btn-primary btn-lg btn-block">확인</button></td>
+                    <input type="submit" value="제출"></input>
+<!--                <button type="button" class="btn btn-primary btn-lg btn-block">확인</button>-->
+                </td>
         </div>
         </tr>
+
             </table>
-        </div>
+    </form>
 <!--</form>-->
 </div>
 

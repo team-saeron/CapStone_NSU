@@ -2,6 +2,7 @@ package togethers.togethers.entity;
 
 
 import lombok.Data;
+import togethers.togethers.form.MemberDetailForm;
 
 import javax.persistence.*;
 
@@ -12,32 +13,29 @@ public class MemberDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true)
-    private Long memberdetail_id;
-
+    //닉네임
+    private Long memberDetail_id;
 
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id",nullable = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
 
 
-    @Column(nullable = false)
     private int mbti;
 
-    @Column(nullable = false)
     @Lob
     private String selfIntro;
 
-    @Column(nullable = false)
     @Lob
     private String wish_roommate;
 
-    @Column(nullable = false)
-    private int mouthly_fee;
+    //월세
+    private String mouthly_fee;
 
-    @Column(nullable = false)
-    private int lease_fee;
+    //보증금
+    private String lease_fee;
 
 
 
@@ -64,8 +62,6 @@ public class MemberDetail {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id")
     private Category category;
-
-
 
 
 
