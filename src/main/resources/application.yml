@@ -6,6 +6,11 @@ spring:
    enabled: true
   thymeleaf:
    cache: false
+ mvc:
+  pathmatch:
+   matching-strategy: ant_path_matcher
+ jwt:
+  secret: flature!@#
  datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://localhost:3306/together?serverTimezone=Asia/Seoul
