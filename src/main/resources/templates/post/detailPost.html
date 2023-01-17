@@ -99,7 +99,7 @@
 
       <!-- 내가 적는 댓글 칸-->
       <div class="my_comment">
-        <form th:action="@{/detailPost}" th:form="${ReplyForm}" th:method="POST">
+        <form th:action="@{/detailPost}">
           <fieldset>
             <div class="my_inner_commnet">
 
@@ -108,7 +108,7 @@
                 마몽
               </div>
               <div class="my_text">
-                <textarea rows="3" cols="30" class="my_textarea" th:field="*{comment}" ></textarea>
+                <textarea rows="3" cols="30" class="my_textarea"  ></textarea>
               </div>
               <div class="text_submit">
                 <button type="submit">등록</button>

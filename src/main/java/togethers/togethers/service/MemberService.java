@@ -36,43 +36,7 @@ public class MemberService {
         return findMember;
     }
 
-    @Transactional
-    public void post_save(Postform postform, MultipartFile file) throws Exception
-    {
-        Post post = new Post(postform);
-        RoomPicture roomPicture = new RoomPicture();
-        Member member = memberRepository.findOne("akahd135");
 
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-        UUID uuid = UUID.randomUUID();
-        String fileName = uuid+"_"+file.getOriginalFilename();
-
-
-        File saveFile = new File(projectPath,fileName);
-
-        file.transferTo(saveFile);
-
-        roomPicture.setFilename(fileName);
-        roomPicture.setFilepath("/files/"+fileName);
-
-        member.setPost(post);
-        roomPicture.setPost(post);
-
-        memberRepository.post_save(post,roomPicture);
-    }
-
-    @Transactional
-    public Post findPost(Long postid)
-    {
-        Post post = memberRepository.findPost(postid);
-        return post;
-    }
-
-    @Transactional
-    public void Member_Post(Post post,String memberid)
-    {
-        memberRepository.Member_Post(post,memberid);
-    }
 
 
 

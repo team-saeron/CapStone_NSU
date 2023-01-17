@@ -55,7 +55,7 @@ public class Post {
     private Category area;
 
     @OneToMany(mappedBy = "post")
-    private List<RoomPicture>images = new ArrayList<>();
+    List<RoomPicture>images = new ArrayList<>();
 
 
 
