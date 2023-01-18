@@ -14,8 +14,8 @@ import togethers.togethers.data.dto.SignInResultDto;
 import togethers.togethers.data.dto.SignUpResultDto;
 import togethers.togethers.repository.UserRepository;
 
-import java.util.Collections;
 import java.util.Date;
+import java.util.Collections;
 
 @Service
 public class SignServiceImpl implements SignService{
@@ -33,7 +33,7 @@ public class SignServiceImpl implements SignService{
     }
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String nickname, String email, String phoneNum, String role){
+    public SignUpResultDto signUp(String id, String password, String name, String nickname, String email, /*Date birth, */String phoneNum, String role){
         LOGGER.info("[getSignUpResult] 회원 가입 정보 전달");
         User user;
         if(role.equalsIgnoreCase("admin")) {
