@@ -18,7 +18,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.springboot.api"))
+                .apis(RequestHandlerSelectors.basePackage("togethers.togethers.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
