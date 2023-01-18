@@ -8,9 +8,9 @@ import togethers.togethers.data.dto.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private String uid;
 
 
-    @Column(length = 30,nullable = false)
+    @Column(nullable = false)
     @NotEmpty(message="비밀번호를 입력해주세요.")
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     private String password;
