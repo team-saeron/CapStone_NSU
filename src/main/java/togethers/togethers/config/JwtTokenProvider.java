@@ -18,6 +18,7 @@ import togethers.togethers.data.dto.UserDetails;
 import togethers.togethers.service.UserDetailsService;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -33,7 +34,7 @@ import java.util.List;
 public class JwtTokenProvider {
     private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsService userDetailsService;
-
+    private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     @Value("${spring.jwt.secret}")
     private String secretKey = "secretKey";
     private final long tokenValidMillisecond = 1000L *500*500;
@@ -44,8 +45,8 @@ public class JwtTokenProvider {
         LOGGER.info("[init] JwtTokenProvider 내 secretKey 초기화 시작");
 //        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 //        key = Keys.hmacShaKeyFor(keyBytes);
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
-
+        secretKey = Base64.getEncoder().encodeToString(key.getEncoded());
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         LOGGER.info("[init] JwtTokenProvider 내  secretKey 초기화 완료");
 
@@ -61,7 +62,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime()+tokenValidMillisecond))
-                .signWith(SignatureAlgorithm.ES256, secretKey)
+                .signWith(key)
                 .compact();
 
         LOGGER.info("[createToken] 토큰 생성 완료");

@@ -8,7 +8,6 @@ import togethers.togethers.data.dto.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,8 +48,8 @@ public class User implements UserDetails {
     @NotEmpty(message = "이메일을 입력해주세요.")
     private String email;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birth;
+//    @Temporal(TemporalType.TIMESTAMP)
+    private String birth;
 
     @Column(length = 30,nullable = false)
     private String nickname;
