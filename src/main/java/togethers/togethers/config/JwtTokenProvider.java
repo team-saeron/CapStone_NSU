@@ -44,10 +44,7 @@ public class JwtTokenProvider {
     {
 
         logger.info("[init] JwtTokenProvider 내 secretKey 초기화 시작");
-//        secretKey = Base64.getEncoder().
-//                encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
         secretKey = Encoders.BASE64.encode(key.getEncoded());
-//        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         logger.info("[init] JwtTokenProvider 내 secretKey 초기화 완료");
     }
