@@ -1,16 +1,25 @@
 !DOCTYPE html
 *{
-margin :5;
+margin :30;
 padding:0;
 }
-
-#join_logo{
-color:#432874;
+.container{
+margin-bottom: 30px;
+border:1px solid rgba(160,160,160,0.3);
+border-radius:6%;
+padding:20px;
 }
-
-#join__logo span{
+.join_title{
+font-weight:550;
 color:black;
 }
+.join__logo{
+display:flex;
+justify-content:center;
+padding:20px;
+border-bottom:1px solid rgba(160,160,160,0.5);
+}
+
 
 #join__logo{
 display:flex;
@@ -23,6 +32,7 @@ left:700px;
 top:30px;
 }
 .container{
+margin-top:40px;
 justify-content:center;
 align-items:center;
 width:40%;
@@ -85,7 +95,8 @@ border:1px solid #432874;
 }
 
 .login_sns_icon{
-color:#432874;
+color:black;
+text-decoration-line:none;
 }
 
 .login_sns_icon:hover{
@@ -93,3 +104,7 @@ color:#432874;
 }
 .fa-eye{
  cursor:pointer;}
+
+ join_sns{
+ padding-top:10px;
+ }

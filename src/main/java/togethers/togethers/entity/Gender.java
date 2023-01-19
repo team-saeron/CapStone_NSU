@@ -6,11 +6,15 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Smoking {
+@Table(name = "gender")
+public class Gender {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true)
-    private Long smoking_id;
+    private Long gender_id;
 
-    private Integer smoking_value;
+    private Integer gender_value;
+
+
+    private String user_id;
 }

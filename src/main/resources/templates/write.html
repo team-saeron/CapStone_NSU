@@ -13,7 +13,7 @@
 </style>
 <body>
   <div class="write_container">
-  <form class="write_column" th:action="@{/write}" th:object="${Postform}" th:method="POST">
+  <form class="write_column" th:action="@{/write}" th:object="${Postform}" th:method="POST" enctype="multipart/form-data">
 <div class="write_wrapper">
   <div class="write__content">
   <div class="write_column">
@@ -45,7 +45,7 @@
       <input class="location" type="text">
     </div>
     <div class="house_img">
-      <img id="write-img" src="https://www.zipdeco.co.kr/upload/2017/07/21/EDITOR_201707210201236390_YQJAH"/>
+      <input type="file" name="file">
       <textarea class="house_detail" cols="37" rows="7" th:field="*{text}"></textarea>
     </div>
   </div>

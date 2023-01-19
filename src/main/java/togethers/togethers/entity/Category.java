@@ -20,5 +20,6 @@ public class Category {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "roomType_id")
+//    @Column(unique = true)
     private RoomType roomType;
 }

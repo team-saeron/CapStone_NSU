@@ -14,6 +14,6 @@ public class RoomType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomType_id;
 
-    private int roomType_value;
+    private Integer roomType_value;
 }
 // 월,전세인지 나타내는 클래스

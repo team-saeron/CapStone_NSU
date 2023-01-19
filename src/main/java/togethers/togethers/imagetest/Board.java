@@ -1,4 +1,4 @@
-package togethers.togethers.entity;
+package togethers.togethers.imagetest;
 
 import lombok.Data;
 
@@ -9,12 +9,16 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class Sex {
+public class Board {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sex_id;
+    private Integer id;
 
-    private int sex_value;
+    private String title;
+    private String content;
 
-    private String member_id;
+    private String filename;
+    private String filepath;
+
 }

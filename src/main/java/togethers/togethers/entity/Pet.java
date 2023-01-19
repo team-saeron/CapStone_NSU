@@ -14,6 +14,6 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pet_id;
 
-    private int pet_value;
+    private Integer pet_value;
 }
 

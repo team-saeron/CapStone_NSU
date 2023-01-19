@@ -1,5 +1,6 @@
 package togethers.togethers.entity;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,13 +11,15 @@ public class UserDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberdetail_id;
+    @Column(nullable = false,unique = true)
+    private Long userDetail_id;
 
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id",nullable = false)
+    @OneToOne(mappedBy = "userDetail")
     private User user;
+
+
 
     @Column(nullable = false)
     private int mbti;
@@ -55,7 +58,7 @@ public class UserDetail {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "sex_id")
-    private Sex sex;
+    private Gender sex;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id")
@@ -66,4 +69,3 @@ public class UserDetail {
 
 
 }
-

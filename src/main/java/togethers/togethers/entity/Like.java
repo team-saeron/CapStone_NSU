@@ -1,11 +1,14 @@
 package togethers.togethers.entity;
 
+import lombok.Builder;
 import lombok.Data;
+
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Table(name = "likes")
 public class Like {
 
     @Id
