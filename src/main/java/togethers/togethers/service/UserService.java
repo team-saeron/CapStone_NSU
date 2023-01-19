@@ -24,7 +24,6 @@ public class UserService {
     @Transactional
     public User findMember(String memberid)
     {
-
         User user = userRepository.getByUid(memberid);
         return user;
     }

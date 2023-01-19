@@ -1,11 +1,12 @@
 server:
  port: 8081
+
 spring:
+ jwt:
+  secret: flature!@#appleandseoullovecdafqefaaasadg
  mvc:
   pathmatch:
    matching-strategy: ant_path_matcher
- jwt:
-  secret: flature!@#
  devtools:
   livereload:
    enabled: true
@@ -22,7 +23,7 @@ spring:
   show-sql: true
   hibernate:
    format_sql: true
-   ddl-auto: create
+   ddl-auto: update
 logging:
  level:
   org:

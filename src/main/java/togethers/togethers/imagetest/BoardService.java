@@ -1,4 +1,4 @@
-package togethers.togethers.test;
+package togethers.togethers.imagetest;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

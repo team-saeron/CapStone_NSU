@@ -9,7 +9,7 @@ import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.entity.User;
 import togethers.togethers.repository.PostRepository;
 import togethers.togethers.repository.RoompictureRepository;
-import togethers.togethers.repository.UserRepository;
+//import togethers.togethers.repository.UserRepository;
 import togethers.togethers.service.form.Postform;
 
 import java.io.File;
@@ -21,8 +21,8 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+//    @Autowired
+//    private UserRepository userRepository;
 
     @Autowired
     private RoompictureRepository roompictureRepository;
@@ -33,7 +33,7 @@ public class PostService {
     {
         Post post = new Post(postform);
         RoomPicture roomPicture = new RoomPicture();
-        User user = userRepository.findById(1L).get();
+//        User user = userRepository.findById(1L).get();
 
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
@@ -46,10 +46,10 @@ public class PostService {
         roomPicture.setFilename(fileName);
         roomPicture.setFilepath("/files/"+fileName);
 
-        user.setPost(post);
+//        user.setPost(post);
         roomPicture.setPost(post);
 
-        userRepository.save(user);
+//        userRepository.save(user);
         roompictureRepository.save(roomPicture);
         postRepository.save(post);
     }
