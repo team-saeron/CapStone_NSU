@@ -1,136 +1,31 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="setLogin(login)">
-    <style>
-.member_login{
-width:100%;
-height: 100%;
-display:flex;
-justify-content:center;
-color:black;
-}
-
-.login_sns_icon{
- text-decoration: none;
-  color: black;
-}
-
-.login_sns{
-display:flex;
-justify-content:center;
-}
-
-.login_sns a{
-border-radius:50px;
-width: 50px;
-height: 50px;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 10px;
-border-radius: 50px;
-background: white;
-font-size: 20px;
-margin:10px;
-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
-
-}
-.login_id{
-width:100%;
-}
-
-.login_pw{
-width:100%;
-}
-
-.login_sns li{
-padding:0px 15px;
-}
-
-.forgot_pw a{
-color:black;
-}
-
-.login_etc{
-padding: 10px;
-width: 80%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-font-size: 12px;
-font-weight: bold;
-color:black;
-}
-
-.checkbox{
-padding-right:6px;
-}
-.login_column h4{
-font-weight: bold;
-color:black;
-}
-
-.login_column h1{
-font-weight:bold;
-  color: black;
-  font-size: 2em;
-}
-
-.login_input{
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 5px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-  font-size: 14px;
-}
-
-.submit{
-margin-top:50px;
-margin-bottom:20px;
-width:80%;
-}
-
-.submit input{
-  width: 100%;
-  height: 50px;
-  border: 0;
-  outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to left, rgb(67, 40, 116), rgb(67, 80, 116));
-  color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
-}
-
-.login_column{
-  width: 100%;
-  height: 600px;
-  background: white;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-
-    </style>
-    <body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/member/login.css" />
+</th:block >
+<th:block layout:fragment="content">
+    <div class="container">
     <div class="member_login">
-        <form class="login_column" th:action="@{/member}" th:method="POST">
+        <form class="login_column" th:action="@{/login}" th:object="${loginForm}" th:method="POST">
             <h1>Log-in</h1>
             <div class="login_id">
-                <h4>E-mail</h4>
-                <input class="login_input" type="email" name=""  placeholder="Email">
+                <h4>ID</h4>
+                <input class="login_input" type="text"  name="loginId" placeholder="ID"
+                th:errorclass="field-error">
+                <div class="field-error" th:errors="*{loginId}"/>
             </div>
 
             <div class="login_pw">
                 <h4>Password</h4>
-                <input class="login_input" type="password" name=""  placeholder="Password">
+                <input class="login_input" type="password" name="pw" placeholder="Password"
+                       th:errorclass="field-error">
+                <div class="field-error" th:errors="*{pw}"/>
             </div>
-
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
             <div class="login_etc">
                 <div class="checkbox">
                     <input type="checkbox" name="" id=""/> 아이디 저장
@@ -141,15 +36,19 @@ width:80%;
                 </div>
             </div>
             <div class="submit">
-                <input th:href="@{/}" type="submit" value="submit">
+                <input type="submit" value="submit">
             </div>
             <div class="login_sns">
+
                 <li><a class="login_sns_icon" href=""><i class="fa-brands fa-google"></i></a></li>
                 <li><a class="login_sns_icon" href=""><i class="fab fa-facebook-f"></i></a></li>
                 <li><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i></a></li>
+
             </div>
         </form>
     </div>
-    </body>
+        <div>
+        </div>
+    </div>
 </th:block>
 </html>

@@ -13,39 +13,40 @@
 </style>
 <body>
   <div class="write_container">
-  <form class="write_column" th:action="@{/auth/writeContentProc}" th:method="POST">
+  <form class="write_column" th:action="@{/write}" th:object="${Postform}" th:method="POST" enctype="multipart/form-data">
 <div class="write_wrapper">
   <div class="write__content">
   <div class="write_column">
-    <select class="select_type">
-      <option selected>방과 함께 룸메이트 찾기</option>
-      <option>룸메이트 찾기</option>
-    </select>
+
+        <input type="radio" style="font-size:20pt;width:30px;height:30px;" th:field="*{getType}" value="true"/>
+        <label th:for="getType">방과 함께 룸메이트 찾기</label>
+
+        <input type="radio" style="font-size:20pt;width:30px;height:30px;" th:field="*{getType}" value="false"/>
+        <label th:for="getType">룸메이트 만 찾기</label>
+
     <input class="write_submit" type="submit" value="글올리기">
     </div>
 
 
-
-
     <div class="title_column">
-      <input class="write_title" type="text" placeholder="제목">
+      <input class="write_title" type="text" placeholder="제목" th:field="*{title}">
     </div>
     <div class="choose_type">
-      <input type="radio" style="font-size:20pt;width:30px;height:30px;" id="month" name="chk_type" value="월세"  checked="checked"></input>
-        <label for="month">월세</label>
-      <input type="radio" style="font-size:20px;width:30px;height:30px;" id="all" name="chk_type" value="전세"></input>
-     <label for="all">전세</label>
+      <input type="radio" style="font-size:20pt;width:30px;height:30px;" th:field="*{roomType}"  checked="checked" value="true"></input>
+        <label th:for="roomType">월세</label>
+      <input type="radio" style="font-size:20px;width:30px;height:30px;" th:field="*{roomType}" value="false"></input>
+     <label th:for="roomType">전세</label>
     </div>
     <div class="write_price">
-      <input class="write_price" type="text" placeholder="가격">
-      <input class="write__price" type="text" placeholder="관리비">
+      <input class="write_price" type="text" placeholder="가격" th:field="*{mouthly}">
+      <input class="write__price" type="text" placeholder="관리비" th:field="*{lease}">
     </div>
     <div class="write_location">
       <input class="location" type="text">
     </div>
     <div class="house_img">
-      <img id="write-img" src="https://www.zipdeco.co.kr/upload/2017/07/21/EDITOR_201707210201236390_YQJAH"/>
-      <textarea class="house_detail" cols="37" rows="7"></textarea>
+      <input type="file" name="file">
+      <textarea class="house_detail" cols="37" rows="7" th:field="*{text}"></textarea>
     </div>
   </div>
 </div>
