@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import togethers.togethers.data.dto.SignInResultDto;
 import togethers.togethers.data.dto.SignUpResultDto;
 import togethers.togethers.service.SignService;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/sign-api")
 @RequiredArgsConstructor
-
 public class SignController {
     private final Logger LOGGER = LoggerFactory.getLogger(SignController.class);
     private final SignService signService;

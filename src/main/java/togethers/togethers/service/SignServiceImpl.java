@@ -34,7 +34,7 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String nickname, String email, /*Date birth, */String phoneNum, String role){
+    public SignUpResultDto signUp(String id, String password, String name, String nickname, String email, String birth, String phoneNum, String role){
         logger.info("[getSignUpResult] 회원 가입 정보 전달");
         User user;
         if(role.equalsIgnoreCase("admin")) {
@@ -44,7 +44,7 @@ public class SignServiceImpl implements SignService {
                     .password(passwordEncoder.encode(password))
                     .nickname(nickname)
                     .email(email)
-//                    .birth(birth)
+                    .birth(birth)
                     .phoneNum(phoneNum)
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
@@ -55,7 +55,7 @@ public class SignServiceImpl implements SignService {
                     .password(passwordEncoder.encode(password))
                     .nickname(nickname)
                     .email(email)
-//                    .birth(birth)
+                    .birth(birth)
                     .phoneNum(phoneNum)
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
