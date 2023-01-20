@@ -2,12 +2,15 @@ package togethers.togethers.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import togethers.togethers.data.dto.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,8 +52,9 @@ public class User implements UserDetails {
     @NotEmpty(message = "이메일을 입력해주세요.")
     private String email;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birth;
+    @Column(nullable = false)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String birth;
 
     @Column(length = 30,nullable = false)
     private String nickname;
