@@ -33,6 +33,7 @@ public class JwtTokenProvider {
     private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsService userDetailsService;
 
+
     @Value("${spring.jwt.secret}")
     private String secretKey = "secretKey";
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -44,10 +45,7 @@ public class JwtTokenProvider {
     {
 
         logger.info("[init] JwtTokenProvider 내 secretKey 초기화 시작");
-//        secretKey = Base64.getEncoder().
-//                encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
         secretKey = Encoders.BASE64.encode(key.getEncoded());
-//        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         logger.info("[init] JwtTokenProvider 내 secretKey 초기화 완료");
     }
