@@ -12,9 +12,11 @@ margin-bottom:60px;
 
 
 }
-
+ul{
+   list-style:none;
+   }
 .ph_wrapper{
-background-color:#00436B;
+background-color:#987095;
 margin-right:50px;
 width:20%;
 height:300px;
@@ -22,7 +24,7 @@ text-align:center;
 }
 
 .mail_wrapper{
-background-color:#00436B;
+background-color:#987095;
 margin-left:50px;
 width:20%;
 height:300px;

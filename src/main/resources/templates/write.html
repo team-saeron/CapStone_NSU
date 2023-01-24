@@ -17,10 +17,53 @@
 <div class="write_wrapper">
   <div class="write__content">
   <div class="write_column">
-    <select class="select_type">
-      <option selected>방과 함께 룸메이트 찾기</option>
-      <option>룸메이트 찾기</option>
-    </select>
+
+
+    <div class="option__column" >
+      <div class="input-group">
+        <select class="custom-select"  aria-label="Example select with button addon" required>
+          <option value="">-옵션선택-</option>
+          <option value="find-with-room">방과 함께 룸메이트 찾기 </option>
+          <option value="find-mate">룸메이트 찾기</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="option__column" >
+      <div class="input-group">
+        <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" required>
+          <option value="">-지역선택-</option>
+          <option value="gang-nam-gu">강남구 </option>
+          <option value="Gang-dong-gu">강동구</option>
+          <option value="Gang-buk-gu">강북구</option>
+          <option value="Gang-seo-gu">강서구</option>
+          <option value="Gwan-ak-gu">관악구</option>
+          <option value="Guro-gu">구로구</option>
+          <option value="Geum-cheon-gu">금천구</option>
+          <option value="No-won-gu">노원구</option>
+          <option value="Do-bong-gu">도봉구</option>
+          <option value="Dong-dae-mun-gu">동대문구</option>
+          <option value="Dong-jak-gu">동작구</option>
+          <option value="Ma-po-gu">마포구</option>
+          <option value="Seo-dae-mun-gu">서대문구</option>
+          <option value="Seo-cho-gu">서초구</option>
+          <option value="Seong-dong-gu">성동구</option>
+          <option value="Song-pa-gu">송파구</option>
+          <option value="Yang-cheon-gu">양천구</option>
+          <option value="Yeong-deung-po-gu">영등포구</option>
+          <option value="Yong-san-gu">용산구</option>
+          <option value="Eun-pyeong-gu">은평구</option>
+          <option value="Jong-no-gu">종로구</option>
+          <option value="Jung-gu">중구</option>
+          <option value="Jung-nang-gu">중랑구</option>
+
+        </select>
+      </div>
+
+      <div class="detail_column">
+        <input class="write_detail" type="text" placeholder="주소">
+      </div>
+    </div>
     <input class="write_submit" type="submit" value="글올리기">
     </div>
 
@@ -45,6 +88,8 @@
     </div>
     <div class="house_img">
       <img id="write-img" src="https://www.zipdeco.co.kr/upload/2017/07/21/EDITOR_201707210201236390_YQJAH"/>
+      <input class="img-input" type="file" name="file">
+
       <textarea class="house_detail" cols="37" rows="7"></textarea>
     </div>
   </div>

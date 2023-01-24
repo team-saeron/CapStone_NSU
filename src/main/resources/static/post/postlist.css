@@ -1,7 +1,5 @@
 
-body{
-    background-color: #f1eaf1;
-}
+
 
 .detailPost_img{
     width: 300px;
@@ -51,9 +49,38 @@ body{
     width: 100%;
     height: 100px;
     border-bottom: 2px solid black;
+    font-size:20px;
+    margin-top:50px;
+    margin-left:10px;
 }
 .explain{
     width: 100%;
     height: 200px;
+    margin-top:10px;
+    margin-left:15px;
 }
 
+#dataPerPage{
+margin-top:10px;
+}
+.picture_icon{
+border:1px solid black;
+border-radius:100%;
+padding:10px;
+width:50px;
+height:60px;
+margin-left:10px;
+}
+.icon{
+font-size:30px;
+}
+.nickname{
+margin-top:-25px;
+margin-left:70px;
+}
+a{
+ color: inherit;
+}
+a:hover{
+color:black;
+}

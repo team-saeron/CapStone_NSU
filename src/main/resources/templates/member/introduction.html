@@ -9,7 +9,7 @@
 <th:block layout:fragment="content">
 <div class="container">
 <!--    <form class="introduction_form" th:action="@{/auth/introductionProc}" th:method="POST">-->
-
+        <h1><b>자기소개 작성 </b></h1>
 
         <table >
             <tr><td class="detail_name"><h4>닉네임</h4></td>
@@ -28,13 +28,38 @@
             <div class="column">
             <td><select class="select" title="지역 선택">
                 <option value="">-선택-</option>
-                <option value="강남구">강남구</option>
-                <option value="송파구">송파구</option>
-                <option value="서초구">서초구</option>
+                <option value="gang-nam-gu">강남구 </option>
+                <option value="Gang-dong-gu">강동구</option>
+                <option value="Gang-buk-gu">강북구</option>
+                <option value="Gang-seo-gu">강서구</option>
+                <option value="Gwan-ak-gu">관악구</option>
+                <option value="Guro-gu">구로구</option>
+                <option value="Geum-cheon-gu">금천구</option>
+                <option value="No-won-gu">노원구</option>
+                <option value="Do-bong-gu">도봉구</option>
+                <option value="Dong-dae-mun-gu">동대문구</option>
+                <option value="Dong-jak-gu">동작구</option>
+                <option value="Ma-po-gu">마포구</option>
+                <option value="Seo-dae-mun-gu">서대문구</option>
+                <option value="Seo-cho-gu">서초구</option>
+                <option value="Seong-dong-gu">성동구</option>
+                <option value="Song-pa-gu">송파구</option>
+                <option value="Yang-cheon-gu">양천구</option>
+                <option value="Yeong-deung-po-gu">영등포구</option>
+                <option value="Yong-san-gu">용산구</option>
+                <option value="Eun-pyeong-gu">은평구</option>
+                <option value="Jong-no-gu">종로구</option>
+                <option value="Jung-gu">중구</option>
+                <option value="Jung-nang-gu">중랑구</option>
             </select></td>
                 </div>
             </tr>
-
+            <tr><td class="detail_name"><h4>(필수)</h4></td>
+                <div class="column">
+                    <td><input type="radio" name="chk_info" value="남">남</input>
+                        <input type="radio" name="chk_info" value="여">여</input></td>
+                </div>
+            </tr>
 
                <tr><td class="detail_name"><h4>보증금 예산(필수)</h4></td>
             <div class="column">
@@ -137,13 +162,16 @@
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
 
-                <button type="button" class="btn btn-primary btn-lg btn-block">확인</button></td>
+                </td>
+
         </div>
         </tr>
             </table>
         </div>
 <!--</form>-->
 </div>
+    <button type="button" class="btn btn-primary btn-lg btn-block">확인</button>
+
 
     <script type="text/javascript" th:src="@{/js/introduction.js}"></script>
 </th:block>

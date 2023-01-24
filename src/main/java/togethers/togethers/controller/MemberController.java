@@ -10,12 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class MemberController {
     @GetMapping("/member/mypage")
-    public String mypage(Model model){
-        return "member/mypage";}
-
+    public String mypage(Model model) {
+        return "member/mypage";
+    }
 
 
     @GetMapping("/member/introduction")
-    public String introduction(Model model){
-        return "member/introduction";}
+    public String introduction(Model model) {
+        return "member/introduction";
+    }
+
+    @GetMapping("/member/rewriteIntroduction")
+    public String rewriteIntroduction(Model model) {
+        return "member/rewriteIntroduction";
+    }
+    @GetMapping("/member/showOFFIntroduction")
+    public String showOFFIntroduction(Model model) {
+        return "member/showOFFIntroduction";
+    }
 }

@@ -1,6 +1,13 @@
+h1{
+display:flex;
+justify-content:center;
+}
+
 table{
-width: 100%;
+width: 70%;
 height: 100%;
+margin-left:10px;
+margin-top:30px;
 }
 
 .column input{
@@ -41,3 +48,13 @@ color:black;
 border:1px solid #432874;
 }
 
+#exampleFormControlTextarea1{
+resize: none;
+}
+.btn{
+margin-left:400px;
+margin-top:40px;
+margin-bottom:30px;
+width:600px;
+height:50px;
+}

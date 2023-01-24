@@ -19,21 +19,25 @@ margin:20px 20px;
 }
 .editPicture_column{
 display:flex;
-}
 
+}
+#picture_icon{
+
+}
 
 .editPassword input{
 width:100%;
 height:10%;
 }
 .editPicture{
+
 border:1px solid black;
 border-radius:100%;
 padding:30px;
 margin-right:10px;
 margin-bottom:10px;
-width:70%;
-height:70%;
+width:200px;
+height:150px;
 }
 
 #picture_icon{
