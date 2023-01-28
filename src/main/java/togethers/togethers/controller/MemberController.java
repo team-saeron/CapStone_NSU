@@ -6,13 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import togethers.togethers.entity.MemberDetail;
-import togethers.togethers.entity.Reply;
-import togethers.togethers.form.MemberDetailForm;
-import togethers.togethers.form.replyForm;
+import togethers.togethers.entity.UserDetail;
+import togethers.togethers.entity.UserDetail;
+import togethers.togethers.form.UserDetailForm;
 import togethers.togethers.service.MemberService;
-
-import java.util.Date;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,26 +40,26 @@ public class MemberController {
 
     @GetMapping("/member/introduction")
     public String introduction(Model model){
-        MemberDetailForm memberDetailForm = new MemberDetailForm();
-        model.addAttribute("MemberDetailForm", memberDetailForm);
+        UserDetailForm userDetailForm = new UserDetailForm();
+        model.addAttribute("MemberDetailForm", userDetailForm);
 
 
         return "member/introduction";}
 
     //form에 담겨있는 data를 db에 전달해주는 역할
     @PostMapping("/member/introduction")
-    public String introduction(MemberDetailForm memberDetailForm){
+    public String introduction(UserDetailForm userDetailForm){
 
-        MemberDetail memberDetail = new MemberDetail();
+        UserDetail userDetail = new UserDetail();
 
-        memberDetail.setMbti(memberDetailForm.getMbti());
-        memberDetail.setSelfIntro(memberDetailForm.getSelfIntro());
-        memberDetail.setWish_roommate(memberDetailForm.getWish_roommate());
-        memberDetail.setMouthly_fee(memberDetailForm.getMouthly_fee());
-        memberDetail.setLease_fee(memberDetailForm.getLease_fee());
+        userDetail.setMbti(userDetailForm.getMbti());
+        userDetail.setSelfIntro(userDetailForm.getSelfIntro());
+        userDetail.setWish_roommate(userDetailForm.getWish_roommate());
+        userDetail.setMouthly_fee(userDetailForm.getMouthly_fee());
+        userDetail.setLease_fee(userDetailForm.getLease_fee());
 
         //저장하는
-        memberService.memberDetail(memberDetail);
+        memberService.UserDetail(userDetail);
 
 
         return "member/introduction";

@@ -2,12 +2,9 @@ package togethers.togethers.memberRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import togethers.togethers.entity.*;
+import togethers.togethers.entity.UserDetail;
 import togethers.togethers.entity.User;
-import togethers.togethers.entity.MemberDetail;
-import togethers.togethers.entity.Post;
-import togethers.togethers.entity.Reply;
-import togethers.togethers.entity.User;
-import togethers.togethers.form.MemberDetailForm;
 import togethers.togethers.form.replyForm;
 
 import javax.persistence.EntityManager;
@@ -47,7 +44,7 @@ public class MemberRepository {
 
 
 //db한테 저장을 부탁한다는 문
-    public void memberDetail(MemberDetail memberDetail) {
-        em.persist(memberDetail);
+    public void userDetail(UserDetail userDetail) {
+        em.persist(userDetail);
     }
 }

@@ -5,7 +5,30 @@ spring:
   pathmatch:
    matching-strategy: ant_path_matcher
  jwt:
-  secret: flature!@#
+  security:
+   oauth2:
+    client:
+     registration:
+      kakao:
+       client-id: [ client-id ]
+       redirect-uri: http://localhost:8080/loginKakao
+       client-authentication-method: POST
+       client-secret: [ secret-key ]
+       authorization-grant-type:
+       scope:
+        - profile_nickname
+        - profile_image
+        - account_email
+        - gender
+        - birthday
+       client_name: kakao
+     provider:
+      kakao:
+       authorization-uri: https://kauth.kakao.com/oauth/authorize
+       token-uri: https://kauth.kakao.com/oauth/token
+       user-info-uri: https://kapi.kakao.com/v2/user/me
+       user-name-attribute: id
+  secret: flature!@#appleandseoullovecdafqefaaasadg
  devtools:
   livereload:
    enabled: true
@@ -13,9 +36,9 @@ spring:
    cache: false
  datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/temp?serverTimezone=Asia/Seoul
+  url: jdbc:mysql://localhost:3306/together?serverTimezone=Asia/Seoul
   username: root
-  password: 1234
+  password: tladuswns1!
  jpa:
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   open-in-view: false

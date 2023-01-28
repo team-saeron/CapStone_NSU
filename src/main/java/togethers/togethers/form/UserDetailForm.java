@@ -4,14 +4,14 @@ import lombok.Data;
 import togethers.togethers.entity.*;
 
 @Data
-public class MemberDetailForm {
+public class UserDetailForm {
     Long memberDetail_Id;
     int mbti;
     String selfIntro;
     String wish_roommate;
     User user;
-    String mouthly_fee;
-    String lease_fee;
+    int mouthly_fee;
+    int lease_fee;
     int area_id;
 
     int smoking;

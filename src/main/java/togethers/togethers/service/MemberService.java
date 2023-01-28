@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.entity.User;
-import togethers.togethers.entity.MemberDetail;
+import togethers.togethers.entity.UserDetail;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
+import togethers.togethers.entity.UserDetail;
 import togethers.togethers.form.replyForm;
 import togethers.togethers.memberRepository.MemberRepository;
 
@@ -36,9 +37,10 @@ public class MemberService {
         memberRepository.Comment(reply);
     }
     @Transactional
-    public void memberDetail(MemberDetail memberDetail){
-        memberRepository.memberDetail(memberDetail);
+    public void UserDetail(UserDetail userDetail){
+        memberRepository.userDetail(userDetail);
     }
+
 
 
 }
