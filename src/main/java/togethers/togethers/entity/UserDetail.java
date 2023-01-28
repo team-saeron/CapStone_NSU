@@ -33,7 +33,7 @@ public class UserDetail {
     private String wish_roommate;
 
     @Column(nullable = false)
-    private int mouthly_fee;
+    private int monthly_fee;
 
     @Column(nullable = false)
     private int lease_fee;

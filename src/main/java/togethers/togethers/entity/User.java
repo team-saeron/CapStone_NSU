@@ -27,7 +27,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable=false, unique=true)
     private String uid;
@@ -49,8 +49,8 @@ public class User implements UserDetails {
     @NotEmpty(message = "이메일을 입력해주세요.")
     private String email;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birth;
+//    @Temporal(TemporalType.TIMESTAMP)
+    private String birth;
 
     @Column(length = 30,nullable = false)
     private String nickname;

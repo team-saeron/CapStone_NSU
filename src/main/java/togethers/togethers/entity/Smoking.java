@@ -12,5 +12,5 @@ public class Smoking {
     @Column(nullable = false,unique = true)
     private Long smoking_id;
 
-    private Integer smoking_value;
+    private int smoking_value;
 }
