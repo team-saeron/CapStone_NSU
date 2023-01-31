@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet"  th:href="@{/css/bootstrap.css}" type="text/css"/>
@@ -25,23 +26,23 @@
             <h1 class="join_title"><span> 회원가입</span></h1>
         </div>
         </h1>
-        <form class="join_column" th:action="@{/auth/joinProc}" th:method="POST">
+        <form class="join_column" th:action="@{/sign-api/sign-up}" th:object="${signUpForm}" th:method="POST">
             <h5>이름</h5>
             <div class="join__column" id="join_name">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <input type="text" class="form-control" placeholder="이름" name="name" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                 </div>
             </div>
             <h5>닉네임</h5>
             <div class="join__column" id="join_nickname">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="닉네임" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <input type="text" class="form-control" placeholder="닉네임" name="nickname" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                 </div>
             </div>
             <h5>아이디</h5>
             <div class="join__column" id="join_id">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <input type="text" class="form-control" name="id" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
                     </div>
@@ -50,19 +51,19 @@
             </div>
             <h5>비밀번호</h5>
             <div class="join__column" id="join_passward">
-                <input type="password" class="form-control" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2" required>
+                <input type="password" class="form-control" name="password" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2" required>
                 <i class="fas fa-eye"></i>
                 <input type="password" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2" required>
                 <i class="fas fa-eye" id="show-password"></i>
             </div>
             <div class="join__column" id="join_birth">
                 <h5>생년월일</h5>
-                <input type="date" name="생년월일" required/>
+                <input type="date" name="birth" required/>
             </div>
             <div class="join__column" id="join_tel">
                 <h5>전화번호</h5>
                 <div class="input-group mb-3">
-                    <input type="tel" class="form-control" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <input type="tel" class="form-control" name="phoneNyum" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-outline-secondary">본인인증</button>
                     </div>
@@ -70,7 +71,7 @@
             </div>
             <h5>이메일</h5>
             <div class="join__column" id="join_email">
-                <input type="text" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="button-addon2" required>
+                <input type="text" class="form-control" name="email" placeholder="이메일" aria-label="email" aria-describedby="button-addon2" required>
                 <div class="input-group">
                     <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                         <option value="">-선택-</option>

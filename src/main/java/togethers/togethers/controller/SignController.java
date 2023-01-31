@@ -4,24 +4,25 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import togethers.togethers.data.dto.SignInResultDto;
 import togethers.togethers.data.dto.SignUpResultDto;
+import togethers.togethers.entity.User;
 import togethers.togethers.service.SignService;
+import togethers.togethers.service.form.MemberForm;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/sign-api")
 @RequiredArgsConstructor
-
 public class SignController {
     private final Logger LOGGER = LoggerFactory.getLogger(SignController.class);
     private final SignService signService;
@@ -55,8 +56,10 @@ public class SignController {
             @ApiParam(value="이메일", required = true) @RequestParam String email,
             @ApiParam(value="생일", required = true) @RequestParam String birth,
             @ApiParam(value="전화번호", required = true) @RequestParam String phoneNum
+
+
     ){
-        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",id, name, role, email, password, nickname, /*birth, */phoneNum);
+        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",id, name/* role*/, email, password, nickname, birth, phoneNum);
         SignUpResultDto signUpResultDto = signService.signUp(id, password, name, nickname, email, birth, phoneNum, role);
 
         LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", id);
@@ -81,5 +84,8 @@ public class SignController {
         map.put("message", "에러발생");
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
+    }
+
+    private class User {
     }
 }

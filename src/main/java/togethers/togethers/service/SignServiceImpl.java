@@ -14,8 +14,6 @@ import togethers.togethers.repository.UserRepository;
 import togethers.togethers.service.SignService;
 
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 
 @Service
@@ -36,11 +34,9 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String nickname, String email,
-                                  String birth, String phoneNum, String role){
+    public SignUpResultDto signUp(String id, String password, String name, String nickname, String email, String birth, String phoneNum, String role){
         logger.info("[getSignUpResult] 회원 가입 정보 전달");
         User user;
-        // 여기에 String --> LocalDateTiem으로 변환하는 메소드 추가
         if(role.equalsIgnoreCase("admin")) {
             user = User.builder()
                     .uid(id)
@@ -117,10 +113,4 @@ public class SignServiceImpl implements SignService {
         result.setCode(CommonResponse.FAIL.getCode());
         result.setMsg(CommonResponse.FAIL.getMsg());
     }
-
-//    private LocalDateTime test(String birth)
-//    {
-//        LocalDateTime date = LocalDateTime.parse(birth);
-//        return date;
-//    }
 }
