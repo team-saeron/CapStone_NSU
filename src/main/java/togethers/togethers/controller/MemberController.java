@@ -55,7 +55,7 @@ public class MemberController {
         userDetail.setMbti(userDetailForm.getMbti());
         userDetail.setSelfIntro(userDetailForm.getSelfIntro());
         userDetail.setWish_roommate(userDetailForm.getWish_roommate());
-        userDetail.setMouthly_fee(userDetailForm.getMouthly_fee());
+        userDetail.setMonthly_fee(userDetailForm.getMouthly_fee());
         userDetail.setLease_fee(userDetailForm.getLease_fee());
 
         //저장하는
