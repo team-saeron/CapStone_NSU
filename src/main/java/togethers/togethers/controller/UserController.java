@@ -1,43 +1,57 @@
-//package togethers.togethers.controller;
-//
-//import io.swagger.annotations.ApiParam;
-//import lombok.RequiredArgsConstructor;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import togethers.togethers.data.dto.MypageResultDto;
-//import togethers.togethers.data.dto.SignUpResultDto;
-//import togethers.togethers.service.MypageService;
-//import togethers.togethers.service.UserService;
-//
+package togethers.togethers.controller;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import togethers.togethers.data.dto.UserDetailSaveDto;
+import togethers.togethers.data.dto.UserDetails;
+import togethers.togethers.entity.User;
+import togethers.togethers.entity.UserDetail;
+import togethers.togethers.service.UserService;
+import togethers.togethers.service.UserServiceImpl;
+
+import java.security.Principal;
+
 //@Controller
-//@RequiredArgsConstructor
-//public class UserController {
-//
-//    private final MypageService mypageService;
-//    private final Logger LOGGER = LoggerFactory.getLogger(SignController.class);
-//
-//    @PostMapping(value="/introduction")
-//    public MypageResultDto userDetailForm(
-//            @ApiParam(value="ID", required = true) @RequestParam String id,
-//            @ApiParam(value="자기소개", required = true) @RequestParam String selfIntro,
-//            @ApiParam(value="희망 룸메이트", required = true) @RequestParam String wish_roomate,
-//            @ApiParam(value="월세", required = true) @RequestParam int monthly_fee,
-//            @ApiParam(value="보증금", required = true) @RequestParam int lease_fee,
-// //           @ApiParam(value="MBTI", required = true) @RequestParam int mbti,
-//            @ApiParam(value="반려견 여부", required = true) @RequestParam int pet,
-//            @ApiParam(value="흡연", required = true) @RequestParam int smoking,
-//            @ApiParam(value="성별", required = true) @RequestParam boolean sex,
-//            @ApiParam(value="생활 패턴", required = true) @RequestParam boolean lifeCycle,
-//            @ApiParam(value="월 전세", required = true) @RequestParam boolean roomType
-//    ){
-//        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",id,selfIntro, wish_roomate, roomType, pet, smoking,sex, lifeCycle, monthly_fee, lease_fee);
-//        MypageResultDto mypageResultDto = mypageService.userDetailForm(id,selfIntro, wish_roomate, roomType, pet, smoking,sex, lifeCycle, monthly_fee, lease_fee);
-//
-//        LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", id);
-//        return mypageResultDto;
+@RestController
+@Slf4j
+public class UserController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService){
+        this.userService=userService;
+    }
+
+//    public String getCurrentUser(Principal principal){
+//        return principal.getName();
 //    }
-//
-//}
+
+    @PostMapping(value="/introduction")
+    public Long saveIntro(@RequestBody UserDetailSaveDto userDetailSaveDto){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        UserDetails user = (UserDetails)authentication.getPrincipal().getUsername();
+        User user = (User)authentication.getPrincipal();
+        LOGGER.info("id = {}, name = {}", user.getUid(), user.getName());
+        Long saveIntro = userService.saveIntro(user.getUid(), userDetailSaveDto);
+//         userService.saveIntro(userDetailSaveDto);
+        return saveIntro;
+    }
+
+//    @PostMapping("/updateIntroduction")
+//    public String update(UserDetailUpdateDto dto){
+//        UserDetail userDetail = dto.toEntity();
+//        userDetailRepository.save(userDetail);
+//    }
+}

@@ -18,15 +18,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
     private final JwtTokenProvider jwtTokenProvider;
 
-//    @Autowired
-//    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider){
-//        this.jwtTokenProvider = jwtTokenProvider;
-//    }
+    @Autowired
+    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider){
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -38,7 +37,7 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/sign-api/sign-in", "/sign-api/sign-up",
-                        "/sign-api/exception").permitAll()
+                        "/sign-api/exception","/introduction").permitAll()
                 .anyRequest().hasRole("ADMIN")
                 .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
