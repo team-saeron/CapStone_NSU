@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ public class UserController {
         this.userService=userService;
     }
 
+//    @GetMapping("/introduction")
 //    public String getCurrentUser(Principal principal){
 //        return principal.getName();
 //    }
@@ -42,9 +44,9 @@ public class UserController {
     public Long saveIntro(@RequestBody UserDetailSaveDto userDetailSaveDto){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        UserDetails user = (UserDetails)authentication.getPrincipal().getUsername();
-        User user = (User)authentication.getPrincipal();
-        LOGGER.info("id = {}, name = {}", user.getUid(), user.getName());
-        Long saveIntro = userService.saveIntro(user.getUid(), userDetailSaveDto);
+//        User user = (User)authentication.getPrincipal();
+        LOGGER.info("id = {}, name = {}", authentication.getName());
+        Long saveIntro = userService.saveIntro(authentication.getName(), userDetailSaveDto);
 //         userService.saveIntro(userDetailSaveDto);
         return saveIntro;
     }

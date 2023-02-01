@@ -24,7 +24,7 @@ public class ViewController {
         return "member/login";
     }
 
-    @GetMapping("/introduction/{id}")
+    @GetMapping("/introduction")
     public String userDetail(Model model){
         model.addAttribute("userDetailForm", new UserDetailSaveDto());
         return "member/introduction";
