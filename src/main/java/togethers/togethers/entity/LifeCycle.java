@@ -15,5 +15,5 @@ public class LifeCycle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lifeCycle_id;
 
-    private Integer lifeCycle_value;
+    private String lifeCycle_value;
 }
