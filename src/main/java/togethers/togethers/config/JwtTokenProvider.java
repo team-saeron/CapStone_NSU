@@ -14,11 +14,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.util.WebUtils;
 import togethers.togethers.data.dto.UserDetails;
 import togethers.togethers.service.UserDetailsService;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -58,11 +61,11 @@ public class JwtTokenProvider {
         claims.put("roles",roles);
         Date now = new Date(); //여기서 import 타입 Date이 달라서때문은 아니겟징
         String token = Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime()+ tokenValidMillisecond))
-                .signWith(key)
-                .compact();
+                .setClaims(claims) //데이터
+                .setIssuedAt(now) // 토큰 발행 일자
+                .setExpiration(new Date(now.getTime()+ tokenValidMillisecond)) //만료 기간
+                .signWith(key) //secret 값
+                .compact(); // 토큰 생성
         logger.info("createToken 토큰 생성 완료");
         return token;
     }
@@ -81,7 +84,7 @@ public class JwtTokenProvider {
     public String getUsername(String token)
     {
         logger.info("[getUsername] 토큰 기반 회원 구별 정보 추출");
-        String info = Jwts.parserBuilder().setSigningKey(secretKey).build()
+        String info = Jwts.parserBuilder().setSigningKey(key).build()
                 .parseClaimsJws(token).getBody().getSubject();
 
         logger.info("[getUsername] 토큰 기반 회원 구별 정보 추출 완료, info : {}",info);
@@ -91,14 +94,25 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request)
     {
         logger.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
+//        String token=null;
+//        Cookie cookie = WebUtils.getCookie(request,"X-AUTH-TOKEN");
+//        if(cookie != null) token = cookie.getValue();
+//        return token;
+//        response.setHeader(X-AUTH-TOKEN);
+
         return request.getHeader("X-AUTH-TOKEN");
+//        String token = request.getHeader("X-AUTH-TOKEN");
+//        if(StringUtils.hasText(token) &&token.startsWith("Bearer ")){
+//            return token.substring(7);
+//        }
+//        return null;
     }
 
     public boolean validateToken(String token)
     {
         logger.info("[validateToken] 토큰 유효 체크 시작");
         try{
-            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 
             return !claims.getBody().getExpiration().before(new Date());
         }catch (Exception e){

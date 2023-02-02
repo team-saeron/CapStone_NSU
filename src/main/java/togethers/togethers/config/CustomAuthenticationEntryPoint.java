@@ -7,6 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import togethers.togethers.data.dto.EntryPointErrorResponse;
+import togethers.togethers.data.dto.SignInResultDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,10 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationEntryPoint.class);
+
+//    private void content(HttpServletResponse response){
+//        response.setHeader("X-AUTH-TOKEN", SignInResultDto.getToken());
+//    }
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,

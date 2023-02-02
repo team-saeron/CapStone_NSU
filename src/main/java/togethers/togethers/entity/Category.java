@@ -17,9 +17,4 @@ public class Category {
     @Column(length = 50, nullable = false)
     private String area;
 
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "roomType_id")
-//    @Column(unique = true)
-    private RoomType roomType;
 }

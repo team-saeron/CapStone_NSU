@@ -44,12 +44,6 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like>likes = new ArrayList<>();
 
-
-    @OneToOne
-    @JoinColumn(name = "roomType_id")
-    private RoomType roomType;
-
-
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private Category area;

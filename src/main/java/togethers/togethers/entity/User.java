@@ -7,7 +7,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import togethers.togethers.data.dto.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +51,7 @@ public class User implements UserDetails {
     private String email;
 
 //    @Temporal(TemporalType.TIMESTAMP)
-    private String birth;
+    private Date birth;
 
     @Column(length = 30,nullable = false)
     private String nickname;
@@ -69,13 +71,24 @@ public class User implements UserDetails {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @OneToOne()
-    @JoinColumn(name = "userDetail_id")
+    @OneToOne(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserDetail userDetail;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
+//    @Builder
+//    public User(String uid, String password, String name, String phoneNum, String email, String nickname, String role, Date birth){
+//        this.uid=uid;
+//        this.password=password;
+//        this.name=name;
+//        this.phoneNum=phoneNum;
+//        this.email=email;
+//        this.nickname=nickname;
+//        this.roles.add(role);
+//        this.birth=birth;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
