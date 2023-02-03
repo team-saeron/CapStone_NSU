@@ -8,10 +8,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import togethers.togethers.data.dto.SignInRequestDto;
-import togethers.togethers.data.dto.SignInResultDto;
-import togethers.togethers.data.dto.SignUpRequestDto;
-import togethers.togethers.data.dto.SignUpResultDto;
+import togethers.togethers.dto.SignInRequestDto;
+import togethers.togethers.dto.SignInResultDto;
+import togethers.togethers.dto.SignUpRequestDto;
+import togethers.togethers.dto.SignUpResultDto;
 import togethers.togethers.service.SignService;
 import togethers.togethers.service.UserServiceImpl;
 

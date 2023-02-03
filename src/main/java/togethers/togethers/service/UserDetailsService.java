@@ -2,7 +2,7 @@ package togethers.togethers.service;
 
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import togethers.togethers.data.dto.UserDetails;
+import togethers.togethers.dto.UserDetails;
 
 
 public interface UserDetailsService {
