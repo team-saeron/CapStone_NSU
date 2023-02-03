@@ -4,31 +4,6 @@ spring:
  mvc:
   pathmatch:
    matching-strategy: ant_path_matcher
- jwt:
-  security:
-   oauth2:
-    client:
-     registration:
-      kakao:
-       client-id: [ client-id ]
-       redirect-uri: http://localhost:8080/loginKakao
-       client-authentication-method: POST
-       client-secret: [ secret-key ]
-       authorization-grant-type:
-       scope:
-        - profile_nickname
-        - profile_image
-        - account_email
-        - gender
-        - birthday
-       client_name: kakao
-     provider:
-      kakao:
-       authorization-uri: https://kauth.kakao.com/oauth/authorize
-       token-uri: https://kauth.kakao.com/oauth/token
-       user-info-uri: https://kapi.kakao.com/v2/user/me
-       user-name-attribute: id
-  secret: flature!@#appleandseoullovecdafqefaaasadg
  devtools:
   livereload:
    enabled: true
@@ -46,6 +21,9 @@ spring:
   hibernate:
    format_sql: true
    ddl-auto: create
+ jwt:
+  secret: sdioashdoihwqndalsmdhoigoqwgdasldhodwhodhqww
+
 logging:
  level:
   org:

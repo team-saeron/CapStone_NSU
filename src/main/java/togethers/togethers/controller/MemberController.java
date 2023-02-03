@@ -52,8 +52,7 @@ public class MemberController {
 
         UserDetail userDetail = new UserDetail();
 
-        userDetail.setMbti(userDetailForm.getMbti());
-        userDetail.setSelfIntro(userDetailForm.getSelfIntro());
+        userDetail.setMbti(String.valueOf(userDetailForm.getMbti()));
         userDetail.setWish_roommate(userDetailForm.getWish_roommate());
         userDetail.setMonthly_fee(userDetailForm.getMouthly_fee());
         userDetail.setLease_fee(userDetailForm.getLease_fee());

@@ -12,7 +12,6 @@ import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
