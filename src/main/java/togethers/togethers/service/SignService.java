@@ -1,14 +1,12 @@
 package togethers.togethers.service;
 
-import lombok.Getter;
-import org.springframework.stereotype.Service;
-import togethers.togethers.data.dto.SignInRequestDto;
 import togethers.togethers.data.dto.SignInResultDto;
-import togethers.togethers.data.dto.SignUpRequestDto;
 import togethers.togethers.data.dto.SignUpResultDto;
+
+import java.time.LocalDate;
 
 public interface SignService {
 
-    SignUpResultDto signUp(SignUpRequestDto signUpRequestDto);
-    SignInResultDto signIn(SignInRequestDto signInRequestDto) throws RuntimeException;
+    SignUpResultDto signUp(String id, String password, String name, String nickname, String email, String birth, String phoneNum, String role);
+    SignInResultDto signIn(String id, String password) throws RuntimeException;
 }

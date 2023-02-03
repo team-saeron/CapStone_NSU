@@ -1,81 +1,67 @@
 package togethers.togethers.controller;
 
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import togethers.togethers.data.dto.SignInRequestDto;
 import togethers.togethers.data.dto.SignInResultDto;
-import togethers.togethers.data.dto.SignUpRequestDto;
 import togethers.togethers.data.dto.SignUpResultDto;
 import togethers.togethers.service.SignService;
-import togethers.togethers.service.UserServiceImpl;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/sign-api")
 @RequiredArgsConstructor
-@Slf4j
+
 public class SignController {
     private final Logger LOGGER = LoggerFactory.getLogger(SignController.class);
-    private final UserServiceImpl userServiceImpl;
-
     private final SignService signService;
 
-
-    @PostMapping(value="sign-up"/*, consumes = "application/x-www-form-urlencoded"*/)
-    public SignUpResultDto signUp(@RequestBody SignUpRequestDto signUpRequestDto){
-        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",signUpRequestDto.getId(), signUpRequestDto.getName(),signUpRequestDto.getRole(), signUpRequestDto.getEmail(), signUpRequestDto.getPassword(), signUpRequestDto.getNickname(), /*signUpRequestDto.getBirth(),*/ signUpRequestDto.getPhoneNum());
-        SignUpResultDto signUpResultDto = signService.signUp(signUpRequestDto);
-        if(signUpResultDto.getCode()==0)
-            LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", signUpRequestDto.getId());
-        return signUpResultDto;
-    }
-
-//    @PostMapping(value = "/sign-in")
-//    public SignInResultDto signIn(@RequestBody LoginRequestDto dto) {
-//        signService.signIn(dto);
-//        return userService.signIn(dto);
+//    @Autowired
+//    public SignController(SignService signService) {
+//        this.signService = signService;
 //    }
 
     @PostMapping(value = "/sign-in")
-    public SignInResultDto signIn(@RequestBody SignInRequestDto signInRequestDto)throws RuntimeException{
-        LOGGER.info("[signIn] 로그인을 시도하고 있습니다. id : {}, pw : ****", signInRequestDto.getId());
-        SignInResultDto signInResultDto = signService.signIn(signInRequestDto);
+    public SignInResultDto signIn(
+            @ApiParam(value = "ID", required = true) @RequestParam String id,
+            @ApiParam(value = "Password", required = true) @RequestParam String password
+    )throws RuntimeException{
+        LOGGER.info("[signIn] 로그인을 시도하고 있습니다. id : {}, pw : ****", id);
+        SignInResultDto signInResultDto = signService.signIn(id, password);
 
         if(signInResultDto.getCode()==0){
-            LOGGER.info("[signIn] 정상적으로 로그인되었습니다. id : {}, token : {}", signInRequestDto.getId(), signInResultDto.getToken());
-            return signInResultDto;
+            LOGGER.info("[signIn] 정상적으로 로그인되었습니다. id : {}, token : {}", id, signInResultDto.getToken());
         }
         return signInResultDto;
     }
 
+    @PostMapping(value="/sign-up")
+    public SignUpResultDto signUp(
+            @ApiParam(value="ID", required = true) @RequestParam String id,
+            @ApiParam(value="비밀번호", required = true) @RequestParam String password,
+            @ApiParam(value="이름", required = true) @RequestParam String name,
+            @ApiParam(value="권한", required = true) @RequestParam String role,
+            @ApiParam(value="닉네임", required = true) @RequestParam String nickname,
+            @ApiParam(value="이메일", required = true) @RequestParam String email,
+            @ApiParam(value="생일", required = true) @RequestParam String birth,
+            @ApiParam(value="전화번호", required = true) @RequestParam String phoneNum
+    ){
+        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",id, name, role, email, password, nickname, /*birth, */phoneNum);
+        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, nickname, email, birth, phoneNum, role);
 
-//    @PostMapping(value="/sign-up")
-//    public SignUpResultDto signUp(
-//            @ApiParam(value="ID", required = true) @RequestParam String id,
-//            @ApiParam(value="비밀번호", required = true) @RequestParam String password,
-//            @ApiParam(value="이름", required = true) @RequestParam String name,
-//            @ApiParam(value="권한", required = true) @RequestParam String role,
-//            @ApiParam(value="닉네임", required = true) @RequestParam String nickname,
-//            @ApiParam(value="이메일", required = true) @RequestParam String email,
-//            @ApiParam(value="생일", required = true) @RequestParam String birth,
-//            @ApiParam(value="전화번호", required = true) @RequestParam String phoneNum
-//
-//
-//    ){
-//        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",id, name/* role*/, email, password, nickname, birth, phoneNum);
-//        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, nickname, email, birth, phoneNum, role);
-//
-//        LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", id);
-//        return signUpResultDto;
-//    }
+        LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", id);
+        return signUpResultDto;
+    }
 
     @GetMapping(value="/exception")
     public void exceptionTest() throws RuntimeException{
@@ -83,7 +69,7 @@ public class SignController {
     }
 
     @ExceptionHandler(value=RuntimeException.class)
-    public ResponseEntity<Map<String, String>> handle(RuntimeException e){
+    public ResponseEntity<Map<String, String>>  handle(RuntimeException e){
         HttpHeaders responseHeaders = new HttpHeaders();
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
@@ -96,5 +82,4 @@ public class SignController {
 
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
-
 }

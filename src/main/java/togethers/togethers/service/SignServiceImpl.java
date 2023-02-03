@@ -1,6 +1,5 @@
 package togethers.togethers.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,20 +7,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.config.JwtTokenProvider;
-import togethers.togethers.data.dto.SignInRequestDto;
 import togethers.togethers.data.dto.SignInResultDto;
-import togethers.togethers.data.dto.SignUpRequestDto;
 import togethers.togethers.data.dto.SignUpResultDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.repository.UserRepository;
+import togethers.togethers.service.SignService;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 
-
 @Service
-@Slf4j
 public class SignServiceImpl implements SignService {
 
     private final Logger logger = LoggerFactory.getLogger(SignServiceImpl.class);
@@ -39,35 +36,37 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public SignUpResultDto signUp(SignUpRequestDto signUpRequestDto){
-        SignUpResultDto signUpResultDto = new SignUpResultDto();
+    public SignUpResultDto signUp(String id, String password, String name, String nickname, String email,
+                                  String birth, String phoneNum, String role){
         logger.info("[getSignUpResult] 회원 가입 정보 전달");
         User user;
-        if(signUpRequestDto.getRole().equals("admin")) {
+        // 여기에 String --> LocalDateTiem으로 변환하는 메소드 추가
+        if(role.equalsIgnoreCase("admin")) {
             user = User.builder()
-                    .uid(signUpRequestDto.getId())
-                    .name(signUpRequestDto.getName())
-                    .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
-                    .nickname(signUpRequestDto.getNickname())
-                    .email(signUpRequestDto.getEmail())
-//                    .birth(signUpRequestDto.getBirth())
-                    .phoneNum(signUpRequestDto.getPhoneNum())
+                    .uid(id)
+                    .name(name)
+                    .password(passwordEncoder.encode(password))
+                    .nickname(nickname)
+                    .email(email)
+                    .birth(birth)
+                    .phoneNum(phoneNum)
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
         }else{
             user = User.builder()
-                    .uid(signUpRequestDto.getId())
-                    .name(signUpRequestDto.getName())
-                    .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
-                    .nickname(signUpRequestDto.getNickname())
-                    .email(signUpRequestDto.getEmail())
-//                    .birth(signUpRequestDto.getBirth())
-                    .phoneNum(signUpRequestDto.getPhoneNum())
+                    .uid(id)
+                    .name(name)
+                    .password(passwordEncoder.encode(password))
+                    .nickname(nickname)
+                    .email(email)
+                    .birth(birth)
+                    .phoneNum(phoneNum)
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
         }
 
         User savedUser = userRepository.save(user);
+        SignUpResultDto signUpResultDto = new SignUpResultDto();
 
         logger.info("[getSignUpResult] userEntity 값이 들어왔는지 확인 후 결과 값 주입");
         if(!savedUser.getName().isEmpty())
@@ -82,13 +81,13 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public SignInResultDto signIn(SignInRequestDto signInRequestDto) throws RuntimeException {
+    public SignInResultDto signIn(String id, String password) throws RuntimeException {
         logger.info("[getSignInResult] signDataHandler로 회원 정보 요청");
-        User user = userRepository.getByUid(signInRequestDto.getId()).get();
-        logger.info("[getSignInResult] Id : {}",signInRequestDto.getId());
+        User user = userRepository.getByUid(id);
+        logger.info("[getSignInResult] Id : {}",id);
 
         logger.info("[getSignInResult] 패스워드 비교 수행");
-        if(!passwordEncoder.matches(signInRequestDto.getPw(),user.getPassword())){
+        if(!passwordEncoder.matches(password,user.getPassword())){
             throw new RuntimeException();
         }
         logger.info("[getSignResult] 패스워드 일치");
@@ -96,16 +95,14 @@ public class SignServiceImpl implements SignService {
         logger.info("[getSignInResult] SignInResultDto 객체 생성");
 
         SignInResultDto signInResultDto = SignInResultDto.builder()
-                .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()))
+                .token(jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()))
                 .build();
-//        response.setHeader("X-AUTH-TOKEN", signInResultDto.getToken());
         logger.info("[getSignInResult] getSignInResult 객체에 값 주입");
         setSuccessResult(signInResultDto);
 
         return signInResultDto;
 
     }
-
 
     private void setSuccessResult(SignUpResultDto result)
     {
@@ -120,4 +117,10 @@ public class SignServiceImpl implements SignService {
         result.setCode(CommonResponse.FAIL.getCode());
         result.setMsg(CommonResponse.FAIL.getMsg());
     }
+
+//    private LocalDateTime test(String birth)
+//    {
+//        LocalDateTime date = LocalDateTime.parse(birth);
+//        return date;
+//    }
 }
