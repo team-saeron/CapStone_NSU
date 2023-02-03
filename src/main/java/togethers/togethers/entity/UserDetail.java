@@ -13,13 +13,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class UserDetail {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,unique = true)
-    private Long id;
+    @Column(nullable = false,name = "userDetail_id",unique = true)
+    private Long userDetail_id;
 
-    @OneToOne
-    @JoinColumn(name="uid")
+    @OneToOne(mappedBy = "userDetail")
     private User user;
 
     @Column(nullable = false)
@@ -60,7 +60,7 @@ public class UserDetail {
 //    private String room_type;
 
     @Builder
-    public UserDetail(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle, User user ){
+    public UserDetail(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle){
         this.regions=regions;
         this.mbti=mbti;
         this.wish_roommate = wish_roommate;
@@ -71,10 +71,9 @@ public class UserDetail {
         this.smoking = smoking;
         this.life_cycle = life_cycle;
         this.nickname=nickname;
-        this.user=user;
     }
 
-    public static UserDetail createIntro(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle, User user){
+    public static UserDetail createIntro(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle){
         UserDetail userDetail = new UserDetail();
         userDetail.regions=regions;
         userDetail.mbti=mbti;
@@ -86,7 +85,6 @@ public class UserDetail {
         userDetail.smoking = smoking;
         userDetail.life_cycle = life_cycle;
         userDetail.nickname=nickname;
-        userDetail.user = user;
         return userDetail;
     }
 

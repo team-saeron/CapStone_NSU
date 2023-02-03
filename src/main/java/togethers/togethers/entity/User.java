@@ -71,7 +71,8 @@ public class User implements UserDetails {
     private Post post;
 
 
-    @OneToOne(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "userDetail_id")
     private UserDetail userDetail;
 
     @ElementCollection(fetch=FetchType.EAGER)

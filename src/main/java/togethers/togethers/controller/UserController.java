@@ -12,8 +12,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import togethers.togethers.data.dto.UserDetailSaveDto;
-import togethers.togethers.data.dto.UserDetails;
+import togethers.togethers.dto.UserDetailSaveDto;
+import togethers.togethers.dto.UserDetails;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 import togethers.togethers.service.UserService;
@@ -35,25 +35,16 @@ public class UserController {
         this.userService=userService;
     }
 
-//    @GetMapping("/introduction")
-//    public String getCurrentUser(Principal principal){
-//        return principal.getName();
-//    }
+
 
     @PostMapping(value="/introduction")
     public Long saveIntro(@RequestBody UserDetailSaveDto userDetailSaveDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        UserDetails user = (UserDetails)authentication.getPrincipal().getUsername();
         User user = (User)principal;
         LOGGER.info("name = {}, pw={}", user.getUid());
         Long saveIntro = userService.saveIntro(user.getUid(), userDetailSaveDto);
-//         userService.saveIntro(userDetailSaveDto);
         return saveIntro;
     }
 
-//    @PostMapping("/updateIntroduction")
-//    public String update(UserDetailUpdateDto dto){
-//        UserDetail userDetail = dto.toEntity();
-//        userDetailRepository.save(userDetail);
-//    }
+
 }

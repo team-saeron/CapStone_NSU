@@ -31,16 +31,7 @@ public class UserServiceImpl implements UserService{
     }
 
 
-//    public SignInResultDto signIn(LoginRequestDto dto) throws RuntimeException{
-//        User user = userRepository.findByUid(dto.getId()).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 회원입니다."));
-//        if(!passwordEncoder.matches(dto.getPw(), user.getPassword())){
-//            throw new RuntimeException();
-//        }
-//
-//        SignInResultDto signInResultDto = SignInResultDto.builder().token(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()))
-//                .id(user.getId()).build();
-//                return signInResultDto;
-//    }
+
 
     @Override
     @Transactional(readOnly = false)
@@ -49,17 +40,16 @@ public class UserServiceImpl implements UserService{
 
        UserDetail userDetail = UserDetail.createIntro(userDetailSaveDto.getNickname(),userDetailSaveDto.getRegions(),userDetailSaveDto.getMbti(),userDetailSaveDto.getWish_roommate(),
                userDetailSaveDto.getMonthly_fee(),userDetailSaveDto.getLease_fee(),userDetailSaveDto.getSex(),userDetailSaveDto.getPet(),userDetailSaveDto.getSmoking(),
-               userDetailSaveDto.getLife_cycle(),user);
+               userDetailSaveDto.getLife_cycle());
+
+       user.setUserDetail(userDetail);
+       userRepository.save(user);
+
        userDetailRepository.save(userDetail);
-       return userDetail.getId();
+       return userDetail.getUserDetail_id();
     }
 
-//    @Transactional
-//    public User findMember(String memberid)
-//    {
-//        User user = userRepository.getByUid(memberid);
-//        return user;
-//    }
+
 
 
 

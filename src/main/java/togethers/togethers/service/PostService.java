@@ -20,6 +20,7 @@ import togethers.togethers.repository.RoompictureRepository;
 import togethers.togethers.repository.UserRepository;
 
 import java.io.File;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,10 +39,13 @@ public class PostService {
 
     @Transactional(readOnly = false)
     public PostUpResultDto post_save(PostUpRequestDto postUpRequestDto,
-                                     MultipartFile file,String name) throws Exception {
-        logger.info("[post_save] 게시물 저장 로직 시작. id : {}", name);
+                                     MultipartFile file,String Uid) throws Exception {
+        User user = userRepository.findByUid(Uid).orElse(null);
+        logger.info("[post_save] 게시물 저장 로직 시작. id : {}", user.getUid());
 
-        User user = userRepository.getByUid(name).orElse(null);
+
+
+
         PostUpResultDto postUpResultDto;
 
 
