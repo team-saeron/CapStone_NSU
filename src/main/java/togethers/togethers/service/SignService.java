@@ -1,12 +1,12 @@
 package togethers.togethers.service;
 
-import togethers.togethers.data.dto.SignInResultDto;
-import togethers.togethers.data.dto.SignUpResultDto;
-
-import java.time.LocalDate;
+import togethers.togethers.dto.SignInRequestDto;
+import togethers.togethers.dto.SignInResultDto;
+import togethers.togethers.dto.SignUpRequestDto;
+import togethers.togethers.dto.SignUpResultDto;
 
 public interface SignService {
 
-    SignUpResultDto signUp(String id, String password, String name, String nickname, String email, String birth, String phoneNum, String role);
-    SignInResultDto signIn(String id, String password) throws RuntimeException;
+    SignUpResultDto signUp(SignUpRequestDto signUpRequestDto);
+    SignInResultDto signIn(SignInRequestDto signInRequestDto) throws RuntimeException;
 }

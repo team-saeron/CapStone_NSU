@@ -2,16 +2,13 @@ package togethers.togethers.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import togethers.togethers.data.dto.UserDetails;
+import togethers.togethers.dto.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,12 +22,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Table
 //회원 정보
-public class User implements UserDetails{
+public class User implements UserDetails {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable=false, unique=true)
     private String uid;
@@ -52,9 +49,8 @@ public class User implements UserDetails{
     @NotEmpty(message = "이메일을 입력해주세요.")
     private String email;
 
-    @Column(nullable = false)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String birth;
+//    @Temporal(TemporalType.TIMESTAMP)
+    private Date birth;
 
     @Column(length = 30,nullable = false)
     private String nickname;
@@ -74,13 +70,15 @@ public class User implements UserDetails{
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @OneToOne()
-    @JoinColumn(name = "userDetail_id")
+
+    @OneToOne(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserDetail userDetail;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
@@ -114,11 +112,6 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled(){
         return true;
-    }
-
-    @Override
-    public User orElse(Object o) {
-        return null;
     }
 
 }
