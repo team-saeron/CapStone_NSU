@@ -23,23 +23,7 @@ public class UserDetailSaveDto {
     private String sex;
     private String pet;
 
-//    public UserDetail toEntity(){
-//        return new UserDetail(nickname, regions, mbti, wish_roommate, monthly_fee, lease_fee, sex, pet, smoking, life_cycle);
-//    }
 
-//    public UserDetailSaveDto(String mbti, String wish_roommate, int monthly_fee, String nickname, String regions, int lease_fee, String life_cycle, String smoking, String pet, String sex){
-//        this.mbti = mbti;
-//        this.wish_roommate=wish_roommate;
-//        this.monthly_fee = monthly_fee;
-//        this.nickname=nickname;
-//        this.regions=regions;
-//        this.lease_fee=lease_fee;
-//        this.life_cycle=life_cycle;
-//        this.smoking=smoking;
-//        this.pet=pet;
-//        this.sex=sex;
-//    }
-//
     public UserDetail toEntity(User user){
         return UserDetail.builder()
                 .nickname(nickname)
@@ -52,7 +36,6 @@ public class UserDetailSaveDto {
                 .smoking(smoking)
                 .sex(sex)
                 .pet(pet)
-                .user(user)
                 .build();
     }
 }

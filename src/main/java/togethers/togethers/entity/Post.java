@@ -1,16 +1,39 @@
 package togethers.togethers.entity;
 
-import lombok.Data;
-import togethers.togethers.service.form.Postform;
+import lombok.*;
+import togethers.togethers.dto.PostUpRequestDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 @Entity
-@Data
+@Getter
+@Setter
 public class Post {
+
+    public Post(){};
+
+    public Post(PostUpRequestDto postUpRequestDto)
+    {
+        this.title = postUpRequestDto.getTitle();
+        this.context = postUpRequestDto.getText();
+        this.publishDate = new Date();
+        this.lease = postUpRequestDto.getLease();
+        this.mouthly = postUpRequestDto.getMouthly();
+
+        if(postUpRequestDto.getGetType()==true) //true면 룸메만 구하는 경우, false면 룸메랑 집을 구하는경우
+            this.RoomMate_type = 0;
+        else
+            this.RoomMate_type = 1;
+
+        if(postUpRequestDto.getRoomType()==true) //true면 월세, false면 전세
+            this.RoomPay_type = 0;
+        else
+            this.RoomPay_type = 1;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +44,7 @@ public class Post {
     private User user;
 
 
+
     private String title;
 
 
@@ -28,7 +52,7 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String context;
 
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
 
 
@@ -38,7 +62,8 @@ public class Post {
     private String lease;
 
 
-    private int get_type;
+    private Integer RoomMate_type;
+    private Integer RoomPay_type;
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -59,32 +84,8 @@ public class Post {
 
     //postForm을 받아와 Post생성자를 통해 DB에 저장할 Post 생성
 
-    public Post(){};
-    public Post(Postform postform)
-    {
-        this.title = postform.getTitle();
-        if(postform.isGetType()==true)
-        {
-            this.get_type = 0;
-        }
-        else {
-            this.get_type = 1;
-        }
 
-        this.mouthly = postform.getMouthly();
-        this.lease = postform.getLease();
-        this.context = postform.getText();
-        this.publishDate = new Date();
-    }
 
-    public Post(Long post_id, String title, String context, Date publishDate, String mouthly, String lease) {
-        this.post_id = post_id;
-        this.title = title;
-        this.context = context;
-        this.publishDate = publishDate;
-        this.mouthly = mouthly;
-        this.lease = lease;
-    }
 
 
 }

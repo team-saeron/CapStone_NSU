@@ -70,24 +70,16 @@ public class User implements UserDetails {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @OneToOne(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @OneToOne
+    @JoinColumn(name = "userDetail_id")
     private UserDetail userDetail;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
-//    @Builder
-//    public User(String uid, String password, String name, String phoneNum, String email, String nickname, String role, Date birth){
-//        this.uid=uid;
-//        this.password=password;
-//        this.name=name;
-//        this.phoneNum=phoneNum;
-//        this.email=email;
-//        this.nickname=nickname;
-//        this.roles.add(role);
-//        this.birth=birth;
-//    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){

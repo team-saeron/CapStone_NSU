@@ -33,6 +33,7 @@ public class JwtTokenProvider {
     private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsService userDetailsService;
 
+
     @Value("${spring.jwt.secret}")
     private String secretKey = "secretKey";
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);

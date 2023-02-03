@@ -38,11 +38,7 @@ public class SignController {
         return signUpResultDto;
     }
 
-//    @PostMapping(value = "/sign-in")
-//    public SignInResultDto signIn(@RequestBody LoginRequestDto dto) {
-//        signService.signIn(dto);
-//        return userService.signIn(dto);
-//    }
+
 
     @PostMapping(value = "/sign-in")
     public SignInResultDto signIn(@RequestBody SignInRequestDto signInRequestDto)throws RuntimeException{
@@ -57,25 +53,7 @@ public class SignController {
     }
 
 
-//    @PostMapping(value="/sign-up")
-//    public SignUpResultDto signUp(
-//            @ApiParam(value="ID", required = true) @RequestParam String id,
-//            @ApiParam(value="비밀번호", required = true) @RequestParam String password,
-//            @ApiParam(value="이름", required = true) @RequestParam String name,
-//            @ApiParam(value="권한", required = true) @RequestParam String role,
-//            @ApiParam(value="닉네임", required = true) @RequestParam String nickname,
-//            @ApiParam(value="이메일", required = true) @RequestParam String email,
-//            @ApiParam(value="생일", required = true) @RequestParam String birth,
-//            @ApiParam(value="전화번호", required = true) @RequestParam String phoneNum
-//
-//
-//    ){
-//        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}, password : {}, email : {}, birth : {}, nickname : {}, phoneNum : {}",id, name/* role*/, email, password, nickname, birth, phoneNum);
-//        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, nickname, email, birth, phoneNum, role);
-//
-//        LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", id);
-//        return signUpResultDto;
-//    }
+
 
     @GetMapping(value="/exception")
     public void exceptionTest() throws RuntimeException{
