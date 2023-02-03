@@ -1,4 +1,4 @@
-package togethers.togethers.data.dto;
+package togethers.togethers.dto;
 
 public class UserDetailUpdateDto {
 }

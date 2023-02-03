@@ -8,15 +8,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.config.JwtTokenProvider;
-import togethers.togethers.data.dto.SignInRequestDto;
-import togethers.togethers.data.dto.SignInResultDto;
-import togethers.togethers.data.dto.SignUpRequestDto;
-import togethers.togethers.data.dto.SignUpResultDto;
+import togethers.togethers.dto.SignInRequestDto;
+import togethers.togethers.dto.SignInResultDto;
+import togethers.togethers.dto.SignUpRequestDto;
+import togethers.togethers.dto.SignUpResultDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.repository.UserRepository;
 
 
-import java.sql.Date;
 import java.util.Collections;
 
 @Service

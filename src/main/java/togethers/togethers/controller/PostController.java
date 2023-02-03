@@ -1,85 +1,66 @@
 package togethers.togethers.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import togethers.togethers.dto.PostUpRequestDto;
+import togethers.togethers.dto.PostUpResultDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
-import togethers.togethers.service.UserServiceImpl;
-import togethers.togethers.service.form.Postform;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
-@Controller
-@RequiredArgsConstructor
+@RestController
+@Slf4j
 public class PostController {
 
-    private UserServiceImpl userServiceImpl;
-
-
+    private final Logger LOGGER = LoggerFactory.getLogger(PostController.class);
     private final PostService postService;
-    @GetMapping("/write")
-    public String postFormCreate(Model model, Postform postform){
-        model.addAttribute("Postform",postform);
-        return "write";
+
+    @Autowired
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
 
-    @PostMapping("/write")
-    public String PostCreate(@Valid Postform postform, MultipartFile file)throws Exception
+    @PostMapping(value = "/write")
+    public PostUpResultDto PostWrite(@Valid PostUpRequestDto postUpRequestDto, MultipartFile file) throws Exception
     {
-//        Member member = memberService.findMember("akahd135");
-////        Post post = new Post(postform);
-////        memberService.post_write(post);
-////        memberService.Member_Post(post,member.getId());
-////        return "redirect:/";
+        LOGGER.info("[PostController] PostController 동작");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-//        Member member = memberService.findMember("akahd135");
+        Object principal = authentication.getPrincipal();
 
-        String memberid = "akahd135";
-        postService.post_save(postform,file);
+        User userDetails = (User)principal;
+        LOGGER.info("userDetails:{}",userDetails.getUsername());
 
-        return "redirect:/";
-    }
+        PostUpResultDto postUpResultDto = postService.post_save(postUpRequestDto, file, userDetails.getUid());
 
-    @GetMapping("/postlist")
-    public String postlist()
-    {
-        return "post/postlist";
+        return postUpResultDto;
     }
 
 
-//    @GetMapping("/detailPost")
-//    public String detailPost(Model model)
-//    {
-//        User user = userServiceImpl.findMember("akahd135");//회원의 아이디를 조회
-//
-//
-//        Long post_id = user.getPost().getPost_id();
-//
-//
-//        //회원이 작성한 post를 memberPost에 받아옴
-////        Post memberPost = memberService.findPost(post_id);
-//
-////        model.addAttribute("post",memberPost);
-//        model.addAttribute("member",user);
-//
-//        return "post/detailPost";
-//
-//    }
+    @ExceptionHandler(value=IllegalStateException.class)
+    public ResponseEntity<Map<String, String>> handle(IllegalStateException e){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
-//    @GetMapping("/findPost")
-//    public String findPost(Model model)
-//    {
-//        Post findpost = memberService.findPost(1L);
-//        model.addAttribute("post",findpost);
-//        return "/test";
-//    }
+        LOGGER.error("ExceptionHandler 호출, {}, {}", e.getCause(), e.getMessage());
 
+        Map<String, String> map = new HashMap<>();
+        map.put("error type", httpStatus.getReasonPhrase());
+        map.put("code", "400");
+        map.put("message", "사용자가 이미 게시물 존재합니다");
 
-
-
-
+        return new ResponseEntity<>(map, responseHeaders, httpStatus);
+    }
 }

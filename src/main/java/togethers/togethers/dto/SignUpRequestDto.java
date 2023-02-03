@@ -1,4 +1,4 @@
-package togethers.togethers.data.dto;
+package togethers.togethers.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

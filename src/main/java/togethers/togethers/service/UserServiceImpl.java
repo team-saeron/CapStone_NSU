@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.JwtTokenProvider;
-import togethers.togethers.data.dto.UserDetailSaveDto;
+import togethers.togethers.dto.UserDetailSaveDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 import togethers.togethers.repository.UserDetailRepository;
