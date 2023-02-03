@@ -2,6 +2,7 @@ package togethers.togethers.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
+import togethers.togethers.entity.User;
 
 import javax.persistence.Access;
 import java.io.Serializable;
@@ -16,4 +17,6 @@ public interface UserDetails extends Serializable {
     boolean isAccountNonLocked();
     boolean isCredentialsNonExpired();
     boolean isEnabled();
+
+    User orElse(Object o);
 }

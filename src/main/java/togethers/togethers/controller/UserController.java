@@ -42,11 +42,11 @@ public class UserController {
 
     @PostMapping(value="/introduction")
     public Long saveIntro(@RequestBody UserDetailSaveDto userDetailSaveDto){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        UserDetails user = (UserDetails)authentication.getPrincipal().getUsername();
-//        User user = (User)authentication.getPrincipal();
-        LOGGER.info("id = {}, name = {}", authentication.getName());
-        Long saveIntro = userService.saveIntro(authentication.getName(), userDetailSaveDto);
+        User user = (User)principal;
+        LOGGER.info("name = {}, pw={}", user.getUid());
+        Long saveIntro = userService.saveIntro(user.getUid(), userDetailSaveDto);
 //         userService.saveIntro(userDetailSaveDto);
         return saveIntro;
     }

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Table
 //회원 정보
-public class User implements UserDetails {
+public class User implements UserDetails{
 
 
     @Id
@@ -114,6 +114,11 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled(){
         return true;
+    }
+
+    @Override
+    public User orElse(Object o) {
+        return null;
     }
 
 }
