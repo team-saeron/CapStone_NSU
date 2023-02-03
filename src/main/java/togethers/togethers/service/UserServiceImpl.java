@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional(readOnly = false)
-    public Long saveIntro(String name, UserDetailSaveDto userDetailSaveDto){
-       User user = userRepository.getByName(name).orElse(null);
+    public Long saveIntro(String id, UserDetailSaveDto userDetailSaveDto){
+       User user = userRepository.getByUid(id).orElse(null);
 
        UserDetail userDetail = UserDetail.createIntro(userDetailSaveDto.getNickname(),userDetailSaveDto.getRegions(),userDetailSaveDto.getMbti(),userDetailSaveDto.getWish_roommate(),
                userDetailSaveDto.getMonthly_fee(),userDetailSaveDto.getLease_fee(),userDetailSaveDto.getSex(),userDetailSaveDto.getPet(),userDetailSaveDto.getSmoking(),
