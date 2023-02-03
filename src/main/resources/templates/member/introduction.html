@@ -12,21 +12,22 @@
 
 
         <table >
+            <form id="userDetailForm" th:action="@{/introduction}" th:object="${userDetailForm}" th:method="POST">
             <tr><td class="detail_name"><h4>닉네임</h4></td>
                 <div class="column">
-                    <td><input type="text" placeholder="닉네임"></td>
+                    <td><input type="text" name="nickname" placeholder="닉네임"></td>
                 </div>
             </tr>
             <tr><td class="detail_name"><h4>성별(필수)</h4></td>
         <div class="column">
-            <td><input type="radio" name="chk_info" value="남">남</input>
-            <input type="radio" name="chk_info" value="여">여</input></td>
+            <td><input type="radio" name="sex"value="남">남</input>
+            <input type="radio" name="sex" value="여">여</input></td>
             </div>
             </tr>
             <tr>
                 <td class="detail_name"><h4>희망지역</h4></td>
             <div class="column">
-            <td><select class="select" title="지역 선택">
+            <td><select name="regions" class="select" title="지역 선택">
                 <option value="">-선택-</option>
                 <option value="강남구">강남구</option>
                 <option value="송파구">송파구</option>
@@ -38,7 +39,7 @@
 
                <tr><td class="detail_name"><h4>보증금 예산(필수)</h4></td>
             <div class="column">
-                <td><input class="deposit_value" type="range" name="deposit" step="100" min="200" max="100000000" oninput="document.getElementById('deposit_value').innerHTML=this.value;">
+                <td><input class="deposit_value" type="range" name="lease_fee" step="100" min="200" max="100000000" oninput="document.getElementById('deposit_value').innerHTML=this.value;">
                 <span id="deposit_value">200</span>
                 </input></td>
             </div>
@@ -46,7 +47,7 @@
 
                <tr> <td class="detail_name"><h4>월세 예산(필수)</h4></td>
             <div class="column">
-               <td> <input class="monthlyRent_value" type="range" name="monthly_rent" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
+               <td> <input class="monthlyRent_value" type="range" name="monthly_fee" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
                    <span id="monthlyRent_value">40</span></td>
                 </input>
 </div>
@@ -54,24 +55,28 @@
 
 
             <tr>
-                <td class="detail_name"><h4>Mbti(필수)</h4></td>
+                <td class="detail_name">
+                    <h4>Mbti(필수)</h4></td>
                 <div class="column">
-                <td><div class="mbti_chk">
-                    <input type="radio" name="chk_info" value="외향적(E)">외향적(E)</input>
-                    <input type="radio" name="chk_info" value="내향적(I)">내향적(I)</input>
-                </div>
-                    <div class="mbti_chk">
-                        <input type="radio" name="chk_info" value="현실적(S)">현실적(S)</input>
-                        <input type="radio" name="chk_info" value="이상적(N)">이상적(N)</input>
-                    </div>
-                    <div class="mbti_chk">
-                        <input type="radio" name="chk_info" value="이성적(T)">이성적(T)</input>
-                        <input type="radio" name="chk_info" value="감성적(F)">감성적(F)</input>
-                    </div>
-                    <div class="mbti_chk">
-                        <input type="radio" name="chk_info" value="계획적(J)">계획적(J)</input>
-                        <input type="radio" name="chk_info" value="즉흥적(P)">즉흥적(P)</input>
-                    </div></td>
+                <td><select class="select" title="mbti 선택" name="mbti">
+                    <option value="">-선택-</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="ISFJ">ISFJ</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="INFP">INFP</option>
+                    <option value="INTP">INTP</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ESFP">ESFP</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ENTJ">ENTJ</option>
+                </select></td>
                 </div></tr>
 
 
@@ -81,16 +86,16 @@
                 <div class="column">
                     <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option1">
-                        <label class="form-check-label" for="inlineCheckbox6">좋아요</label>
+                        <input class="form-check-input" name="pet" type="radio" id="pet1" value="좋아요">
+                        <label class="form-check-label" for="pet1">좋아요</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option2">
-                        <label class="form-check-label" for="inlineCheckbox7">싫어요</label>
+                        <input class="form-check-input" name="pet" type="radio" id="pet2" value="싫어요">
+                        <label class="form-check-label" for="pet2">싫어요</label>
                     </div>
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option1">
-                    <label class="form-check-label" for="inlineCheckbox8">상관없어요</label>
+                    <input class="form-check-input" name="pet" type="radio" id="pet3" value="상관없어요" th:checked="checked">
+                    <label class="form-check-label" for="pet3">상관없어요</label>
                     </div>
                 </td>
 
@@ -102,15 +107,15 @@
            <td class="detail_name"><h4>흡연</h4></td>
            <div class="column">
                <td><div class="form-check form-check-inline">
-                   <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option1">
-                   <label class="form-check-label" for="inlineCheckbox3">좋아요</label>
+                   <input class="form-check-input" name="smoking"  type="radio"  id="smoking1" value="좋아요">
+                   <label class="form-check-label">좋아요</label>
                </div>
                <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
-                   <label class="form-check-label" for="inlineCheckbox4">싫어요</label>
+                   <input class="form-check-input" name="smoking" type="radio" id="smoking2" value="싫어요">
+                   <label class="form-check-label" for="smoking2">싫어요</label>
                </div><div class="form-check form-check-inline">
-               <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option1">
-               <label class="form-check-label" for="inlineCheckbox5">상관없어요</label>
+               <input class="form-check-input" name="smoking" type="radio" id="smoking3" value="상관없어요" th:checked="checked">
+               <label class="form-check-label" for="smoking3">상관없어요</label>
            </div>
                </td>
            </div></tr>
@@ -120,12 +125,12 @@
                 <td class="detail_name"><h4>생활패턴</h4></td>
             <div class="column">
                 <td><div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                    <label class="form-check-label" for="inlineCheckbox1">아침형</label>
+                    <input class="form-check-input" name="life_Cycle" type="radio" id="lifeCycle1" value="아침형" th:checked="checked">
+                    <label class="form-check-label" for="lifeCycle1">아침형</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                    <label class="form-check-label" for="inlineCheckbox2">야행성</label>
+                    <input class="form-check-input" name="life_Cycle" type="radio" id="lifeCycle2" value="야행성">
+                    <label class="form-check-label" for="lifeCycle2">야행성</label>
                 </div>
                 </td>
             </div>
@@ -134,12 +139,13 @@
                 <td class="detail_name"><h4>내가 원하는 룸메이트</h4></td>
             <div class="column">
                 <td><div class="form-group">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea name="wish_roommate" class="form-control" id="wishroomate1" rows="3"></textarea>
                 </div>
 
-                <button type="button" class="btn btn-primary btn-lg btn-block">확인</button></td>
+                <button type="submit" id="btn" class="btn btn-primary btn-lg btn-block">확인</button></td>
         </div>
         </tr>
+            </form>
             </table>
         </div>
 <!--</form>-->

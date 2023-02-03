@@ -12,7 +12,7 @@ import java.sql.Date;
 @Data
 public class MemberForm {
 
-    private String id;
+    private String uid;
     private String email;
     private String name;
     private String password;

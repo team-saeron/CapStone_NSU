@@ -8,11 +8,11 @@
 <th:block layout:fragment="content">
     <div class="container">
     <div class="member_login">
-        <form class="login_column" th:action="@{/login}" th:object="${loginForm}" th:method="POST">
+        <form class="login_column" th:action="@{/sign-api/sign-in}" th:object="${loginForm}" th:method="POST">
             <h1>Log-in</h1>
             <div class="login_id">
                 <h4>ID</h4>
-                <input class="login_input" type="text"  name="loginId" placeholder="ID"
+                <input class="login_input" type="text"  name="id" placeholder="ID"
                 th:errorclass="field-error">
                 <div class="field-error" th:errors="*{loginId}"/>
             </div>
