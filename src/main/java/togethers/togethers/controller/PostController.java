@@ -40,10 +40,10 @@ public class PostController {
 
         Object principal = authentication.getPrincipal();
 
-        User userDetails = (User)principal;
-        LOGGER.info("userDetails:{}",userDetails.getUsername());
+        User user = (User)principal;
+        LOGGER.info("User Uid:{}",user.getUid());
 
-        PostUpResultDto postUpResultDto = postService.post_save(postUpRequestDto, file, userDetails.getUid());
+        PostUpResultDto postUpResultDto = postService.post_save(postUpRequestDto, file, user.getUid());
 
         return postUpResultDto;
     }
