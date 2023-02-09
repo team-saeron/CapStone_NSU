@@ -31,9 +31,9 @@ public class HomeController {
         return "join";
     }
 
-    @GetMapping("/write")
-    public String write(){
-        return "write";
+    @GetMapping("/writeMonth")
+    public String writeMonth(){
+        return "writeMonth";
     }
 
     @GetMapping("/choose")
@@ -41,7 +41,15 @@ public class HomeController {
         return "choose";
     }
 
+    @GetMapping("/chooseType")
+    public String chooseType(){
+        return "chooseType";
+    }
 
+    @GetMapping("/writeBeforePay")
+    public String writeBeforePay(){
+        return "writeBeforePay";
+    }
 
 
 

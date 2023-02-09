@@ -19,6 +19,7 @@ color:#432874;
 
 #header__logo{
     color:#432874;
+    position:fixed;
 }
 .navbar navbar-expand-lg bg-light{
 margin-top:10%;
@@ -53,9 +54,13 @@ display:inline-block;
 
 .nav-link{
 color:#432874;
+
 }
 
 .nav-link:hover{
 background-color:white;
 color:black;
+}
+.navbar-toggler{
+position:fixed;
 }

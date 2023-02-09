@@ -4,6 +4,7 @@
 margin-bottom:30px;
 }
 .mail_column{
+border:1px solid rgba(160,160,160,0.3);
 position:relative;
 display:flex;
 justify-content:center;
@@ -14,8 +15,8 @@ margin-right:550px;
 padding-top:200px;
 padding-bottom:50px;
 height:500px;
-background-color:#2D88BC;
-border-radius:5px;
+border-radius:8px;
+width:550px;
 
 }
 
@@ -27,6 +28,7 @@ border-radius:8px;
 border:1px solid;
 color:#397089;
 opacity:0.4;
+border:1px solid rgba(160,160,160);
 
 }
 
@@ -34,13 +36,13 @@ opacity:0.4;
 text-align:center;
 position:absolute;
 top:80px;
-left:150px;
+left:155px;
 }
 
 .mail_sub{
 
 border-radius:22px;
-background-color:#00436B;
+background-color:#bf81a6;
 }
 
 .mail_href{
@@ -48,7 +50,7 @@ display:flex;
 justify-content:space-between;
 }
 .mail_email,.mail_pw{
-color:white;
+color:gray;
 }
 
 

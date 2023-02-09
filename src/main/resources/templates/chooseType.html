@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/post/chooseType.css" />
+</th:block>
+
+<th:block layout:fragment="content">
+
+
+    <div class="container">
+       <div class="ch_tit"> <h1>어느 타입을 구하시나요?</h1> </div>
+            <div class="choose" >
+                <button type="button" class="ch_m" onclick="location.href='/writeMonth';">월세구하기</button>
+                <button type="button" class="ch_a" onclick="location.href='/writeBeforePay';">전세구하기</button>
+
+            </div>
+
+    </div>
+</th:block>

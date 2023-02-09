@@ -18,7 +18,7 @@ ul{
 .ph_wrapper{
 background-color:#987095;
 margin-right:50px;
-width:20%;
+width:310px;
 height:300px;
 text-align:center;
 }
@@ -26,13 +26,15 @@ text-align:center;
 .mail_wrapper{
 background-color:#987095;
 margin-left:50px;
-width:20%;
+width:310px;
 height:300px;
 text-align:center;
+
 }
 .fa-mobile-screen-button,.fa-envelope{
 color:white;
 line-height:280px;
+
 
 }
 .tit_mail,.tit_ph{

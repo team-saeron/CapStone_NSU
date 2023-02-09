@@ -8,7 +8,7 @@
 
 <th:block layout:fragment="content">
 
-  <body>
+
   <div class="container">
 
     <div class="slider"> <!--이미지를 담고 있는 div-->
@@ -94,51 +94,9 @@
 
     </div>
 
-    <!-- 댓글 html-->
-    <div class="comment">
-
-      <!-- 내가 적는 댓글 칸-->
-      <div class="my_comment">
-        <form action="post">
-          <fieldset>
-            <div class="my_inner_commnet">
-
-              <div class="my_id">
-                <i class="fa-solid fa-user fa fa-2x"></i>
-                마몽
-              </div>
-              <div class="my_text">
-                    <textarea rows="3" cols="30" placeholder="댓글을 작성하세요"
-                              class="my_textarea"></textarea>
-              </div>
-              <div class="text_submit">
-                <button type="submit">등록</button>
-              </div>
-            </div>
-          </fieldset>
-        </form>
-      </div>
 
 
-      <!--다른 사람이 작성한 댓글 칸 -->
-      <div class="other_comment">
-        <ul>
-          <legend><strong>댓글</strong></legend>
-          <li>
-            <div class="other_inner_comment">
-              <div class="other_id">
-                <i class="fa-solid fa-user fa fa-2x"></i>
-                정호균
-              </div>
-              <div class="other_text">
-                <span >이집 마음에 들어요!</span>
-              </div>
-            </div>
-          </li>
 
-
-        </ul>
-      </div>
 
     </div>
   </div>
@@ -178,11 +136,30 @@
         }
         slide();
         setInterval(slide,3000);
+
     </script>
+  <div id="disqus_thread"></div>
+  <script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://together-4.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 
 
 
-  </body>
 </th:block>
 </html>

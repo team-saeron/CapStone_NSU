@@ -49,6 +49,21 @@ height:120px;
 }
 
 #notice_box{
+margin-top:40px;
 margin-right:60px;
  border-top solid 35px;
+}
+#notice_box>table{
+font=size:0.9em;
+color:#666;
+width:430px;
+margin-left:20px;
+border-collapse:collapse;
+}
+#notice_box>table tr>th{
+padding:5px 0;
+}
+
+#notice_box>table tr>td{
+padding:5px;
 }

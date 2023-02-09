@@ -1,8 +1,10 @@
 @CHARSET "UTF-8";
 
 .write_container{
-background-color:#f1eaf1;
 margin: 0 auto;
+margin-left:450px;
+height:980px;
+margin-top:-110px;
 }
 
 .write_wrapper{
@@ -10,16 +12,22 @@ display:flex;
 justify-content:center;
 align-items:center;
 text-align:center
-width:50%;
-height:100%;
+width:800px;
+height:1100px;
 
 }
-
+.write_column{
+position:relative;
+}
 .write_submit{
-width:15%;
+
+width:150px;
 height:50px;
 float:right;
-margin-right:520px;
+position:absolute;
+top:-10px;
+right:420px;
+
 }
 #write-img{
 width:30%;
@@ -62,4 +70,10 @@ left:20px;
 
 textarea{
 resize:none;
+width:500px;
+}
+.answer{
+margin-top:150px;
+display:absolute;
+margin-left:-80px;
 }
