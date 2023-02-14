@@ -7,6 +7,7 @@
 text-align:center;
 background-color:none;
 width:100%;
+position:relative;
 }
 .header__colum{
     display:flex;
@@ -20,6 +21,8 @@ color:#432874;
 #header__logo{
     color:#432874;
     position:fixed;
+    position:absolute;
+    left:-100px;
 }
 .navbar navbar-expand-lg bg-light{
 margin-top:10%;
@@ -54,13 +57,19 @@ display:inline-block;
 
 .nav-link{
 color:#432874;
-
+position:absolute;
+left:-100px;
 }
 
 .nav-link:hover{
 background-color:white;
 color:black;
+
 }
 .navbar-toggler{
 position:fixed;
+position:absolute;
+left:-110px;
+top:20px;
+
 }

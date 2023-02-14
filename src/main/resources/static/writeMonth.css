@@ -5,6 +5,7 @@ margin: 0 auto;
 margin-left:450px;
 height:980px;
 margin-top:-110px;
+
 }
 
 .write_wrapper{
@@ -14,6 +15,7 @@ align-items:center;
 text-align:center
 width:800px;
 height:1100px;
+position:relative;
 
 }
 .write_column{
@@ -76,4 +78,11 @@ width:500px;
 margin-top:150px;
 display:absolute;
 margin-left:-80px;
+}
+.write__price{
+width:150px;
+margin-left:10px;
+}
+.write_price{
+margin-left:-10px;
 }
