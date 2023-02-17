@@ -171,11 +171,22 @@ public class PostService {
 
 
     @Transactional
-    public Page<Post> postList(Pageable pageable)
+    public DetailPostDto detail_post(Post post, RoomPicture photo,List<Reply>replies)
     {
-        logger.info("[postList] 게시무루 목록 조회 로직 동작.");
-        return postRepository.findAll(pageable);
+
+        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{}",post.getPostId());
+        DetailPostDto detailPostDto = DetailPostDto.builder()
+                .title(post.getTitle())
+                .context(post.getContext())
+                .photo_name(photo.getFilename())
+                .photo_path(photo.getFilepath())
+                .replies(replies)
+                .build();
+
+        return detailPostDto;
     }
+
+
 
 
     public Long photo_save(Long post_id, MultipartFile file)throws Exception //이미지 저장로직

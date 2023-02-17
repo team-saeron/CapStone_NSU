@@ -17,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import togethers.togethers.dto.PostDeleteResultDto;
-import togethers.togethers.dto.PostEditRequestDto;
-import togethers.togethers.dto.PostUpRequestDto;
-import togethers.togethers.dto.PostUpResultDto;
+import togethers.togethers.dto.*;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.RoomPicture;
@@ -137,8 +134,30 @@ public class PostController {
         return postDeleteResultDto;
     }
 
-        @ExceptionHandler(value=IllegalStateException.class)
-        public ResponseEntity<Map<String, String>> handle(IllegalStateException e){
+    @GetMapping(value = "/post/detailPost")
+    public void post_detailPost(Long PostId)
+    {
+        LOGGER.info("[post_detailPost] 게시물 세부사항 관련 로직 동작 PostId:{}",PostId);
+
+        Post post = postService.findPost(PostId);
+        RoomPicture photo = postService.findPhoto(PostId);
+        List<Reply> replies = postService.findReply(PostId);
+
+        DetailPostDto detailPostDto = postService.detail_post(post, photo, replies);
+
+        System.out.println("*************************************************************************");
+        System.out.println(detailPostDto.getTitle());
+        System.out.println(detailPostDto.getContext());
+        System.out.println(detailPostDto.getPhoto_path());
+        for (Reply reply : detailPostDto.getReplies()) {
+            System.out.println(reply.getComment());
+        }
+    }
+
+
+
+    @ExceptionHandler(value=IllegalStateException.class)
+    public ResponseEntity<Map<String, String>> handle(IllegalStateException e){
         HttpHeaders responseHeaders = new HttpHeaders();
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
@@ -153,5 +172,5 @@ public class PostController {
     }
 
 
-    }
+}
 

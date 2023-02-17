@@ -56,9 +56,9 @@ public class User implements UserDetails {
     private String nickname;
 
     // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @Builder.Default()
-    private List<Like>likes = new ArrayList<>();
+//    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @Builder.Default()
+//    private List<Like>likes = new ArrayList<>();
 
     // 사용자가 댓글을 달은 DB와 연관관계 설정
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

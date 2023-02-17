@@ -24,6 +24,12 @@ spring:
   hibernate:
    format_sql: true
    ddl-auto: update
+ servlet:
+  multipart:
+   maxFileSize: 10MB
+   maxRequestSize: 20MB
+   enabled: true
+
 logging:
  level:
   org:
