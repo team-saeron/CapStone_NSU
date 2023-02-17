@@ -12,7 +12,9 @@ public class PostUpRequestDto {
     private String title;
     private Boolean getType;
     private Boolean roomType;
-    private String mouthly;
+    private String mounthly;
     private String lease;
-    private String text;
+    private String context;
+
+
 }

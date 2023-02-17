@@ -2,6 +2,7 @@ package togethers.togethers.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import togethers.togethers.dto.ReplyRequestDto;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +10,14 @@ import java.util.Date;
 @Entity
 @Data
 public class Reply {
+
+    public Reply (){};
+
+    public Reply(ReplyRequestDto replyRequestDto)
+    {
+        this.comment = replyRequestDto.getComment();
+        this.publishedDate = replyRequestDto.getPublishedDate();
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)

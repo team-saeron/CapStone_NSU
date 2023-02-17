@@ -4,8 +4,6 @@ import lombok.*;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 
-import javax.persistence.Column;
-
 @Getter
 @Setter
 @Builder
@@ -20,7 +18,7 @@ public class UserDetailSaveDto {
     private int lease_fee;
     private String life_cycle;
     private String smoking;
-    private String sex;
+    private String gender;
     private String pet;
 
 
@@ -34,7 +32,7 @@ public class UserDetailSaveDto {
                 .lease_fee(lease_fee)
                 .life_cycle(life_cycle)
                 .smoking(smoking)
-                .sex(sex)
+                .sex(gender)
                 .pet(pet)
                 .build();
     }
