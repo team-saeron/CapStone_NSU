@@ -115,4 +115,12 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public User orElse(Object o) {
+        return null;
+    }
+
+    public User get() {
+        return null;
+    }
 }
