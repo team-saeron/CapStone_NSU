@@ -7,8 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper=false)
-public class PostUpResultDto extends SignUpResultDto{
-
+public class PostUpResultDto extends BaseResultDto{
     private String title;
     private String context;
 
@@ -19,4 +18,5 @@ public class PostUpResultDto extends SignUpResultDto{
         this.title = title;
         this.context = context;
     }
+
 }
