@@ -81,7 +81,7 @@ public class Post {
 
 
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Reply>replies = new ArrayList<>();
 
     //postForm을 받아와 Post생성자를 통해 DB에 저장할 Post 생성

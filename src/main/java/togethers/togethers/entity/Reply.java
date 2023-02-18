@@ -34,7 +34,7 @@ public class Reply {
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishedDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name ="post_id")
     private Post post;
 }
