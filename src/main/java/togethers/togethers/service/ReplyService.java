@@ -63,14 +63,26 @@ public class ReplyService {
     }
 
     @Transactional
-    public ReplyDeleteResultDto reply_delete(Long PostId,Long UserId)
+    public ReplyDeleteResultDto reply_delete(Long PostId,Long UserId,Long ReplyId)
     {
-        logger.info("[reply_delete] 댓글 삭제 로직 동작. postId:{}, userId:{}",PostId,UserId);
-        replyRepository.deleteByPost_PostIdAndUser_Id(PostId,UserId);
-
         ReplyDeleteResultDto replyDeleteResultDto = new ReplyDeleteResultDto();
+        replyDeleteResultDto.setUserId(UserId);
+        replyDeleteResultDto.setReplyId(ReplyId);
 
-        setSuccessResult(replyDeleteResultDto);
+        logger.info("[reply_delete] 댓글 삭제 로직 동작. postId:{}, userId:{}",PostId,UserId);
+        Reply reply = replyRepository.findById(ReplyId).orElse(null);
+
+        if(!UserId.equals(reply.getUser().getId()))
+        {
+            logger.info("[reply_delete] 사용자가 삭제할수 없는 댓글입니다");
+            setFailResult(replyDeleteResultDto);
+            replyDeleteResultDto.setMsg("사용자가 삭제할수 없는 댓글입니다");
+            return replyDeleteResultDto;
+        }
+        else {
+            replyRepository.deleteByPost_PostIdAndUser_Id(PostId,UserId);
+            setSuccessResult(replyDeleteResultDto);
+        }
         return replyDeleteResultDto;
     }
 

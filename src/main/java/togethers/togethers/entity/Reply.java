@@ -23,7 +23,7 @@ public class Reply {
     @Column(nullable = false)
     private Long reply_id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id")
     private User user;
 

@@ -57,7 +57,7 @@ public class ReplyController {
     }
 
     @PostMapping(value = "/detailPost/ReplyDelete")
-    public ReplyDeleteResultDto Reply_delete(Long PostId)
+    public ReplyDeleteResultDto Reply_delete(Long PostId,Long ReplyId)
     {
         LOGGER.info("[Reply_delete] 댓글 삭제 컨트롤러 동작. 게시물 Id:{}",PostId);
 
@@ -65,7 +65,7 @@ public class ReplyController {
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
 
-        ReplyDeleteResultDto replyDeleteResultDto = replyService.reply_delete(PostId, user.getId());
+        ReplyDeleteResultDto replyDeleteResultDto = replyService.reply_delete(PostId, user.getId(),ReplyId);
         return replyDeleteResultDto;
     }
 }
