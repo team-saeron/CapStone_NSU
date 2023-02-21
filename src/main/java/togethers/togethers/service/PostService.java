@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,7 @@ import togethers.togethers.repository.RoompictureRepository;
 //import togethers.togethers.repository.UserRepository;
 import togethers.togethers.repository.UserRepository;
 
+import java.lang.Math;
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -174,16 +177,31 @@ public class PostService {
     public DetailPostDto detail_post(Post post, RoomPicture photo,List<Reply>replies)
     {
 
-        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{}",post.getPostId());
+        User user = post.getUser();
+
+        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{},user Uid",post.getPostId(),user.getUid());
         DetailPostDto detailPostDto = DetailPostDto.builder()
                 .title(post.getTitle())
                 .context(post.getContext())
+                .mounthly(post.getMounthly())
+                .lease(post.getLease())
+                .userId(user.getId())
+                .Uid(user.getUid())
                 .photo_name(photo.getFilename())
                 .photo_path(photo.getFilepath())
                 .replies(replies)
                 .build();
 
         return detailPostDto;
+    }
+
+    @Transactional
+    public Page<Post> post_postList(Pageable pageable)
+    {
+        int page = (pageable.getPageNumber()==0)?0:(pageable.getPageNumber()-1);
+
+        PageRequest pageRequest = PageRequest.of(page, 8, Sort.by(Sort.Direction.DESC, "postId"));
+        return postRepository.findAll(pageRequest);
     }
 
 

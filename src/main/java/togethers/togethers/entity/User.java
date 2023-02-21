@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable=false, unique=true)
-    private String uid;
+    private String uid; // hbj1025 = em
 
 
     @Column(nullable = false)
@@ -47,7 +47,7 @@ public class User implements UserDetails {
 
     @Column(length = 30,nullable = false)
     @NotEmpty(message = "이메일을 입력해주세요.")
-    private String email;
+    private String email; //실제쓰는이메미일
 
 //    @Temporal(TemporalType.TIMESTAMP)
     private Date birth;

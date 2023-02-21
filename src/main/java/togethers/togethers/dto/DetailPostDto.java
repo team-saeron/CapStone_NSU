@@ -13,12 +13,22 @@ import java.util.List;
 @Builder
 public class DetailPostDto {
 
+    private Long postId;
+
+    private Long userId;
+    private String Uid;
+
     private String title;
     private String context;
     private Integer roomPay_type;
 
+    private String mounthly;
+    private String lease;
+
     private String photo_name;
     private String photo_path;
+
+    //월세, 전세
 
     @Builder.Default
     private List<Reply> replies = new ArrayList<>();
