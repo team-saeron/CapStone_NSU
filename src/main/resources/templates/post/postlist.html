@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="layout/default_layout">
 <th:block layout:fragment="css">
   <link rel="stylesheet" href="/post/postlist.css" />
@@ -15,52 +15,51 @@
   <script src="postlist.js"></script>
 
   <div class="container">
-    <select id="dataPerPage">
-      <option value="10">10개씩보기</option>
-      <option value="15">15개씩보기</option>
-      <option value="20">20개씩보기</option>
-    </select>
     <div class="post_row_wrap">
 
-
+     <table height="1200px" >
+       <tr>
+     <td>
       <div class="post_container">
+
         <div class="slider">
           <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
         </div>
         <div class="list_word">
 
-          <div class="subject"> <b>강남구 집구해요 </b></div>
+          <div class="subject"> <b>강남구 집 룸메이트 구해요 </b></div>
 
-          <div class="explain">서울시 강남구 집 구해요! 이 집은 난방이 잘되고 방음이 잘돼요! </div>
+          <div class="explain">서울시 강남구 집 룸메 구해요! 이 집은 난방이 잘되고 방음이 잘돼요! </div>
+          <div class="picture_icon">
+            <a href="/member/showOFFIntroduction"><i class="fa-solid fa-user icon"></i></a>
+          </div>
+          <div class="nickname">밀크야 님
+          </div>
+        </div>
+
+      </div>
+     </td>
+
+      <td>
+       <div class="post_container">
+        <div class="slider">
+          <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
+        </div>
+        <div class="list_word">
+          <div class="subject"> <b>강남구 집 룸메 구해요</b></div>
+          <div class="explain">서울시 강남구 집 룸메 구해요</div>
           <div class="picture_icon">
             <a href="/member/showOFFIntroduction"><i class="fa-solid fa-user icon"></i></a>
           </div>
           <div class="nickname">밀크야살빼자 님
           </div>
         </div>
-
       </div>
+      </td>
+       </tr>
 
-
-      <div class="post_container">
-        <div class="slider">
-          <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
-        </div>
-        <div class="list_word">
-          <div class="subject"> <b>강남구 집구해요</b></div>
-          <div class="explain">서울시 강남구 집 구해요</div>
-          <div class="picture_icon">
-            <a href="/member/showOFFIntroduction"><i class="fa-solid fa-user icon"></i></a>
-          </div>
-          <div class="nickname">밀크야살빼자 님
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="post_row_wrap">
-
+        <tr>
+          <td>
       <div class="post_container">
         <div class="slider">
           <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
@@ -75,7 +74,8 @@
           </div>
         </div>
       </div>
-
+          </td>
+     <td>
       <div class="post_container">
         <div class="slider">
           <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
@@ -90,11 +90,10 @@
           </div>
         </div>
       </div>
-
-    </div>
-
-    <div class="post_row_wrap">
-
+     </td>
+        </tr>
+        <tr>
+      <td>
       <div class="post_container">
         <div class="slider">
           <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
@@ -109,7 +108,8 @@
           </div>
         </div>
       </div>
-
+    </td>
+    <td>
       <div class="post_container">
         <div class="slider">
           <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
@@ -126,6 +126,46 @@
 
         </div>
       </div>
+      </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="post_container">
+              <div class="slider">
+                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
+              </div>
+              <div class="list_word">
+                <div class="subject"> <b>강남구 집구해요</b></div>
+                <div class="explain">서울시 강남구 집 구해요</div>
+                <div class="picture_icon">
+                  <a href="/member/showOFFIntroduction"><i class="fa-solid fa-user icon"></i></a>
+                </div>
+                <div class="nickname">밀크야살빼자 님
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="post_container">
+              <div class="slider">
+                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
+              </div>
+              <div class="list_word">
+                <div class="subject"> <b>강남구 집구해요</b></div>
+                <div class="explain">서울시 강남구 집 구해요</div>
+
+                <div class="picture_icon">
+                  <a href="/member/showOFFIntroduction"><i class="fa-solid fa-user icon"></i></a>
+                </div>
+                <div class="nickname">밀크야살빼자 님
+                </div>
+
+              </div>
+            </div>
+          </td>
+        </tr>
+
+</table>
 
       <ul id="pagingul">
       </ul>
@@ -137,7 +177,6 @@
 
 
   </div>
-
 
 
 

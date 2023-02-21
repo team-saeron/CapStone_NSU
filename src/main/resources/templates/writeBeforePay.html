@@ -60,9 +60,8 @@
             <input class="write__price" type="text" placeholder="관리비">
           </div>
           <div class="house_img">
-            <img id="write-img" src="https://www.zipdeco.co.kr/upload/2017/07/21/EDITOR_201707210201236390_YQJAH"/>
-            <input class="img-input" type="file" name="file">
-
+            <input type="file" id="image" accept="image/*" onchange="setThumbnail(event);" multiple/>
+            <div id="image_container"></div>
             <textarea placeholder="방이나 본인에 대해서 설명해주세요" class="house_detail" cols="37" rows="7" required></textarea>
 
             <div class="answer">
@@ -74,15 +73,26 @@
 
       </div>
 
+
     </form>
   </div>
 
-  <!--<script type="text/javascript">
+  <script>
+      function setThumbnail(event) {
+        for (var image of event.target.files) {
+          var reader = new FileReader();
 
-             alert("글을 올리기 전에 원본 작성자에게 허락을 받았나요?");
+          reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            document.querySelector("div#image_container").appendChild(img);
+          };
 
-            </script>
-!-->
+          console.log(image);
+          reader.readAsDataURL(image);
+        }
+      }
+    </script>
 
   </body>
 
