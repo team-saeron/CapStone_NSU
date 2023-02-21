@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable=false, unique=true)
-    private String uid;
+    private String uid; // hbj1025 = em
 
 
     @Column(nullable = false)
@@ -47,7 +47,7 @@ public class User implements UserDetails {
 
     @Column(length = 30,nullable = false)
     @NotEmpty(message = "이메일을 입력해주세요.")
-    private String email;
+    private String email; //실제쓰는이메미일
 
 //    @Temporal(TemporalType.TIMESTAMP)
     private Date birth;
@@ -56,17 +56,17 @@ public class User implements UserDetails {
     private String nickname;
 
     // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    @Builder.Default()
-    private List<Like>likes = new ArrayList<>();
+//    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @Builder.Default()
+//    private List<Like>likes = new ArrayList<>();
 
     // 사용자가 댓글을 달은 DB와 연관관계 설정
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Builder.Default()
     private List<Reply>replyes = new ArrayList<>();
 
     // 사용자가 작성한 게시물과 연관관계 설정
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
 

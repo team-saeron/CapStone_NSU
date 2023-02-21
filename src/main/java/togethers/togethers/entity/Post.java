@@ -1,6 +1,7 @@
 package togethers.togethers.entity;
 
 import lombok.*;
+import togethers.togethers.dto.PostEditRequestDto;
 import togethers.togethers.dto.PostUpRequestDto;
 
 import javax.persistence.*;
@@ -19,10 +20,10 @@ public class Post {
     public Post(PostUpRequestDto postUpRequestDto)
     {
         this.title = postUpRequestDto.getTitle();
-        this.context = postUpRequestDto.getText();
+        this.context = postUpRequestDto.getContext();
         this.publishDate = new Date();
         this.lease = postUpRequestDto.getLease();
-        this.mouthly = postUpRequestDto.getMouthly();
+        this.mounthly = postUpRequestDto.getMounthly();
 
         if(postUpRequestDto.getGetType()==true) //true면 룸메만 구하는 경우, false면 룸메랑 집을 구하는경우
             this.RoomMate_type = 0;
@@ -38,9 +39,9 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true)
-    private Long post_id;
+    private Long postId;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "post",fetch = FetchType.LAZY) // user로 mappedBy로 바꾸기
     private User user;
 
 
@@ -52,11 +53,11 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String context;
 
-//    @Temporal(TemporalType.TIMESTAMP)
+    //    @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
 
 
-    private String mouthly;
+    private String mounthly;
 
 
     private String lease;
@@ -73,17 +74,35 @@ public class Post {
     @JoinColumn(name = "area_id")
     private Category area;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},
+            orphanRemoval = true)
     List<RoomPicture>images = new ArrayList<>();
 
 
 
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Reply>replies = new ArrayList<>();
 
     //postForm을 받아와 Post생성자를 통해 DB에 저장할 Post 생성
 
+
+
+
+    public void PostEdit(PostEditRequestDto postEditRequestDto)
+    {
+        this.title = postEditRequestDto.getTitle();
+        this.context = postEditRequestDto.getContext();
+        this.lease = postEditRequestDto.getLease();
+        this.mounthly = postEditRequestDto.getMounthly();
+
+        if(postEditRequestDto.getRoomType()==true)
+        {
+            this.RoomPay_type = 0;
+        }else{
+            this.RoomPay_type = 1;
+        }
+    }
 
 
 

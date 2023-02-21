@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
        User user = userRepository.getByUid(id).orElse(null);
 
        UserDetail userDetail = UserDetail.createIntro(userDetailSaveDto.getNickname(),userDetailSaveDto.getRegions(),userDetailSaveDto.getMbti(),userDetailSaveDto.getWish_roommate(),
-               userDetailSaveDto.getMonthly_fee(),userDetailSaveDto.getLease_fee(),userDetailSaveDto.getSex(),userDetailSaveDto.getPet(),userDetailSaveDto.getSmoking(),
+               userDetailSaveDto.getMonthly_fee(),userDetailSaveDto.getLease_fee(),userDetailSaveDto.getGender(),userDetailSaveDto.getPet(),userDetailSaveDto.getSmoking(),
                userDetailSaveDto.getLife_cycle());
 
        user.setUserDetail(userDetail);

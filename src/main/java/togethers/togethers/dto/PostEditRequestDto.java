@@ -4,17 +4,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Builder
-@Getter
 @Setter
-public class PostUpRequestDto {
+@Getter
+public class PostEditRequestDto {
+
     private String title;
     private Boolean getType;
     private Boolean roomType;
     private String mounthly;
     private String lease;
     private String context;
-
-
 }

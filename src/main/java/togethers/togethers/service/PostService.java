@@ -4,23 +4,28 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import togethers.togethers.config.CommonResponse;
-import togethers.togethers.dto.PostUpRequestDto;
-import togethers.togethers.dto.PostUpResultDto;
-import togethers.togethers.dto.SignUpResultDto;
+import togethers.togethers.dto.*;
 import togethers.togethers.entity.Post;
+import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.entity.User;
 import togethers.togethers.repository.PostRepository;
+import togethers.togethers.repository.ReplyRepository;
 import togethers.togethers.repository.RoompictureRepository;
 //import togethers.togethers.repository.UserRepository;
 import togethers.togethers.repository.UserRepository;
 
+import java.lang.Math;
 import java.io.File;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -37,18 +42,36 @@ public class PostService {
     @Autowired
     private final RoompictureRepository roompictureRepository;
 
+    @Autowired
+    private final ReplyRepository replyRepository;
+
+    @Transactional
+    public Post findPost(Long post_id)
+    {
+        return postRepository.findById(post_id).orElse(null);
+    }
+
+    @Transactional
+    public List<Reply>findReply(Long PostId)
+    {
+        List<Reply> replies = replyRepository.findAllByPost_PostId(PostId);
+        return replies;
+    }
+
+    @Transactional
+    public RoomPicture findPhoto(Long PostId)
+    {
+        RoomPicture roomPicture = roompictureRepository.findByPost_PostId(PostId).orElse(null);
+        return roomPicture;
+    }
+
     @Transactional(readOnly = false)
     public PostUpResultDto post_save(PostUpRequestDto postUpRequestDto,
                                      MultipartFile file,String Uid) throws Exception {
         User user = userRepository.findByUid(Uid).orElse(null);
         logger.info("[post_save] 게시물 저장 로직 시작. id : {}", user.getUid());
 
-
-
-
         PostUpResultDto postUpResultDto;
-
-
 
         if (user.getPost() != null) //사용자가 게시물이 이미 있을경우 예외처리
         {
@@ -64,29 +87,15 @@ public class PostService {
             user.setPost(post);
             userRepository.save(user);
 
+            photo_save(post.getPostId(),file);
 
-            RoomPicture roomPicture = new RoomPicture();
-            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-            UUID uuid = UUID.randomUUID();
-            String fileName = uuid + "_" + file.getOriginalFilename();
-
-            File saveFile = new File(projectPath, fileName);
-
-            file.transferTo(saveFile);
-
-            roomPicture.setFilename(fileName);
-            roomPicture.setFilepath("/files/" + fileName);
-            roomPicture.setPost(post);
-
-            roompictureRepository.save(roomPicture);
-
-             postUpResultDto = PostUpResultDto.builder()
+            postUpResultDto = PostUpResultDto.builder()
                     .title(post.getTitle())
                     .context(post.getTitle())
                     .build();
 
 
-            if (post.getPost_id() == user.getPost().getPost_id() && post.getPost_id() == roomPicture.getPost().getPost_id()) // post와 user,Roompicture pk 검증
+            if (post.getPostId() == user.getPost().getPostId()) // post와 user,Roompicture pk 검증
             {
                 setSuccessResult(postUpResultDto);
             } else {
@@ -94,26 +103,159 @@ public class PostService {
             }
         }
 
+        return postUpResultDto;
+    }
+
+    @Transactional
+    public PostUpResultDto post_edit(Long post_id,String Uid ,PostEditRequestDto postEditRequestDto)
+    {
+        logger.info("[post_edit] 게시물 수정 로직 동작 post_id:{}, Uid:{} ",post_id,Uid);
+        PostUpResultDto postUpResultDto = new PostUpResultDto();
+
+        Post post = postRepository.findById(post_id).orElse(null);
+        User user = userRepository.findByUid(Uid).orElse(null);
+        Long tempPost_id = post.getPostId();
+
+        if(!user.getPost().getPostId().equals(post.getPostId()))
+        {
+            setFailResult(postUpResultDto);
+            postUpResultDto.setMsg("사용자가 권한이 존재하지 않습니다");
             return postUpResultDto;
         }
 
+        post.PostEdit(postEditRequestDto);
+        postRepository.flush();
 
+        if(post.getPostId().equals(tempPost_id)){
 
-
-
-
-        private void setSuccessResult (SignUpResultDto result)
-        {
-            result.setSuccess(true);
-            result.setCode(CommonResponse.SUCCESS.getCode());
-            result.setMsg(CommonResponse.SUCCESS.getMsg());
+            postUpResultDto.setContext(postEditRequestDto.getContext());
+            postUpResultDto.setTitle(postEditRequestDto.getTitle());
+            setSuccessResult(postUpResultDto);
+        }else {
+            setFailResult(postUpResultDto);
         }
 
-        private void setFailResult (SignUpResultDto result)
+        return postUpResultDto;
+    }
+
+
+    @Transactional
+    public PostDeleteResultDto post_delete(Long PostId,String Uid)
+    {
+        logger.info("[post_delete] 게시물 삭제 로직 동작. postId:{} userId:{}",PostId,Uid);
+        User user = userRepository.findByUid(Uid).orElse(null);
+        PostDeleteResultDto postDeleteResultDto = new PostDeleteResultDto();
+        postDeleteResultDto.setPostId(PostId);
+
+
+        if(user.getPost()==null||user.getPost().getPostId()!=PostId)
         {
-            result.setSuccess(false);
-            result.setCode(CommonResponse.FAIL.getCode());
-            result.setMsg(CommonResponse.FAIL.getMsg());
+            logger.info("[post_delete] 사용자가 게시물이 없거나 사용자가 삭제할수 없는 게시물.");
+            setFailResult(postDeleteResultDto);
+            postDeleteResultDto.setMsg("사용자가 권한이 존재하지 않습니다");
+
+            return postDeleteResultDto;
         }
+
+        postRepository.deleteBypostId(PostId);
+
+        user.setPost(null);
+        userRepository.flush();
+
+        if(user.getPost()==null)
+        {
+            setSuccessResult(postDeleteResultDto);
+        }else{
+            setFailResult(postDeleteResultDto);
+        }
+
+        return postDeleteResultDto;
+    }
+
+
+    @Transactional
+    public DetailPostDto detail_post(Post post, RoomPicture photo,List<Reply>replies)
+    {
+
+        User user = post.getUser();
+
+        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{},user Uid",post.getPostId(),user.getUid());
+        DetailPostDto detailPostDto = DetailPostDto.builder()
+                .title(post.getTitle())
+                .context(post.getContext())
+                .mounthly(post.getMounthly())
+                .lease(post.getLease())
+                .userId(user.getId())
+                .Uid(user.getUid())
+                .photo_name(photo.getFilename())
+                .photo_path(photo.getFilepath())
+                .replies(replies)
+                .build();
+
+        return detailPostDto;
+    }
+
+    @Transactional
+    public Page<Post> post_postList(Pageable pageable)
+    {
+        int page = (pageable.getPageNumber()==0)?0:(pageable.getPageNumber()-1);
+
+        PageRequest pageRequest = PageRequest.of(page, 8, Sort.by(Sort.Direction.DESC, "postId"));
+        return postRepository.findAll(pageRequest);
+    }
+
+
+
+
+    public Long photo_save(Long post_id, MultipartFile file)throws Exception //이미지 저장로직
+    {
+        logger.info("[Photo_save] 이미지 저장로직 동작 post_id:{}",post_id);
+
+
+        Post post = postRepository.findById(post_id).orElse(null);
+
+        RoomPicture roomPicture = new RoomPicture();
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+
+        file.transferTo(saveFile);
+
+        roomPicture.setFilename(fileName);
+        roomPicture.setFilepath("/files/" + fileName);
+        roomPicture.setPost(post);
+
+        roompictureRepository.save(roomPicture);
+
+        return roomPicture.getId();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void setSuccessResult (BaseResultDto result)
+    {
+        result.setSuccess(true);
+        result.setCode(CommonResponse.SUCCESS.getCode());
+        result.setMsg(CommonResponse.SUCCESS.getMsg());
+    }
+
+    private void setFailResult (BaseResultDto result)
+    {
+        result.setSuccess(false);
+        result.setCode(CommonResponse.FAIL.getCode());
+        result.setMsg(CommonResponse.FAIL.getMsg());
+    }
 
 }
