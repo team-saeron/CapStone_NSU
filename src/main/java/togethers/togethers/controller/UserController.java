@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import togethers.togethers.dto.UserDetailEditDto;
 import togethers.togethers.dto.UserDetailSaveDto;
 import togethers.togethers.dto.UserDetails;
 import togethers.togethers.entity.User;
@@ -46,5 +47,13 @@ public class UserController {
         return saveIntro;
     }
 
+    @PatchMapping(value="/introduction/edit")
+    public Long editIntro(@RequestBody UserDetailEditDto userDetailEditDto){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User)principal;
+        LOGGER.info("name = {}, pw={}", user.getUid());
+        Long editIntro = userService.editIntro(user.getUid(), userDetailEditDto);
+        return editIntro;
+    }
 
 }

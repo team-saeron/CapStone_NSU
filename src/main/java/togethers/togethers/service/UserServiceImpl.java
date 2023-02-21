@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.JwtTokenProvider;
+import togethers.togethers.dto.UserDetailEditDto;
 import togethers.togethers.dto.UserDetailSaveDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
@@ -50,7 +51,21 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    @Override
+    @Transactional(readOnly = false)
+    public Long editIntro(String id, UserDetailEditDto userDetailEditDto){
+        User user = userRepository.getByUid(id).orElse(null);
 
+        UserDetail userDetail = UserDetail.createIntro(userDetailEditDto.getNickname(),userDetailEditDto.getRegions(),userDetailEditDto.getMbti(),userDetailEditDto.getWish_roommate(),
+                userDetailEditDto.getMonthly_fee(),userDetailEditDto.getLease_fee(),userDetailEditDto.getPet(),userDetailEditDto.getSmoking(),
+                userDetailEditDto.getLife_cycle());
+
+        user.setUserDetail(userDetail);
+        userRepository.save(user);
+
+        userDetailRepository.save(userDetail);
+        return userDetail.getUserDetail_id();
+    }
 
 
 
