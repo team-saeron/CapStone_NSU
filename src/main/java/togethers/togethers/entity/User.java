@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import togethers.togethers.dto.MyPageUpdateDto;
 import togethers.togethers.dto.UserDetails;
 
 import javax.persistence.*;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 @Table
 //회원 정보
 public class User implements UserDetails {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,6 +113,11 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled(){
         return true;
+    }
+
+    @Builder
+    public User(MyPageUpdateDto myPageUpdateDto){
+        this.password = myPageUpdateDto.getPassword();
     }
 
 }

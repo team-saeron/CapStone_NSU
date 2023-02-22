@@ -1,26 +1,21 @@
 package togethers.togethers.controller;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import togethers.togethers.dto.UserDetailEditDto;
+import togethers.togethers.dto.FindUserDto;
+import togethers.togethers.dto.UserDetailUpdateDto;
 import togethers.togethers.dto.UserDetailSaveDto;
-import togethers.togethers.dto.UserDetails;
 import togethers.togethers.entity.User;
-import togethers.togethers.entity.UserDetail;
 import togethers.togethers.service.UserService;
-import togethers.togethers.service.UserServiceImpl;
 
-import java.security.Principal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 //@Controller
 @RestController
@@ -48,12 +43,17 @@ public class UserController {
     }
 
     @PatchMapping(value="/introduction/edit")
-    public Long editIntro(@RequestBody UserDetailEditDto userDetailEditDto){
+    public void editIntro(@RequestBody UserDetailUpdateDto userDetailUpdateDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = (User)principal;
         LOGGER.info("name = {}, pw={}", user.getUid());
-        Long editIntro = userService.editIntro(user.getUid(), userDetailEditDto);
-        return editIntro;
+        userService.editIntro(user.getId(), userDetailUpdateDto);
     }
 
+
+
+   /* @PostMapping("/findPw")
+    public String findPw(FindUserDto findUserDto){
+
+    }*/
 }

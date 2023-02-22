@@ -4,6 +4,7 @@ package togethers.togethers.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import togethers.togethers.dto.UserDetailUpdateDto;
 
 import javax.persistence.*;
 
@@ -16,8 +17,8 @@ public class UserDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,name = "userDetail_id",unique = true)
-    private Long userDetail_id;
+    @Column(nullable = false,unique = true)
+    private Long userDetailId;
 
     @OneToOne(mappedBy = "userDetail")
     private User user;
@@ -58,7 +59,6 @@ public class UserDetail {
 
 //    @Column(nullable = false)
 //    private String room_type;
-
     @Builder
     public UserDetail(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle){
         this.regions=regions;
@@ -71,6 +71,18 @@ public class UserDetail {
         this.smoking = smoking;
         this.life_cycle = life_cycle;
         this.nickname=nickname;
+    }
+
+    public void updateUserDetail(UserDetailUpdateDto userDetailUpdateDto){
+        this.regions = userDetailUpdateDto.getRegions();
+        this.mbti = userDetailUpdateDto.getMbti();
+        this.wish_roommate = userDetailUpdateDto.getWish_roommate();
+        this.monthly_fee = userDetailUpdateDto.getMonthly_fee();
+        this.lease_fee=userDetailUpdateDto.getLease_fee();
+        this.pet=userDetailUpdateDto.getPet();
+        this.smoking = userDetailUpdateDto.getSmoking();
+        this.life_cycle = userDetailUpdateDto.getLife_cycle();
+        this.nickname=userDetailUpdateDto.getNickname();
     }
 
     public static UserDetail createIntro(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle){
@@ -87,5 +99,7 @@ public class UserDetail {
         userDetail.nickname=nickname;
         return userDetail;
     }
+
+
 
 }
