@@ -12,4 +12,6 @@ public interface UserService {
 
     public void editIntro(Long id, UserDetailUpdateDto userDetailUpdateDto);
 
+    public User findId(FindUserDto findUserDto);
+
 }

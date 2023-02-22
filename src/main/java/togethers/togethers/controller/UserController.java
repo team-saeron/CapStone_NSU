@@ -51,9 +51,11 @@ public class UserController {
     }
 
 
+    @PostMapping("/findId")
+    public String findId(@RequestBody FindUserDto findUserDto){
 
-   /* @PostMapping("/findPw")
-    public String findPw(FindUserDto findUserDto){
-
-    }*/
+        User user = userService.findId(findUserDto);
+        log.info("[findId] 아이디 찾기를 시작합니다. user : {}", user.getUid());
+        return user.getUid();
+    }
 }
