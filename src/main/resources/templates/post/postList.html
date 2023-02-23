@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/post/postlist.css" />
+</th:block>
+
+<th:block layout:fragment="content">
+  <body>
+<div class="jumbotron">
+  <h2>스프링 부트 게시판</h2>
+</div>
+
+<table class="table">
+  <tr>
+    <th>방 번호</th>
+    <th>글 제목</th>
+    <th>글 내용</th>
+    <th>방 월세</th>
+  </tr>
+
+  <tr th:each="post: ${postList}">
+    <td><a th:text="${post.postId}" th:href="@{/post/detailPost/{postId}(postId=${post.postId})}"></a></td>
+    <td th:text="${post.title}"></td>
+    <td th:text="${post.context}"></td>
+    <td th:text="${post.mounthly}"></td>
+  </tr>
+</table>
+
+<nav style="text-align: center;">
+  <ul class="pagination"
+      th:with="start=${T(java.lang.Math).floor(postList.number/10)*10 + 1},last=(${start + 9 < postList.totalPages ? start + 9 : postList.totalPages})">
+    <li>
+      <a th:href="@{/post/postList(page=1)}" aria-label="First">
+        <span aria-hidden="true">First</span>
+      </a>
+    </li>
+
+    <li th:class="${postList.first} ? 'disabled'">
+      <a th:href="${postList.first} ? '#' :@{/post/postList(page=${postList.number})}" aria-label="Previous">
+        <span aria-hidden="true">&lt;</span>
+      </a>
+    </li>
+
+    <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == postList.number + 1} ? 'active'">
+      <a th:text="${page}" th:href="@{/post/postList(page=${page})}"></a>
+    </li>
+
+    <li th:class="${postList.last} ? 'disabled'">
+      <a th:href="${postList.last} ? '#' : @{/post/postList(page=${postList.number + 2})}" aria-label="Next">
+        <span aria-hidden="true">&gt;</span>
+      </a>
+    </li>
+
+    <li>
+      <a th:href="@{/post/postList(page=${postList.totalPages})}" aria-label="Last">
+        <span aria-hidden="true">Last</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+  </body>
+</th:block>
+</html>

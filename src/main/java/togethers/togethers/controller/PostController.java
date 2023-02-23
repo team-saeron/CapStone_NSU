@@ -27,6 +27,8 @@ import togethers.togethers.service.PostService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.Math;
+
 
 @RestController
 @Slf4j
@@ -43,7 +45,7 @@ public class PostController {
     }
 
 
-    @PostMapping(value = "/write") //게시물 작성
+    @PostMapping(value = "/post/write") //게시물 작성
     public PostUpResultDto PostWrite(    @RequestParam(value = "file") MultipartFile file,
                                          @RequestParam(value = "title")String title,
                                          @RequestParam(value = "mouthly")String mouthly,
@@ -134,25 +136,28 @@ public class PostController {
         return postDeleteResultDto;
     }
 
-    @GetMapping(value = "/post/detailPost")
-    public void post_detailPost(Long PostId)
-    {
-        LOGGER.info("[post_detailPost] 게시물 세부사항 관련 로직 동작 PostId:{}",PostId);
+//    @GetMapping(value = "/post/detailPost")
+//    public void post_detailPost(Long PostId)
+//    {
+//        LOGGER.info("[post_detailPost] 게시물 세부사항 관련 로직 동작 PostId:{}",PostId);
+//
+//        Post post = postService.findPost(PostId);
+//        RoomPicture photo = postService.findPhoto(PostId);
+//        List<Reply> replies = postService.findReply(PostId);
+//
+//        DetailPostDto detailPostDto = postService.detail_post(post, photo, replies);
+//
+//        System.out.println("*************************************************************************");
+//        System.out.println(detailPostDto.getTitle());
+//        System.out.println(detailPostDto.getContext());
+//        System.out.println(detailPostDto.getPhoto_path());
+//        for (Reply reply : detailPostDto.getReplies()) {
+//            System.out.println(reply.getComment());
+//        }
+//    }
 
-        Post post = postService.findPost(PostId);
-        RoomPicture photo = postService.findPhoto(PostId);
-        List<Reply> replies = postService.findReply(PostId);
 
-        DetailPostDto detailPostDto = postService.detail_post(post, photo, replies);
 
-        System.out.println("*************************************************************************");
-        System.out.println(detailPostDto.getTitle());
-        System.out.println(detailPostDto.getContext());
-        System.out.println(detailPostDto.getPhoto_path());
-        for (Reply reply : detailPostDto.getReplies()) {
-            System.out.println(reply.getComment());
-        }
-    }
 
 
 
