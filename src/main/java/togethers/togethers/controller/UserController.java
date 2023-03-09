@@ -6,9 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import togethers.togethers.dto.FindUserDto;
-import togethers.togethers.dto.UserDetailUpdateDto;
-import togethers.togethers.dto.UserDetailSaveDto;
+import togethers.togethers.dto.*;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.UserService;
 
@@ -57,5 +55,18 @@ public class UserController {
         User user = userService.findId(findUserDto);
         log.info("[findId] 아이디 찾기를 시작합니다. user : {}", user.getUid());
         return user.getUid();
+    }
+
+    @PostMapping("/sendEmailPw")
+    public String sendEmailPw(@RequestBody FindPassword findPassword){
+        MailDto mailDto = userService.sendEmail(findPassword);
+        userService.mailSend(mailDto);
+        log.info("[sendEmailPw] 임시 비밀번호 전송 완료.");
+        return "/sign-api/sign-in";
+    }
+
+    @PatchMapping("/user/editPassword")
+    public void updatePassword(Long id, String password){
+        userService.updatePassword(id,password);
     }
 }

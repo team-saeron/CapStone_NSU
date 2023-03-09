@@ -2,6 +2,14 @@ server:
  port: 1000
 
 spring:
+ mail:
+  host: smtp.gmail.com
+  port: 465
+  username: songhyeon4643@gmail.com
+  password : onlvjajuvzkagtfh
+  properties:
+   mail.smtp.auth: true
+   mail.smtp.ssl.enable: true
  jwt:
   secret: flature!@#appleandseoullovecdafqefaaasadg
  mvc:

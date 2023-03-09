@@ -1,8 +1,6 @@
 package togethers.togethers.service;
 
-import togethers.togethers.dto.FindUserDto;
-import togethers.togethers.dto.UserDetailUpdateDto;
-import togethers.togethers.dto.UserDetailSaveDto;
+import togethers.togethers.dto.*;
 import togethers.togethers.entity.User;
 
 public interface UserService {
@@ -13,5 +11,14 @@ public interface UserService {
     public void editIntro(Long id, UserDetailUpdateDto userDetailUpdateDto);
 
     public User findId(FindUserDto findUserDto);
+
+    public MailDto sendEmail(FindPassword findPassword);
+
+    public String getTempPassword() ;
+
+
+    public void mailSend(MailDto mailDto);
+
+    public void updatePassword(Long id, String password);
 
 }
