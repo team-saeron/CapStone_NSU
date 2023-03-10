@@ -1,0 +1,110 @@
+!DOCTYPE html
+*{
+margin :30;
+padding:0;
+}
+.container{
+margin-bottom: 30px;
+border:1px solid rgba(160,160,160,0.3);
+border-radius:6%;
+padding:20px;
+}
+.join_title{
+font-weight:550;
+color:black;
+}
+.join__logo{
+display:flex;
+justify-content:center;
+padding:20px;
+border-bottom:1px solid rgba(160,160,160,0.5);
+}
+
+
+#join__logo{
+display:flex;
+color:#432874;
+position:relative;
+}
+.join__logo span{
+position:absolute;
+left:700px;
+top:30px;
+}
+.container{
+margin-top:40px;
+justify-content:center;
+align-items:center;
+width:40%;
+height:100%;
+}
+
+h5{
+font-weight:bold;
+margin:3px;
+padding:5px;
+}
+
+#join_passward{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+#join_passward input{
+margin:0px 5px;
+width:50%;
+}
+
+#join_email{
+display:flex;
+margin:5px 0px;
+}
+#join_email select{
+width:50%;
+margin:0px 5px;
+}
+
+#join_email input{
+width:50%;
+margin:0px 5px;
+}
+
+span{
+display:flex;
+justify-content:center;
+}
+
+#join_birth input{
+border:1px solid lightgray;
+width:100%;
+height:40px;
+border-radius:5px;
+}
+
+.btn-primary{
+background-color:#432874;
+color:white;
+border:1px solid #432874;
+}
+
+.btn-primary:hover{
+background-color:white;
+color:black;
+border:1px solid #432874;
+}
+
+.login_sns_icon{
+color:black;
+text-decoration-line:none;
+}
+
+.login_sns_icon:hover{
+color:#432874;
+}
+.fa-eye{
+ cursor:pointer;}
+
+ join_sns{
+ padding-top:10px;
+ }

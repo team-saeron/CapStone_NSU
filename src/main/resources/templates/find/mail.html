@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet"  th:href="@{/find/mail.css}" type="text/css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Together | 아이디찾기</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="mail_container">
+        <div class="mail_column">
+            <div class="mail_box">
+                <h3 class="mail_tit"><strong>이메일로 아이디 찾기</strong></h3>
+                <div> <input class="mail_name" type="text" placeholder="이름"  /> </div>
+                <div><input class="mail" type="text" placeholder="이메일"/></div>
+                <div><input class="mail_sub" type="submit" value="확인" style="color:white;"/></div>
+                <div class="mail_href"><a href="/find/phone"><span class="mail_email">휴대전화로 아이디 찾기</span></a>
+                    <a href="/find/password"><span class="mail_pw">비밀번호 찾기</span></a></div>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,29 @@
+.container{
+margin-left:550px;
+margin-top:120px;
+margin-bottom:400px;
+}
+.choose{
+margin-top:70px;
+display:flex;
+font-size:30px;
+
+}
+.ch_m{
+margin-left:-700px;
+width:250px;
+height:200px;
+border-radius:10px;
+border:none;
+background-color:#af6290;
+color:white;
+}
+.ch_a{
+margin-left:30px;
+ width:250px;
+ height:200px;
+ border-radius:10px;
+ border:none;
+ background-color:#af6290;
+ color:white;
+ }

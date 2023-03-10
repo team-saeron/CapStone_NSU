@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/post/detailPost.css" />
+</th:block>
+
+<th:block layout:fragment="content">
+
+  <body>
+  <div class="container" >
+
+    <div class="slider"> <!--이미지를 담고 있는 div-->
+
+      <div class="slider__item">
+        <img class="post_img" th:src="@{/files/}+${post.photo_name}">
+      </div>
+
+    </div>
+
+    <div class="Like">
+      <table>
+        <tr>
+          <td>
+            <addr title="매칭률"><i class="fa-solid fa-fire fa-2x"></i></addr>
+            80%
+          </td>
+          <td>
+            <i class="fa-solid fa-heart fa-2x"></i>
+          </td>
+        </tr>
+      </table>
+
+
+    </div>
+
+    <hr>
+
+    <!--방과 사람 정보-->
+    <div class="explain">
+
+      <div class="room_explain">
+        <table class="ex_table">
+          <caption><strong>방 정보</strong></caption>
+          <tr>
+            <td>보증금</td>
+            <td th:text="${post.lease}"></td>
+          </tr>
+
+          <tr>
+            <td>월세</td>
+            <td th:text="${post.mounthly}"></td>
+          </tr>
+
+          <tr>
+            <td>내용</td>
+            <td th:text="${post.context}"></td>
+          </tr>
+
+          <tr>
+            <td>위치</td>
+            <td th:text="서울시 + ${post.area}"></td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div class="personal_explain">
+
+        <table class="ex_table">
+          <caption><strong>게시물 정보</strong></caption>
+          <tr>
+            <td>방 id</td>
+            <td th:text="${post.postId}"></td>
+          </tr>
+          <tr>
+            <td>작성자 pk</td>
+            <td th:text="${post.userId}"></td>
+          </tr>
+          <tr>
+            <td>작성자 id</td>
+            <td th:text="${post.Uid}"></td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- 댓글 html-->
+    <div class="comment">
+
+      <!-- 내가 적는 댓글 칸-->
+      <div class="my_comment">
+        <form action="/post/detailPost/reply" method="POST">
+<!--          <fieldset>-->
+            <div class="my_inner_commnet">
+              <div class="my_id">
+                <i class="fa-solid fa-user fa fa-2x"></i>
+                <span th:text="${user.uid}"></span>
+              </div>
+              <div class="my_text">
+                <input type="text" cols="30" class="my_textarea" id="comment" name="comment">
+                <input type="hidden" id="p_id" name="p_id" th:value="${postId}">
+              </div>
+              <div class="text_submit">
+                <button type="submit">등록</button>
+              </div>
+            </div>
+<!--          </fieldset>-->
+        </form>
+      </div>
+
+      <!--다른 사람이 작성한 댓글 칸 -->
+      <div class="other_comment">
+        <ul th:each="reply : ${replies}">
+          <legend><strong>댓글</strong></legend>
+          <li>
+            <div class="other_inner_comment">
+              <div class="other_id">
+                <i class="fa-solid fa-user fa fa-2x"></i>
+                <span th:text="${reply.user.uid}"></span>
+              </div>
+              <div class="other_text">
+                <span th:text="${reply.comment}">이집 마음에 들어요!</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+  <!-- script 구역 -->
+  <script>
+        const SHOWING_CLASS = "showing";
+        const firstslide = document.querySelector(".slider__item:first-child");
+        function slide()
+        {
+          const currentslide = document.querySelector(`.${SHOWING_CLASS}`);
+          if(currentslide)
+          {
+                currentslide.classList.remove(SHOWING_CLASS);
+                const nextSlide = currentslide.nextElementSibling;
+                if(nextSlide){
+                    nextSlide.classList.add(SHOWING_CLASS);
+                }else{
+                    firstslide.classList.add(SHOWING_CLASS);
+                }
+          }else{
+            firstslide.classList.add(SHOWING_CLASS);
+          }
+        }
+        slide();
+        setInterval(slide,3000);
+    </script>
+
+
+
+
+  </body>
+</th:block>
+</html>
