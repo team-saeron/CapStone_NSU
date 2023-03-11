@@ -124,8 +124,8 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
       <div class="search_text">어느 지역을 찾으세요?</div>
     <nav class="navbar">
       <div class="container-fluid">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
+        <form class="d-flex" role="search" th:object="${dto}" th:method="post" th:action="@{/post/search}">
+          <input class="form-control me-2" type="text" placeholder="Search" th:field="*{keyword}" aria-label="Search" >
           <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass" style="color:white;"></i></button>
         </form>
       </div>

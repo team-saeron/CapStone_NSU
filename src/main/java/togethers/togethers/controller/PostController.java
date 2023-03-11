@@ -145,4 +145,20 @@ public class PostController {
 
         return "post/detailPost";
     }
+
+
+
+    /**게시물 검색 관련 로직**/
+    @PostMapping(value = "/post/search")
+    public String SearchPost(@PageableDefault Pageable pageable,Model model,PostSearchDto dto){
+
+        logger.info("[SearchPost] 게시물 검색 Controller 동작. keyword : {}",dto.getKeyword());
+        Page<Post> posts = postService.SearchPost(dto.getKeyword(), pageable);
+
+        logger.info("[SearchPost] 게시물 검색 결과 갯수: {}",posts.getTotalElements());
+
+        model.addAttribute("postList",posts);
+        return "post/postList";
+
+    }
 }

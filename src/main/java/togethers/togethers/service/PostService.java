@@ -309,6 +309,16 @@ public class PostService {
     }
 
 
+    public Page<Post>SearchPost(String keyword,Pageable pageable)
+    {
+        logger.info("[SearchPost] 게시물 검색 Service 로직 동작. keyword: {}",keyword);
+        int page = (pageable.getPageNumber()==0)?0:(pageable.getPageNumber()-1);
+        PageRequest pageRequest = PageRequest.of(page, 4, Sort.by(Sort.Direction.DESC, "postId"));
+        return postRepository.findByTitleContaining(keyword,pageRequest);
+
+    }
+
+
 
 
 
