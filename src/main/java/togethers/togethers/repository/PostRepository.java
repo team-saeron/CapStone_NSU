@@ -17,5 +17,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Page<Post> findByTitleContaining(String keyword, PageRequest pageRequest);
 
+    Page<Post>findByAreaContaining(String area,PageRequest pageRequest);
+
 }
 

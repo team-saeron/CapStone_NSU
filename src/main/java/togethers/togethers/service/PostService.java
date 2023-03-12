@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.Post;
@@ -23,6 +24,7 @@ import togethers.togethers.repository.RoompictureRepository;
 //import togethers.togethers.repository.UserRepository;
 import togethers.togethers.repository.UserRepository;
 
+import java.awt.geom.Area;
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -316,6 +318,16 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(page, 4, Sort.by(Sort.Direction.DESC, "postId"));
         return postRepository.findByTitleContaining(keyword,pageRequest);
 
+    }
+
+
+    public Page<Post>SearchPostUsingCategory(String areaName,Pageable pageable)
+    {
+        logger.info("[SearchPostUsingCategory] 카테고리에서 클릭한 지역이름을 이용해 게시물 조회 Service로직 동작 지역 이름: {}",areaName);
+        int page = (pageable.getPageNumber()==0)?0:(pageable.getPageNumber()-1);
+        PageRequest pageRequest = PageRequest.of(page, 4, Sort.by(Sort.Direction.DESC, "postId"));
+
+        return postRepository.findByAreaContaining(areaName,pageRequest);
     }
 
 

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.*;
@@ -23,6 +24,7 @@ import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -30,6 +32,7 @@ public class PostController {
 
 
     private final PostService postService;
+    private AreaEnum[] area = AreaEnum.values();
 
     @Autowired
     public PostController(PostService postService)
@@ -158,7 +161,35 @@ public class PostController {
         logger.info("[SearchPost] 게시물 검색 결과 갯수: {}",posts.getTotalElements());
 
         model.addAttribute("postList",posts);
-        return "post/postList";
+        return "post/searchList";
 
     }
+
+    @GetMapping(value = "/post/searchList")
+    public String SearchPostUsingCategory(@RequestParam(value = "areaId",required = false,defaultValue = "")String areaId,
+                                          @PageableDefault Pageable pageable, Model model)
+    {
+        int aid = 0;
+        if(!areaId.equals("")){
+             aid = Integer.parseInt(areaId);
+        }
+
+        logger.info("[SearchPost]홈페이지에서 사용자가 카테고리 클릭후 해당 게시물 검색. areaID:{}",aid);
+
+
+        String areaName = area[aid].toString();
+        logger.info("[findArea] Service 에서 사용자가 클릭한 지역게시물 Enum에서 조회. 결과: {}",areaName);
+
+
+        Page<Post> posts = postService.SearchPostUsingCategory(areaName, pageable);
+        logger.info("[SearchPostUsingCategory] 카테고리 클릭후 해당지역 조회 게시물 결과. 지역이름:{} 게시물 갯수:{}",areaName,posts.getTotalElements());
+
+
+
+        model.addAttribute("AreaId",areaId);
+        model.addAttribute("postList",posts);
+
+        return "post/searchList";
+    }
+
 }

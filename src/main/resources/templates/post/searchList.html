@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/post/postlist.css" />
+</th:block>
+<head>
+
+
+</head>
+<th:block layout:fragment="content">
+
+  <body>
+  <script src="postlist.js"></script>
+
+  <div class="container">
+    <div class="post_row_wrap">
+
+      <table height="1200px" >
+        <tr th:each="post: ${postList}">
+          <td>
+            <div class="post_container">
+
+              <div class="slider">
+                <a th:href="@{/post/detailPost/{postId}(postId = ${post.postId})}">
+                  <img class="detailPost_img" th:src="@{/files/}+${post.fileName}">
+                </a>
+              </div>
+              <div class="list_word">
+
+                <div class="subject" th:text="${post.title}"> <b>강남구 집 룸메이트 구해요 </b></div>
+
+                <div class="explain" th:text="${post.context}">서울시 강남구 집 룸메 구해요! 이 집은 난방이 잘되고 방음이 잘돼요! </div>
+                <div class="picture_icon">
+                  <a href="/member/showOFFIntroduction"><i class="fa-solid fa-user icon"></i></a>
+                </div>
+                <div class="nickname" th:text="${post.getUid()}">밀크야 님
+                </div>
+              </div>
+
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+  </div>
+
+  <nav style="text-align: center;">
+    <ul class="pagination"
+        th:with="start=${T(java.lang.Math).floor(postList.number/10)*10 + 1},last=(${start + 9 < postList.totalPages ? start + 9 : postList.totalPages})">
+      <li>
+        <a th:href="@{/post/searchList(page=1)}" aria-label="First">
+          <span aria-hidden="true">First</span>
+        </a>
+      </li>
+
+      <li th:class="${postList.first} ? 'disabled'">
+        <a th:href="${postList.first} ? '#' :@{/post/searchList(page=${postList.number})}" aria-label="Previous">
+          <span aria-hidden="true">&lt;</span>
+        </a>
+      </li>
+
+      <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == postList.number + 1} ? 'active'">
+        <a th:text="${page}" th:href="@{/post/searchList(page=${page})}"></a>
+      </li>
+
+      <li th:class="${postList.last} ? 'disabled'">
+        <a th:href="${postList.last} ? '#' : @{/post/searchList(page=${postList.number + 2})}" aria-label="Next">
+          <span aria-hidden="true">&gt;</span>
+        </a>
+      </li>
+
+      <li>
+        <a th:href="@{/post/searchList(page=${postList.totalPages})}" aria-label="Last">
+          <span aria-hidden="true">Last</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  </body>
+
+</th:block>
+
+</html>

@@ -24,7 +24,7 @@ public class SignController {
 
     /** 회원가입 GET,POST 매핑 관련 Controller**/
 
-    @GetMapping(value = "/members/new")
+    @GetMapping(value = "/member/new")
     public String signUp(Model model)
     {
         logger.info("[signUp] GET 회원가입 컨트롤러 동작 ");
@@ -34,7 +34,7 @@ public class SignController {
     }
 
 
-    @PostMapping(value = "/members/new")
+    @PostMapping(value = "/member/new")
     public String signUp(@Valid SignUpRequestDto dto, Model model)
     {
         logger.info("[signUp] POST 회원가입 컨트롤러 동작");
