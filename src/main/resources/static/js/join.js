@@ -1,9 +1,13 @@
-window.onload = function(){const showPassword = document.querySelector("#show-password");
-const passwordField = document.querySelector("#password");
+$(".key").on("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    $(".checkKey").triggerHandler("click");
+  } else {
+    if (this.value) {
+      $(".keyShow").css("display", "inline-block");
+    } else {
+      $(".keyShow").hide();
+    }
+  }
+}).focus();
 
-showPassword.addEventListener("click", function(){
-   this.classList.toggle("fa-eye-slash");
-   const type-passwordField.getAttribute("type")==="password" ? "texr" : "password";
-   passwordField.setAttribute("type",type)
-})
-}
