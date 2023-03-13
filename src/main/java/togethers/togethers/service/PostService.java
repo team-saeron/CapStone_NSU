@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.Post;
@@ -24,8 +23,9 @@ import togethers.togethers.repository.RoompictureRepository;
 //import togethers.togethers.repository.UserRepository;
 import togethers.togethers.repository.UserRepository;
 
-import java.awt.geom.Area;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,6 +64,32 @@ public class PostService {
     {
         RoomPicture roomPicture = roompictureRepository.findByPost_PostId(PostId).orElse(null);
         return roomPicture;
+    }
+
+    @Transactional
+    public List<RecentlyPostDto>RecentlyPost()
+    {
+        logger.info("[RecentlyPost] 최근 게시물 조회 로직 Service 동작.");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String DtoDate = new String();
+        List<RecentlyPostDto>recentlyPostDto = new ArrayList<>();
+
+        List<Post> postList = postRepository.findTop5ByOrderByPublishDateDesc();
+
+        for (Post post : postList) {
+            DtoDate = simpleDateFormat.format(post.getPublishDate());
+
+            RecentlyPostDto build = RecentlyPostDto
+                    .builder()
+                    .postId(post.getPostId())
+                    .title(post.getTitle())
+                    .date(DtoDate)
+                    .build();
+
+            recentlyPostDto.add(build);
+        }
+
+        return recentlyPostDto;
     }
 
 
