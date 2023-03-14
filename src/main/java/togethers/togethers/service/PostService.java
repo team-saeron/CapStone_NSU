@@ -235,7 +235,9 @@ public class PostService {
 
 
 
+    public void saveLike(LikeDto likeDto){
 
+    }
 
 
 
