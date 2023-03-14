@@ -105,6 +105,7 @@ public class Post {
     }
 
 
-
-
+    public Long getPost_id() {
+        return postId;
+    }
 }

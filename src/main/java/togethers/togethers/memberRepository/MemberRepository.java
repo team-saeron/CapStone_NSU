@@ -25,7 +25,6 @@ public class MemberRepository {
 
 
 
-
     public void post_save(Post post)
     {
         em.persist(post);
