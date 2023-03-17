@@ -85,12 +85,6 @@ public class Post {
     private String management_fee;
 
     private Integer RoomPay_type;
-
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Like>likes = new ArrayList<>();
-
-
     private String area;
 
 //    @OneToMany(mappedBy = "post",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},

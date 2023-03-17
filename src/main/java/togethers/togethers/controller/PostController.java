@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,18 +131,20 @@ public class PostController {
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
 
-
-        logger.info("[post_detailPost] 게시물 세부사항 관련 로직 동작 PostId:{},userId: {}",PostId,user.getUid());
-
         Post post = postService.findPost(PostId);
         RoomPicture photo = postService.findPhoto(PostId);
         List<Reply> replies = postService.findReply(PostId);
-
         DetailPostDto detailPostDto = postService.detail_post(post, photo);
+        boolean check = postService.checkFavorite(PostId, user.getId());
 
 
-        model.addAttribute("post",detailPostDto);
+
+        logger.info("[post_detailPost] 사용자 로그인 되어있음, 토큰 인증 완료. 로그인 완료후 게시물 세부사항 로직 동작. postId : {}, userId:{}", PostId,user.getUid());
+
+
+        model.addAttribute("check",check);
         model.addAttribute("user",user);
+        model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
         model.addAttribute("postId",PostId);
 
@@ -162,6 +165,35 @@ public class PostController {
 
         model.addAttribute("postList",posts);
         return "post/searchList";
+
+    }
+
+    @GetMapping(value = "/detailPost/Like")
+    public String saveLike(LikeDto likeDto,@RequestParam("postId")Long postId,Model model)
+    {
+
+        logger.info("[saveLike] 게시물 좋아요 Controller동작. postId:{}",postId);
+        Post post = postService.findPost(postId);
+        RoomPicture photo = postService.findPhoto(postId);
+        List<Reply> replies = postService.findReply(postId);
+        DetailPostDto detailPostDto = postService.detail_post(post, photo);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        User user = (User)principal;
+
+        likeDto.setPostId(postId);
+        boolean check = postService.saveLike(user.getId(), likeDto);
+
+
+
+        model.addAttribute("check",check);
+        model.addAttribute("user",user);
+        model.addAttribute("post",detailPostDto);
+        model.addAttribute("replies",replies);
+        model.addAttribute("postId",postId);
+
+        return "post/detailPost";
 
     }
 

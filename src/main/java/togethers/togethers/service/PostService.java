@@ -13,15 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
-import togethers.togethers.entity.Post;
-import togethers.togethers.entity.Reply;
-import togethers.togethers.entity.RoomPicture;
-import togethers.togethers.entity.User;
-import togethers.togethers.repository.PostRepository;
-import togethers.togethers.repository.ReplyRepository;
-import togethers.togethers.repository.RoompictureRepository;
+import togethers.togethers.entity.*;
+import togethers.togethers.repository.*;
 //import togethers.togethers.repository.UserRepository;
-import togethers.togethers.repository.UserRepository;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -46,6 +40,9 @@ public class PostService {
     @Autowired
     private final ReplyRepository replyRepository;
 
+    @Autowired
+    private final FavoriteRepository likeRepository;
+
     @Transactional
     public Post findPost(Long post_id)
     {
@@ -64,6 +61,18 @@ public class PostService {
     {
         RoomPicture roomPicture = roompictureRepository.findByPost_PostId(PostId).orElse(null);
         return roomPicture;
+    }
+
+    @Transactional
+    public boolean checkFavorite(Long postId,Long userId) {
+        Favorite favorite = likeRepository.findByPost_PostIdAndUser_Id(postId, userId).orElse(null);
+        boolean check;
+        if (favorite != null) {
+            check = true;
+        } else {
+            check = false;
+        }
+        return check;
     }
 
     @Transactional
@@ -279,7 +288,7 @@ public class PostService {
 
         User user = post.getUser();
 
-        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{},user Uid",post.getPostId(),user.getUid());
+        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{},user Uid:{}",post.getPostId(),user.getUid());
         DetailPostDto detailPostDto = DetailPostDto.builder()
                 .title(post.getTitle())
                 .context(post.getContext())
@@ -307,6 +316,7 @@ public class PostService {
 
 
 
+    @Transactional
     public Long photo_save(Long post_id, MultipartFile file)throws Exception //이미지 저장로직
     {
         logger.info("[Photo_save] 이미지 저장로직 동작 post_id:{}, 사진 제목:{}",post_id,file.getOriginalFilename());
@@ -336,7 +346,7 @@ public class PostService {
         return roomPicture.getId();
     }
 
-
+    @Transactional
     public Page<Post>SearchPost(String keyword,Pageable pageable)
     {
         logger.info("[SearchPost] 게시물 검색 Service 로직 동작. keyword: {}",keyword);
@@ -346,7 +356,7 @@ public class PostService {
 
     }
 
-
+    @Transactional
     public Page<Post>SearchPostUsingCategory(String areaName,Pageable pageable)
     {
         logger.info("[SearchPostUsingCategory] 카테고리에서 클릭한 지역이름을 이용해 게시물 조회 Service로직 동작 지역 이름: {}",areaName);
@@ -358,8 +368,31 @@ public class PostService {
 
 
 
+    @Transactional
+    public boolean saveLike(Long userId, LikeDto likeDto){
 
+        logger.info("[saveLike] 게시물 좋아요 Service 로직 동작. 유저 Id:{}, 게시물 pk:{}",userId,likeDto.getPostId());
+        boolean check = true;
 
+        User user = userRepository.findById(userId).orElse(null);
+
+        Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(likeDto.getPostId(),user.getId()).orElse(null);
+
+        if(checkFavorite != null)
+        {
+            logger.info("[saveLike] 게시물 좋아요 취소 로직 동작 좋아요의 게시물:{} 유저 pk:{}",checkFavorite.getPost().getPostId(),checkFavorite.getUser().getId());
+            likeRepository.delete(checkFavorite);
+            check = false;
+        }else{
+            Post post = postRepository.findById(likeDto.getPostId()).orElse(null);
+            Favorite favorite = new Favorite();
+            favorite.setPost(post);
+            favorite.setUser(user);
+            favorite.setMyFavorite(true);
+            likeRepository.save(favorite);
+        }
+        return check;
+    }
 
 
 

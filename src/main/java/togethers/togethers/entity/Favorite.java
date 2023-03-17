@@ -1,25 +1,31 @@
 package togethers.togethers.entity;
 
-import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "likes")
-public class Like {
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Favorite {
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)// pk값, 값이 들어올때마다 pk가 자동으로 증가함
-    private Long like_id;
+    private Long favorite_id;
+
+
+    @Column(nullable = false)
+    private Boolean MyFavorite;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @OneToOne(fetch = FetchType.LAZY)
     private Post post;
 }

@@ -29,5 +29,6 @@ public class DetailPostDto {
     private String photo_name;
     private String photo_path;
 
+
     //월세, 전세
 }
