@@ -1,4 +1,4 @@
-package togethers.togethers.data.dto;
+package togethers.togethers.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class EntryPointErrorResponse {
+public class BaseResultDto {
+
+    private boolean success;
+
+    private int code;
+
     private String msg;
 }

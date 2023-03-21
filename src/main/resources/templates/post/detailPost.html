@@ -9,24 +9,12 @@
 <th:block layout:fragment="content">
 
   <body>
-  <div class="container">
+  <div class="container" >
 
     <div class="slider"> <!--이미지를 담고 있는 div-->
 
       <div class="slider__item">
-        <img class="post_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000" alt="null">
-      </div>
-
-      <div class="slider__item">
-        <img class="post_img" src="https://img.freepik.com/free-photo/3d-rendering-mock-up-wood-decor-in-living-room-with-leather-sofa_105762-2207.jpg?w=1060&t=st=1671599477~exp=1671600077~hmac=29ccb061847fc646fbe3d5d654b010f2c505b55b3a5fb337d3c9979e2f33070c" alt="null">
-      </div>
-
-      <div class="slider__item">
-        <img class="post_img" src="https://img.freepik.com/free-photo/3d-contemporary-living-room-interior-and-modern-furniture_1048-10261.jpg?w=1380&t=st=1671599493~exp=1671600093~hmac=e9245221a8580e66f229bbcab5bad33af4290464b64262ca72bfb1cf17188530" alt="null">
-      </div>
-
-      <div class="slider__item">
-        <img class="post_img" src="https://img.freepik.com/premium-photo/3d-rendering-wood-minimal-style-bedroom-with-view-from-window_105762-20.jpg?w=1060" alt="null">
+        <img class="post_img" th:src="@{/files/}+${post.photo_name}">
       </div>
 
     </div>
@@ -57,12 +45,17 @@
           <caption><strong>방 정보</strong></caption>
           <tr>
             <td>보증금</td>
-            <td th:text="${post.lease}">1000만원</td>
+            <td th:text="${post.lease}"></td>
           </tr>
 
           <tr>
             <td>월세</td>
-            <td th:text="${post.mouthly}"></td>
+            <td th:text="${post.mounthly}"></td>
+          </tr>
+
+          <tr>
+            <td>내용</td>
+            <td th:text="${post.context}"></td>
           </tr>
 
           <tr>
@@ -76,18 +69,18 @@
       <div class="personal_explain">
 
         <table class="ex_table">
-          <caption><strong>작성자 정보</strong></caption>
+          <caption><strong>게시물 정보</strong></caption>
           <tr>
-            <td>닉네임</td>
-            <td th:text="${member.nickname}"></td>
+            <td>방 id</td>
+            <td th:text="${post.postId}"></td>
           </tr>
           <tr>
-            <td>나이</td>
-            <td th:text="${member.age}"></td>
+            <td>작성자 pk</td>
+            <td th:text="${post.userId}"></td>
           </tr>
           <tr>
-            <td>이름</td>
-            <td th:text="${member.name}"></td>
+            <td>작성자 id</td>
+            <td th:text="${post.Uid}"></td>
           </tr>
         </table>
       </div>
@@ -99,7 +92,7 @@
 
       <!-- 내가 적는 댓글 칸-->
       <div class="my_comment">
-        <form th:action="@{/detailPost}">
+        <form th:action="@{/detailPost/Reply}" th:method="POST">
           <fieldset>
             <div class="my_inner_commnet">
 
@@ -135,7 +128,6 @@
             </div>
           </li>
 
-
         </ul>
       </div>
 
@@ -143,17 +135,6 @@
   </div>
 
   </div>
-
-
-
-
-
-
-
-
-
-
-
 
   <!-- script 구역 -->
   <script>

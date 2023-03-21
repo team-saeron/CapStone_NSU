@@ -37,12 +37,13 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/sign-api/sign-in", "/sign-api/sign-up",
-                        "/sign-api/exception","/introduction").permitAll()
-                .anyRequest().hasRole("ADMIN")
-                .and()
-                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
-                .and()
-                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        "/sign-api/exception","/introduction","/write","/detailPost/Reply"
+                        ,"/post/**").permitAll()
+//                .anyRequest().hasRole("ADMIN")
+//                .and()
+//                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+//                .and()
+//                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
@@ -56,3 +57,5 @@ public class SecurityConfiguration {
                 "/swagger-ui.html", "/webjars/**", "/swagger/**","/v2/api-docs");
     }
 }
+
+//"/post/modify","/post/delete","/post/detailPost","/post/postList","/detailPost/ReplyDelete"

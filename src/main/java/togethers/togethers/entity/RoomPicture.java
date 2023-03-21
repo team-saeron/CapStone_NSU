@@ -1,5 +1,6 @@
 package togethers.togethers.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,4 +19,7 @@ public class RoomPicture{
 
     private String filename;
     private String filepath;
+
+
+
 }

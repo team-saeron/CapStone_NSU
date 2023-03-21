@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import togethers.togethers.data.dto.UserDetails;
+import togethers.togethers.dto.MyPageUpdateDto;
+import togethers.togethers.dto.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -25,13 +25,12 @@ import java.util.stream.Collectors;
 //회원 정보
 public class User implements UserDetails {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable=false, unique=true)
-    private String uid;
+    private String uid; // hbj1025 = em
 
 
     @Column(nullable = false)
@@ -48,7 +47,7 @@ public class User implements UserDetails {
 
     @Column(length = 30,nullable = false)
     @NotEmpty(message = "이메일을 입력해주세요.")
-    private String email;
+    private String email; //실제쓰는이메미일
 
 //    @Temporal(TemporalType.TIMESTAMP)
     private Date birth;
@@ -57,38 +56,36 @@ public class User implements UserDetails {
     private String nickname;
 
     // 사용자가 좋아요를 눌른 값을 저장하고있는 DB와 연관관계 설정
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    @Builder.Default()
-    private List<Like>likes = new ArrayList<>();
+//    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @Builder.Default()
+//    private List<Like>likes = new ArrayList<>();
 
     // 사용자가 댓글을 달은 DB와 연관관계 설정
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Builder.Default()
     private List<Reply>replyes = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @Builder.Default()
+    private List<Like>likes = new ArrayList<>();
+
+
     // 사용자가 작성한 게시물과 연관관계 설정
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @OneToOne(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @OneToOne
+    @JoinColumn(name = "userDetail_id")
     private UserDetail userDetail;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
-//    @Builder
-//    public User(String uid, String password, String name, String phoneNum, String email, String nickname, String role, Date birth){
-//        this.uid=uid;
-//        this.password=password;
-//        this.name=name;
-//        this.phoneNum=phoneNum;
-//        this.email=email;
-//        this.nickname=nickname;
-//        this.roles.add(role);
-//        this.birth=birth;
-//    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
@@ -122,6 +119,11 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled(){
         return true;
+    }
+
+    @Builder
+    public User(MyPageUpdateDto myPageUpdateDto){
+        this.password = myPageUpdateDto.getPassword();
     }
 
 }

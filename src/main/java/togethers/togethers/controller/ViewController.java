@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import togethers.togethers.data.dto.SignInRequestDto;
-import togethers.togethers.data.dto.SignUpRequestDto;
-import togethers.togethers.data.dto.UserDetailSaveDto;
+import togethers.togethers.dto.SignInRequestDto;
+import togethers.togethers.dto.SignUpRequestDto;
+import togethers.togethers.dto.UserDetailSaveDto;
 
 @Controller
 @RequiredArgsConstructor

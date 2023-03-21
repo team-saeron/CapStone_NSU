@@ -1,24 +1,49 @@
 package togethers.togethers.entity;
 
-import lombok.Data;
-import togethers.togethers.service.form.Postform;
+import lombok.*;
+import togethers.togethers.dto.PostEditRequestDto;
+import togethers.togethers.dto.PostUpRequestDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 @Entity
-@Data
+@Getter
+@Setter
 public class Post {
+
+    public Post(){};
+
+    public Post(PostUpRequestDto postUpRequestDto)
+    {
+        this.title = postUpRequestDto.getTitle();
+        this.context = postUpRequestDto.getContext();
+        this.publishDate = new Date();
+        this.lease = postUpRequestDto.getLease();
+        this.mounthly = postUpRequestDto.getMounthly();
+
+        if(postUpRequestDto.getGetType()==true) //true면 룸메만 구하는 경우, false면 룸메랑 집을 구하는경우
+            this.RoomMate_type = 0;
+        else
+            this.RoomMate_type = 1;
+
+        if(postUpRequestDto.getRoomType()==true) //true면 월세, false면 전세
+            this.RoomPay_type = 0;
+        else
+            this.RoomPay_type = 1;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true)
-    private Long post_id;
+    private Long postId;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "post",fetch = FetchType.LAZY) // user로 mappedBy로 바꾸기
     private User user;
+
 
 
     private String title;
@@ -28,63 +53,57 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String context;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    //    @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
 
 
-    private String mouthly;
+    private String mounthly;
 
 
     private String lease;
 
 
-    private int get_type;
+    private Integer RoomMate_type;
+    private Integer RoomPay_type;
 
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Like>likes = new ArrayList<>();
+    private Boolean like;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private Category area;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},
+            orphanRemoval = true)
     List<RoomPicture>images = new ArrayList<>();
 
 
 
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Reply>replies = new ArrayList<>();
 
     //postForm을 받아와 Post생성자를 통해 DB에 저장할 Post 생성
 
-    public Post(){};
-    public Post(Postform postform)
+
+
+
+    public void PostEdit(PostEditRequestDto postEditRequestDto)
     {
-        this.title = postform.getTitle();
-        if(postform.isGetType()==true)
+        this.title = postEditRequestDto.getTitle();
+        this.context = postEditRequestDto.getContext();
+        this.lease = postEditRequestDto.getLease();
+        this.mounthly = postEditRequestDto.getMounthly();
+
+        if(postEditRequestDto.getRoomType()==true)
         {
-            this.get_type = 0;
+            this.RoomPay_type = 0;
+        }else{
+            this.RoomPay_type = 1;
         }
-        else {
-            this.get_type = 1;
-        }
-
-        this.mouthly = postform.getMouthly();
-        this.lease = postform.getLease();
-        this.context = postform.getText();
-        this.publishDate = new Date();
     }
 
-    public Post(Long post_id, String title, String context, Date publishDate, String mouthly, String lease) {
-        this.post_id = post_id;
-        this.title = title;
-        this.context = context;
-        this.publishDate = publishDate;
-        this.mouthly = mouthly;
-        this.lease = lease;
-    }
+
 
 
 }

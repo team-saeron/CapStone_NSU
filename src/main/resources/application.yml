@@ -2,6 +2,14 @@ server:
  port: 1000
 
 spring:
+ mail:
+  host: smtp.gmail.com
+  port: 465
+  username: songhyeon4643@gmail.com
+  password : onlvjajuvzkagtfh
+  properties:
+   mail.smtp.auth: true
+   mail.smtp.ssl.enable: true
  jwt:
   secret: flature!@#appleandseoullovecdafqefaaasadg
  mvc:
@@ -17,6 +25,7 @@ spring:
   url: jdbc:mysql://localhost:8081/together?serverTimezone=Asia/Seoul
   username: root
   password: hyeon4643!!@
+
  jpa:
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   open-in-view: false
@@ -24,6 +33,12 @@ spring:
   hibernate:
    format_sql: true
    ddl-auto: update
+ servlet:
+  multipart:
+   maxFileSize: 10MB
+   maxRequestSize: 20MB
+   enabled: true
+
 logging:
  level:
   org:
@@ -33,3 +48,4 @@ logging:
      descriptor:
       sql:
        BasicBinder: TRACE
+

@@ -11,7 +11,7 @@ margin: 0 auto;
 .home_column{
 display:flex;
 justify-content:center;
-width:200%
+width:200%;
 height:200%;
 margin-bottom:10px;
 }
@@ -50,5 +50,5 @@ height:120px;
 
 #notice_box{
 margin-right:60px;
- border-top solid 35px;
+ border-top : solid 35px;
 }
