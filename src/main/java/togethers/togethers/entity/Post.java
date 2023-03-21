@@ -67,8 +67,7 @@ public class Post {
     private Integer RoomPay_type;
 
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Like>likes = new ArrayList<>();
+    private Boolean like;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")

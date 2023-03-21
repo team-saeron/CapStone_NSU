@@ -177,8 +177,8 @@ public class PostController {
     }
 
     @PostMapping
-    public void saveLike(LikeDto likeDto){
-        postService.saveLike(likeDto);
+    public void saveLike(Long id,LikeDto likeDto){
+        postService.saveLike(id, likeDto);
     }
 }
 
