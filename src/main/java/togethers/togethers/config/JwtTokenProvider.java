@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 
+// Access Token은 Header와 Payload의 값을 각각 Base64로 인코딩한 후 인코딩된 값을 secret key를 이용해 헤더에서 정의한 알고리즘으로 암호화하고 다시 Base64로 인코딩하여 생성
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -37,26 +38,27 @@ public class JwtTokenProvider {
     @Value("${spring.jwt.secret}")
     private String secretKey = "secretKey";
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final Long tokenValidMillisecond = 1000L*60*60;
+    private final Long tokenValidMillisecond = 1000L*60*60; // 토큰 만료 가건 60분, 토큰이 무한정으로 사용되면X
 
 
-    @PostConstruct
+    @PostConstruct // 해당 객체가 빈 객체로 주입된 이후 수행되는 메서드를 가리킴
     protected void init()
     {
 
         logger.info("[init] JwtTokenProvider 내 secretKey 초기화 시작");
-        secretKey = Encoders.BASE64.encode(key.getEncoded());
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+        secretKey = Encoders.BASE64.encode(key.getEncoded()); //secretkey를 Base64로 인코딩
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)); //
         logger.info("[init] JwtTokenProvider 내 secretKey 초기화 완료");
     }
 
 
+    //claims : 토큰에 담는 정보가 포함된 속성들
     public String createToken(String userUid, List<String> roles)
     {
         logger.info("[createToken] 토큰 생성 시작");
-        Claims claims = Jwts.claims().setSubject(userUid);
+        Claims claims = Jwts.claims().setSubject(userUid); //토큰의 키가 되는 Subject를 중복되지 않는 고유한 값으로 지정
         claims.put("roles",roles);
-        Date now = new Date(); //여기서 import 타입 Date이 달라서때문은 아니겟징
+        Date now = new Date();
         String token = Jwts.builder()
                 .setClaims(claims) //데이터
                 .setIssuedAt(now) // 토큰 발행 일자

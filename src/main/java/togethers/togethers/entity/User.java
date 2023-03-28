@@ -82,7 +82,7 @@ public class User implements UserDetails {
 
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities(){ //계정이 가지고 있는 권한 목록 리턴
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
@@ -90,30 +90,30 @@ public class User implements UserDetails {
     @Override
     public String getUsername(){
         return this.uid;
-    }
+    } // 계정의 이름(=아이디)을 리턴
 
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isAccountNonExpired(){
         return true;
-    }
+    }//계정이 만료됐는지 리턴(true면 만료x)
 
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isAccountNonLocked(){
         return true;
-    }
+    }//계정이 잠겨있는지 리턴(true면 잠김x)
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isCredentialsNonExpired(){
         return true;
-    }
+    } //비밀번호가 만료됐는지 리턴(true면 만료x)
 
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isEnabled(){
         return true;
-    }
+    } //계정이 활성화 되어있는지 리턴(true 활성o)
 
     @Builder
     public User(MyPageUpdateDto myPageUpdateDto){
