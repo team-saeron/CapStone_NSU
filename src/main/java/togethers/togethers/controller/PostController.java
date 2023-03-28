@@ -176,6 +176,9 @@ public class PostController {
         return new ResponseEntity<>(map, responseHeaders, httpStatus);
     }
 
-
+    @PostMapping
+    public void saveLike(Long id,LikeDto likeDto){
+        postService.saveLike(id, likeDto);
+    }
 }
 

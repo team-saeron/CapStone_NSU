@@ -235,7 +235,11 @@ public class PostService {
 
 
 
-
+    public void saveLike(Long post_id, LikeDto likeDto){
+        Post post = postRepository.findById(post_id).orElse(null);
+        post.setLike(likeDto.getLike());
+        postRepository.save(post);
+    }
 
 
 

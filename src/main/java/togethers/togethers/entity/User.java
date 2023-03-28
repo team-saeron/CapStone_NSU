@@ -65,6 +65,12 @@ public class User implements UserDetails {
     @Builder.Default()
     private List<Reply>replyes = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @Builder.Default()
+    private List<Like>likes = new ArrayList<>();
+
+
     // 사용자가 작성한 게시물과 연관관계 설정
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
