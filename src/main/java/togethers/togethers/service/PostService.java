@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
@@ -369,14 +370,14 @@ public class PostService {
 
 
     @Transactional
-    public boolean saveLike(Long userId, LikeDto likeDto){
+    public boolean saveLike(Long userId, Long PostId){
 
-        logger.info("[saveLike] 게시물 좋아요 Service 로직 동작. 유저 Id:{}, 게시물 pk:{}",userId,likeDto.getPostId());
+        logger.info("[saveLike] 게시물 좋아요 Service 로직 동작. 유저 Id:{}, 게시물 pk:{}",userId, PostId);
         boolean check = true;
 
         User user = userRepository.findById(userId).orElse(null);
 
-        Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(likeDto.getPostId(),user.getId()).orElse(null);
+        Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(PostId,user.getId()).orElse(null);
 
         if(checkFavorite != null)
         {
@@ -384,7 +385,7 @@ public class PostService {
             likeRepository.delete(checkFavorite);
             check = false;
         }else{
-            Post post = postRepository.findById(likeDto.getPostId()).orElse(null);
+            Post post = postRepository.findById(PostId).orElse(null);
             Favorite favorite = new Favorite();
             favorite.setPost(post);
             favorite.setUser(user);
@@ -393,6 +394,14 @@ public class PostService {
         }
         return check;
     }
+
+
+
+
+
+
+
+
 
 
 

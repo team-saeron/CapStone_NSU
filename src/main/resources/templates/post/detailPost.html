@@ -16,7 +16,6 @@
       <div class="slider__item">
         <img class="post_img" th:src="@{/files/}+${post.photo_name}">
       </div>
-
     </div>
 
     <div class="Like">
@@ -26,9 +25,15 @@
             <addr title="매칭률"><i class="fa-solid fa-fire fa-2x"></i></addr>
             80%
           </td>
-          <td>
-            <i class="fa-solid fa-heart fa-2x"></i>
+
+          <td th:if="${check==true}">
+            <a th:href="@{/detailPost/Like(postId = ${postId})}" class="fa-solid fa-heart fa-2x"></a>
           </td>
+
+            <td th:if="${check==false}">
+              <a th:href="@{/detailPost/Like(postId = ${postId})}" class="fa-regular fa-heart fa-2x"></a>
+            </td>
+
         </tr>
       </table>
 
@@ -72,7 +77,7 @@
           <caption><strong>게시물 정보</strong></caption>
           <tr>
             <td>방 id</td>
-            <td th:text="${post.postId}"></td>
+            <td th:text="${postId}"></td>
           </tr>
           <tr>
             <td>작성자 pk</td>
@@ -90,26 +95,25 @@
     <!-- 댓글 html-->
     <div class="comment">
 
-      <!-- 내가 적는 댓글 칸-->
-      <div class="my_comment">
-        <form action="/post/detailPost/reply" method="POST">
-<!--          <fieldset>-->
-            <div class="my_inner_commnet">
-              <div class="my_id">
-                <i class="fa-solid fa-user fa fa-2x"></i>
-                <span th:text="${user.uid}"></span>
+        <div class="my_comment">
+          <form action="/post/detailPost/reply" method="POST">
+              <div class="my_inner_commnet">
+                <div class="my_id">
+                  <i class="fa-solid fa-user fa fa-2x"></i>
+                  <span th:text="${userId}"></span>
+                </div>
+                <div class="my_text">
+                  <input type="text" cols="30" class="my_textarea" id="comment" name="comment">
+                  <input type="hidden" id="p_id" name="p_id" th:value="${postId}">
+                </div>
+                <div class="text_submit">
+                  <button type="submit">등록</button>
+                </div>
               </div>
-              <div class="my_text">
-                <input type="text" cols="30" class="my_textarea" id="comment" name="comment">
-                <input type="hidden" id="p_id" name="p_id" th:value="${postId}">
-              </div>
-              <div class="text_submit">
-                <button type="submit">등록</button>
-              </div>
-            </div>
-<!--          </fieldset>-->
-        </form>
-      </div>
+          </form>
+        </div>
+
+
 
       <!--다른 사람이 작성한 댓글 칸 -->
       <div class="other_comment">
@@ -136,6 +140,7 @@
   </div>
 
   <!-- script 구역 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script>
         const SHOWING_CLASS = "showing";
         const firstslide = document.querySelector(".slider__item:first-child");
@@ -157,6 +162,23 @@
         }
         slide();
         setInterval(slide,3000);
+
+        $(document).ready(function()
+        {
+            let message = "[[${reply_msg}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+            })
+
+        $(document).ready(function()
+        {
+            let message = "[[${like_msg}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+            })
+
     </script>
 
 

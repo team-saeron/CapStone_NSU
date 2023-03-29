@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FavoriteRepository extends JpaRepository<Favorite,Long> {
-    Optional<Favorite> findByPost_PostId(Long id);
 
     Optional<Favorite>findByPost_PostIdAndUser_Id(Long postId,Long userId);
 

@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Entity
 @Data
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Favorite {
 
 
