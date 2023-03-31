@@ -42,7 +42,9 @@
             <h5>아이디</h5>
             <div class="join__column" id="join_id">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" th:field="*{id}" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <input type="text" class="form-control" th:field="*{id}" id="id" name="id" oninput="checkId()" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <span class = "id_ok"> 사용 가능한 아이디 입니다.</span>
+                    <span class = "id_already">이미 존재하는 아이디 입니다.</span>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
                     </div>
@@ -104,10 +106,38 @@
     </div>
     </div>
 
-
-    <script type="text/javascript" th:src="@{/js/join.js}"></script>
 </th:block>
 
+<script type="text/javascript" th:src="@{/js/join.js}"></script>
+<script>
+        function checkId(){
+            var id = $('#id').val();
+            $.ajax({
+                url:'./idCheck',
+                type:'post',
+                data:{id:id},
+
+                success:function(cnt){
+                    if(cnt == 0)
+                    {
+                        $('.id_ok').css("display","inline-block");
+                        $('.id_already').css("display", "none");
+                    }
+                    else
+                    {
+                        $('.id_already').css("display","inline-block");
+                        $('.id_ok').css("display", "none");
+                        alert("아이디를 다시 입력해주세요");
+                        $('#id').val('');
+                    }
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+        };
+
+    </script>
 </body>
 
 </html>

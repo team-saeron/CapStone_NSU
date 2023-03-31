@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="layout/default_layout">
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/member/login.css" />
@@ -45,5 +45,27 @@
         <div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+
+        $(document).ready(function()
+        {
+            let message = "[[${id_error_msg}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+        })
+
+        $(document).ready(function()
+        {
+            let message = "[[${password_error_msg}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+        })
+
+    </script>
+
 </th:block>
 </html>

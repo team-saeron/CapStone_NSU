@@ -141,10 +141,19 @@ public class PostController {
     @GetMapping(value = "post/postList")
     public String post_postList(@PageableDefault Pageable pageable, Model model){
         logger.info("[postList]게시물 목록 조회 controller 동작");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal == "anonymousUser"){
+            model.addAttribute("login_inform",false);
+        }else{
+            model.addAttribute("login_inform",true);
+        }
+
 
         Page<Post>postList = postService.post_postList(pageable);
 
         model.addAttribute("postList",postList);
+        model.addAttribute("category",AreaEnum.values());
         logger.info("[postList] 총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
                 postList.getTotalElements(), postList.getTotalPages(), postList.getSize(),
                 postList.getNumber(), postList.getNumberOfElements());
@@ -170,6 +179,8 @@ public class PostController {
             userId = "";
             model.addAttribute("userId",userId);
             model.addAttribute("check",check);
+            model.addAttribute("login_inform",false);
+
         }else {
             User user = (User)principal;
             userId = user.getUid();
@@ -177,6 +188,8 @@ public class PostController {
             check = postService.checkFavorite(PostId, user.getId());
             model.addAttribute("userId",userId);
             model.addAttribute("check",check);
+            model.addAttribute("login_inform",true);
+
         }
 
 
@@ -189,6 +202,7 @@ public class PostController {
         model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
         model.addAttribute("postId",PostId);
+        model.addAttribute("category",AreaEnum.values());
 
 
         return "post/detailPost";
@@ -227,7 +241,7 @@ public class PostController {
             logger.info("[saveLike] 사용자가 로그인 하지 않아 게시물 좋아요 기능 동작 불가능");
             check = false;
             model.addAttribute("like_msg","로그인 이후 좋아요가 가능합니다.");
-
+            model.addAttribute("login_inform",false);
             model.addAttribute("userId"," ");
             model.addAttribute("check",check);
 
@@ -236,14 +250,13 @@ public class PostController {
             logger.info("[saveLike] 게시물 좋아요 로직 동작. postId : {}, userId:{}",postId,user.getUid());
 
             check = postService.saveLike(user.getId(), postId);
-
+            model.addAttribute("login_inform",true);
             model.addAttribute("userId",user.getUid());
             model.addAttribute("check",check);
         }
 
 
-
-
+        model.addAttribute("category",AreaEnum.values());
         model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
         model.addAttribute("postId",postId);

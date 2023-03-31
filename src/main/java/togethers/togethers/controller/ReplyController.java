@@ -9,6 +9,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.DetailPostDto;
 import togethers.togethers.dto.ReplyRequestDto;
 import togethers.togethers.entity.Post;
@@ -57,6 +58,7 @@ public class ReplyController {
         if(principal == "anonymousUser"){
             logger.info("[replyWrite] 사용자가 로그인 하지 않아 게시물 작성 불가");
             check = false;
+            model.addAttribute("login_inform",false);
             model.addAttribute("reply_msg","로그인 이후 댓글 작성이 가능합니다.");
             model.addAttribute("userId"," ");
             model.addAttribute("check",check);
@@ -72,6 +74,8 @@ public class ReplyController {
             replyService.Reply_write(dto);
             check = postService.checkFavorite(p_id, user.getId());
 
+            model.addAttribute("category", AreaEnum.values());
+            model.addAttribute("login_inform",true);
             model.addAttribute("check",check);
             model.addAttribute("userId",user.getUid());
         }

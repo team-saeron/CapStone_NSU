@@ -3,6 +3,7 @@ package togethers.togethers.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,14 @@ public class HomeController {
     @GetMapping(value = "/")
     public String Home(Model model)
     {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal == "anonymousUser"){
+            model.addAttribute("login_inform",false);
+        }else{
+            model.addAttribute("login_inform",true);
+        }
+
         PostSearchDto postSearchDto = new PostSearchDto();
 
         List<RecentlyPostDto> recentlyPost = postService.RecentlyPost();

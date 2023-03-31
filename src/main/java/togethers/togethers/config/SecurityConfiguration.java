@@ -29,7 +29,12 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.httpBasic().disable().cors()
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true).deleteCookies("X-AUTH-TOKEN")
+                .and()
+                .httpBasic().disable().cors()
                 .and()
                 .csrf().disable()
                 .sessionManagement()

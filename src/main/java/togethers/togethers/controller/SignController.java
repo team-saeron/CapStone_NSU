@@ -3,15 +3,18 @@ package togethers.togethers.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import togethers.togethers.dto.*;
+import togethers.togethers.entity.User;
 import togethers.togethers.service.SignService;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -62,26 +65,49 @@ public class SignController {
 
     @PostMapping(value = "/login")
     public String signUp(@Valid @ModelAttribute SignInRequestDto signInRequestDto,
-                         HttpServletResponse response)
+                         HttpServletResponse response,Model model)
     {
         logger.info("[signIn] 로그인을 시도하고 있습니다. id : {}, pw : ****", signInRequestDto.getId());
         SignInResultDto signInResultDto = signService.signIn(signInRequestDto);
 
+        if(signInResultDto.getCode()==-1){
+            model.addAttribute("id_error_msg","존재하지 않는 아이디 입니다");
+            SignInRequestDto newsignInRequestDto = new SignInRequestDto();
+            model.addAttribute("SignInRequestDto",newsignInRequestDto);
+            return "member/login";
 
-        String token = signInResultDto.getToken();
-        response.setHeader("X-AUTH-TOKEN",token);
+        } else if (signInResultDto.getCode()==-2) {
+            model.addAttribute("password_error_msg","비밀번호가 일치하지 않습니다");
 
-        Cookie cookie = new Cookie("X-AUTH-TOKEN", token);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
+            SignInRequestDto newsignInRequestDto = new SignInRequestDto();
+            model.addAttribute("SignInRequestDto",newsignInRequestDto);
+            return "member/login";
 
-
-        if(signInResultDto.getCode()==0){
-            logger.info("[signIn] 정상적으로 로그인되었습니다. id : {}, token : {}", signInRequestDto.getId(), signInResultDto.getToken());
         }
-        return "redirect:/";
+        else{
+            String token = signInResultDto.getToken();
+            response.setHeader("X-AUTH-TOKEN",token);
+
+            Cookie cookie = new Cookie("X-AUTH-TOKEN", token);
+            cookie.setPath("/");
+            cookie.setSecure(true);
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+
+
+            return "redirect:/";
+        }
     }
+
+
+    @PostMapping("/idCheck")
+    @ResponseBody
+    public int idCheck(@RequestParam("id")String id){
+        logger.info("[idCheck] id 중복 검사 Controller 동작 id: {}",id);
+        int cnt = signService.idCheck(id);
+        return cnt;
+    }
+
+
 
 }
