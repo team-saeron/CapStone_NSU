@@ -9,6 +9,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.DetailPostDto;
 import togethers.togethers.dto.ReplyRequestDto;
@@ -38,31 +39,16 @@ public class ReplyController {
 
 
     @PostMapping(value = "/post/detailPost/reply")
-    public String replyWrite(HttpServletRequest request, Model model)
+    public String replyWrite(HttpServletRequest request,RedirectAttributes attr)
     {
-
         String postId = request.getParameter("p_id");
         long p_id = Long.parseLong(postId);
 
-        Post post = postService.findPost(p_id);
-        RoomPicture photo = postService.findPhoto(p_id);
-        List<Reply> replies = postService.findReply(p_id);
-        DetailPostDto detailPostDto = postService.detail_post(post, photo);
-        boolean check;
-
-        model.addAttribute("post",detailPostDto);
-        model.addAttribute("replies",replies);
-        model.addAttribute("postId",p_id);
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal == "anonymousUser"){
-            logger.info("[replyWrite] 사용자가 로그인 하지 않아 게시물 작성 불가");
-            check = false;
-            model.addAttribute("login_inform",false);
-            model.addAttribute("reply_msg","로그인 이후 댓글 작성이 가능합니다.");
-            model.addAttribute("userId"," ");
-            model.addAttribute("check",check);
-        }else{
+            attr.addFlashAttribute("reply_msg","로그인 이후 댓글 작성이 가능합니다");
+        }
+        else{
             User user = (User)principal;
             logger.info("[replyWrite]  게시물 댓글 작성 로직 동작 postId:{}, userId:{} comment: {}",p_id,user.getUid(),request.getParameter("comment"));
 
@@ -72,15 +58,9 @@ public class ReplyController {
                     .comment(request.getParameter("comment"))
                     .build();
             replyService.Reply_write(dto);
-            check = postService.checkFavorite(p_id, user.getId());
-
-            model.addAttribute("category", AreaEnum.values());
-            model.addAttribute("login_inform",true);
-            model.addAttribute("check",check);
-            model.addAttribute("userId",user.getUid());
         }
 
 
-        return "post/detailPost";
+        return "redirect:/post/detailPost/"+p_id;
     }
 }

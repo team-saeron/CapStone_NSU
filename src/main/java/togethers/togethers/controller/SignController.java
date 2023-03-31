@@ -9,6 +9,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.SignService;
@@ -65,24 +66,18 @@ public class SignController {
 
     @PostMapping(value = "/login")
     public String signUp(@Valid @ModelAttribute SignInRequestDto signInRequestDto,
-                         HttpServletResponse response,Model model)
+                         HttpServletResponse response, RedirectAttributes attr)
     {
         logger.info("[signIn] 로그인을 시도하고 있습니다. id : {}, pw : ****", signInRequestDto.getId());
         SignInResultDto signInResultDto = signService.signIn(signInRequestDto);
 
         if(signInResultDto.getCode()==-1){
-            model.addAttribute("id_error_msg","존재하지 않는 아이디 입니다");
-            SignInRequestDto newsignInRequestDto = new SignInRequestDto();
-            model.addAttribute("SignInRequestDto",newsignInRequestDto);
-            return "member/login";
+            attr.addFlashAttribute("id_error_msg","존재하지 않는 아이디 입니다");
+            return "redirect:/login";
 
         } else if (signInResultDto.getCode()==-2) {
-            model.addAttribute("password_error_msg","비밀번호가 일치하지 않습니다");
-
-            SignInRequestDto newsignInRequestDto = new SignInRequestDto();
-            model.addAttribute("SignInRequestDto",newsignInRequestDto);
-            return "member/login";
-
+            attr.addFlashAttribute("password_error_msg","비밀번호가 일치하지 않습니다.");
+            return "redirect:/login";
         }
         else{
             String token = signInResultDto.getToken();
@@ -93,7 +88,6 @@ public class SignController {
             cookie.setSecure(true);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
-
 
             return "redirect:/";
         }

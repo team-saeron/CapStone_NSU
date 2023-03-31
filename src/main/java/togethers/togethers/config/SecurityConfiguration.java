@@ -31,8 +31,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true).deleteCookies("X-AUTH-TOKEN")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true).deleteCookies("X-AUTH-TOKEN","JSESSIONID")
                 .and()
                 .httpBasic().disable().cors()
                 .and()

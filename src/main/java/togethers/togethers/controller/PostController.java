@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.Post;
@@ -56,20 +57,14 @@ public class PostController {
 
     /**월세 타입의 게시물 GET,POST MAPPING **/
     @GetMapping(value = "/writeMonth")
-    public String postWriteMouth(Model model)
+    public String postWriteMouth(Model model,RedirectAttributes attr)
     {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal =="anonymousUser"){
             logger.info("[postWriteMouth] 사용자가 로그인 하지 않아 게시물 작성 불가");
-            List<RecentlyPostDto> recentlyPost = postService.RecentlyPost();
-            PostSearchDto postSearchDto = new PostSearchDto();
 
-            model.addAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
-            model.addAttribute("recentlyPost",recentlyPost);
-            model.addAttribute("dto",postSearchDto);
-            model.addAttribute("category",AreaEnum.values());
-
-            return "home";
+            attr.addFlashAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
+            return "redirect:/";
         }else {
 
             logger.info("[postWriteMouth] GET 게시물 월세 작성 Controller 동작.");
@@ -99,19 +94,12 @@ public class PostController {
 
     /**전세 타입의 게시물 GET, POST 매핑**/
     @GetMapping("/writeBeforePay")
-    public String writeBeforePay(Model model){
+    public String writeBeforePay(Model model,RedirectAttributes attr){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal =="anonymousUser"){
             logger.info("[postWriteMouth] 사용자가 로그인 하지 않아 게시물 작성 불가");
-            List<RecentlyPostDto> recentlyPost = postService.RecentlyPost();
-            PostSearchDto postSearchDto = new PostSearchDto();
-
-            model.addAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
-            model.addAttribute("recentlyPost",recentlyPost);
-            model.addAttribute("dto",postSearchDto);
-            model.addAttribute("category",AreaEnum.values());
-
-            return "home";
+            attr.addFlashAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
+            return "redirect:/";
         }else {
             logger.info("[postWriteMouth] GET 게시물 전세 작성 Controller 동작.");
             LeasePostRequestDto leasePostRequestDto = new LeasePostRequestDto();
@@ -225,43 +213,25 @@ public class PostController {
     }
 
     @GetMapping(value = "/detailPost/Like")
-    public String saveLike(@RequestParam("postId")Long postId,Model model)
+    public String saveLike(@RequestParam("postId")Long postId,RedirectAttributes attr)
     {
 
         logger.info("[saveLike] 게시물 좋아요 Controller동작. postId:{}",postId);
-        Post post = postService.findPost(postId);
-        RoomPicture photo = postService.findPhoto(postId);
-        List<Reply> replies = postService.findReply(postId);
-        DetailPostDto detailPostDto = postService.detail_post(post, photo);
-        boolean check;
+
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal == "anonymousUser")
         {
             logger.info("[saveLike] 사용자가 로그인 하지 않아 게시물 좋아요 기능 동작 불가능");
-            check = false;
-            model.addAttribute("like_msg","로그인 이후 좋아요가 가능합니다.");
-            model.addAttribute("login_inform",false);
-            model.addAttribute("userId"," ");
-            model.addAttribute("check",check);
+            attr.addFlashAttribute("like_msg","로그인 이후 이용하여 주세요");
+
 
         }else{
             User user = (User)principal;
             logger.info("[saveLike] 게시물 좋아요 로직 동작. postId : {}, userId:{}",postId,user.getUid());
-
-            check = postService.saveLike(user.getId(), postId);
-            model.addAttribute("login_inform",true);
-            model.addAttribute("userId",user.getUid());
-            model.addAttribute("check",check);
+            postService.saveLike(user.getId(), postId);
         }
-
-
-        model.addAttribute("category",AreaEnum.values());
-        model.addAttribute("post",detailPostDto);
-        model.addAttribute("replies",replies);
-        model.addAttribute("postId",postId);
-
-        return "post/detailPost";
+        return "redirect:/post/detailPost/"+postId;
 
     }
 
