@@ -27,7 +27,6 @@ public class SignController {
     private final SignService signService;
 
     /** 회원가입 GET,POST 매핑 관련 Controller**/
-
     @GetMapping(value = "/member/new")
     public String signUp(Model model)
     {
@@ -47,9 +46,7 @@ public class SignController {
         dto.setRole("user");
         SignUpResultDto signUpResultDto = signService.signUp(dto);
 
-        SignInRequestDto signInRequestDto = new SignInRequestDto();
-        model.addAttribute("SignInRequestDto",signInRequestDto);
-        return "member/login";
+        return "redirect:/login";
     }
 
 

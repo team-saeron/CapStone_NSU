@@ -38,7 +38,6 @@ public class JwtTokenProvider {
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final Long tokenValidMillisecond = 1000L*60*60;
 
-
     @PostConstruct
     protected void init()
     {
