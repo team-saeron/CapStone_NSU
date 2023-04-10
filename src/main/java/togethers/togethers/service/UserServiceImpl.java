@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(str);
             return mailDto;
         }else{
+            log.info("[sendEmail] 사용자 정보 일치 하지 않음.");
             return null;
         }
     }

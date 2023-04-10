@@ -42,7 +42,7 @@ public class SignController {
     {
         logger.info("[signUp] POST 회원가입 컨트롤러 동작");
         String email = dto.getEmail()+"@"+dto.getDomain();
-        logger.info("[signUp] name:{}, nickname:{}, email:{}",dto.getName(),dto.getNickname(), email);
+        logger.info("[signUp] name:{}, nickname:{}, email:{} birth : {}",dto.getName(),dto.getNickname(), dto.getEmail(),dto.getBirth());
         dto.setRole("user");
         SignUpResultDto signUpResultDto = signService.signUp(dto);
 

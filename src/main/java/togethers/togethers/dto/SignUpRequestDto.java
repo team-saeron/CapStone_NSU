@@ -12,16 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SignUpRequestDto {
 
-    public SignUpRequestDto(HttpServletRequest request)
-    {
-        this.id = request.getParameter("id");
-        this.password = request.getParameter("password");
-        this.email = request.getParameter("email");
-        this.name  = request.getParameter("name");
-        this.nickname = request.getParameter("nickname");
-        this.phoneNum = request.getParameter("phoneNum");
-        this.role = "user";
-    }
 
     private String id;
 
@@ -36,21 +26,10 @@ public class SignUpRequestDto {
     private String email;
     private String domain;
 
-//    private Date birth;
+    private Date birth;
 
     private String phoneNum;
 
-    //    public User toEntity(String encodedPassword){
-//        return User.builder()
-//                .uid(id)
-//                .password(encodedPassword)
-//                .name(name)
-//                .role(role)
-//                .nickname(nickname)
-//                .email(email)
-//                .birth(birth)
-//                .phoneNum(phoneNum)
-//                .build();
-//    }
+
 
 }

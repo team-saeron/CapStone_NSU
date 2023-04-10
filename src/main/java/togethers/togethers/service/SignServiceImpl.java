@@ -51,7 +51,7 @@ public class SignServiceImpl implements SignService {
                     .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                     .nickname(signUpRequestDto.getNickname())
                     .email(tempEmail)
-//                    .birth(signUpRequestDto.getBirth())
+                    .birth(signUpRequestDto.getBirth())
                     .phoneNum(signUpRequestDto.getPhoneNum())
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
@@ -62,7 +62,7 @@ public class SignServiceImpl implements SignService {
                     .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                     .nickname(signUpRequestDto.getNickname())
                     .email(tempEmail)
-//                    .birth(signUpRequestDto.getBirth())
+                    .birth(signUpRequestDto.getBirth())
                     .phoneNum(signUpRequestDto.getPhoneNum())
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
