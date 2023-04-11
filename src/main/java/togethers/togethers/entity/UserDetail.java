@@ -1,9 +1,9 @@
 package togethers.togethers.entity;
 
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import togethers.togethers.dto.UserDetailSaveDto;
 import togethers.togethers.dto.UserDetailUpdateDto;
 
 import javax.persistence.*;
@@ -14,6 +14,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class UserDetail {
 
+
+    public UserDetail(UserDetailSaveDto dto) {
+        this.mbti = dto.getMbti();
+        this.wish_roommate = dto.getWish_roommate();
+        this.monthly_fee = dto.getMonthly_fee();
+        this.regions = dto.getRegions();
+        this.lease_fee = dto.getLease_fee();
+        this.life_cycle = dto.getLife_cycle();
+        this.smoking = dto.getSmoking();
+        this.gender = dto.getGender();
+        this.pet = dto.getPet();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,19 +38,12 @@ public class UserDetail {
     @Column(nullable = false)
     private String mbti;
 
-//    @Column(nullable = false)
-//    @Lob
-//    private String selfIntro;
-
     @Column(nullable = false)
     @Lob
     private String wish_roommate;
 
     @Column(nullable = false)
     private int monthly_fee;
-
-    @Column(nullable = false)
-    private String nickname;
 
     @Column(nullable = false)
     private String regions;
@@ -52,42 +57,15 @@ public class UserDetail {
     private String smoking;
 
     @Column(nullable = false)
-    private String sex;
+    private String gender;
 
     @Column(nullable = false)
     private String pet;
 
-//    @Column(nullable = false)
-//    private String room_type;
 
-    @Builder
-    public UserDetail(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle){
-        this.regions=regions;
-        this.mbti=mbti;
-        this.wish_roommate = wish_roommate;
-        this.monthly_fee=monthly_fee;
-        this.lease_fee = lease_fee;
-        this.sex=sex;
-        this.pet=pet;
-        this.smoking = smoking;
-        this.life_cycle = life_cycle;
-        this.nickname=nickname;
-    }
 
-    public static UserDetail createIntro(String nickname, String regions, String mbti, String wish_roommate, int monthly_fee, int lease_fee, String sex, String pet, String smoking, String life_cycle){
-        UserDetail userDetail = new UserDetail();
-        userDetail.regions=regions;
-        userDetail.mbti=mbti;
-        userDetail.wish_roommate = wish_roommate;
-        userDetail.monthly_fee=monthly_fee;
-        userDetail.lease_fee = lease_fee;
-        userDetail.sex=sex;
-        userDetail.pet=pet;
-        userDetail.smoking = smoking;
-        userDetail.life_cycle = life_cycle;
-        userDetail.nickname=nickname;
-        return userDetail;
-    }
+
+
     public void updateUserDetail(UserDetailUpdateDto userDetailUpdateDto){
         this.regions = userDetailUpdateDto.getRegions();
         this.mbti = userDetailUpdateDto.getMbti();
@@ -97,7 +75,6 @@ public class UserDetail {
         this.pet=userDetailUpdateDto.getPet();
         this.smoking = userDetailUpdateDto.getSmoking();
         this.life_cycle = userDetailUpdateDto.getLife_cycle();
-        this.nickname=userDetailUpdateDto.getNickname();
     }
 
 

@@ -5,12 +5,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.UserService;
 
-@RestController
+import javax.validation.Valid;
+
+@Controller
 @Slf4j
 public class UserController {
 
@@ -24,18 +29,28 @@ public class UserController {
     }
 
 
+    @GetMapping(value = "/introduction")
+    public String saveIntro(Model model){
+
+        log.info("[saveIntro] 사용자 세부사항 작성 GET 매핑 Controller 동작");
+        UserDetailSaveDto dto = new UserDetailSaveDto();
+        model.addAttribute("dto",dto);
+        model.addAttribute("areaEnum", AreaEnum.values());
+        return "member/introduction";
+    }
 
     @PostMapping(value="/introduction")
-    public Long saveIntro(@RequestBody UserDetailSaveDto userDetailSaveDto){
+    public String saveIntro(@Valid UserDetailSaveDto userDetailSaveDto){
+
+        log.info("[saveIntro] 사용자 세부사항 작성 Post 매핑 Controller 동작");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = (User)principal;
-        LOGGER.info("name = {}, pw={}", user.getUid());
-        Long saveIntro = userService.saveIntro(user.getUid(), userDetailSaveDto);
-        return saveIntro;
+        userService.saveIntro(user.getUid(), userDetailSaveDto);
+        return "redirect:/";
     }
 
     @PatchMapping(value="/introduction/edit")
-    public void editIntro(@RequestBody UserDetailUpdateDto userDetailUpdateDto){
+    public void editIntro(@Valid UserDetailUpdateDto userDetailUpdateDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = (User)principal;
         LOGGER.info("name = {}, pw={}", user.getUid());

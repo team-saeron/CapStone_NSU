@@ -54,18 +54,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = false)
-    public Long saveIntro(String id, UserDetailSaveDto userDetailSaveDto) {
+    public void saveIntro(String id, UserDetailSaveDto userDetailSaveDto) {
+
+        log.info("[saveIntro] 유저 세부사항 저장 Service 로직 동작. userid :{}",id);
         User user = userRepository.findByUid(id).orElse(null);
 
-        UserDetail userDetail = UserDetail.createIntro(userDetailSaveDto.getNickname(), userDetailSaveDto.getRegions(), userDetailSaveDto.getMbti(), userDetailSaveDto.getWish_roommate(),
-                userDetailSaveDto.getMonthly_fee(), userDetailSaveDto.getLease_fee(), userDetailSaveDto.getGender(), userDetailSaveDto.getPet(), userDetailSaveDto.getSmoking(),
-                userDetailSaveDto.getLife_cycle());
+        UserDetail userDetail = new UserDetail(userDetailSaveDto);
+        userDetail.setUser(user);
+        userDetailRepository.save(userDetail);
 
         user.setUserDetail(userDetail);
-        userRepository.save(user);
+        userRepository.flush();
 
-        userDetailRepository.save(userDetail);
-        return userDetail.getUserDetailId();
     }
 
 

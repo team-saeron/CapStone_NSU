@@ -22,18 +22,20 @@ public class UserDetailSaveDto {
     private String pet;
 
 
-    public UserDetail toEntity(User user){
-        return UserDetail.builder()
-                .nickname(nickname)
-                .mbti(mbti)
-                .wish_roommate(wish_roommate)
-                .monthly_fee(monthly_fee)
-                .regions(regions)
-                .lease_fee(lease_fee)
-                .life_cycle(life_cycle)
-                .smoking(smoking)
-                .sex(gender)
-                .pet(pet)
-                .build();
+
+    @Override
+    public String toString() {
+        return "UserDetailSaveDto{" +
+                "mbti='" + mbti + '\'' +
+                ", wish_roommate='" + wish_roommate + '\'' +
+                ", monthly_fee=" + monthly_fee +
+                ", nickname='" + nickname + '\'' +
+                ", regions='" + regions + '\'' +
+                ", lease_fee=" + lease_fee +
+                ", life_cycle='" + life_cycle + '\'' +
+                ", smoking='" + smoking + '\'' +
+                ", gender='" + gender + '\'' +
+                ", pet='" + pet + '\'' +
+                '}';
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.PostSearchDto;
 import togethers.togethers.dto.RecentlyPostDto;
+import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
 
 import java.util.List;
@@ -34,6 +35,11 @@ public class HomeController {
         if(principal == "anonymousUser"){
             model.addAttribute("login_inform",false);
         }else{
+            User user = (User)principal;
+            if(user.getUserDetail() == null)
+            {
+                model.addAttribute("no_userdetail","나를 소개하는 글을 작성해 주세요!");
+            }
             model.addAttribute("login_inform",true);
         }
 
