@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/sign-api/sign-in", "/sign-api/sign-up",
                         "/sign-api/exception","/introduction","/detailPost/Reply"
-                        ,"/post/**","/member/**","/**").permitAll()
+                        ,"/post/**","/member/**","/**","/login","/join").permitAll()
                 .anyRequest().hasRole("ADMIN")
                 .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
