@@ -66,12 +66,19 @@ public class PostController {
             attr.addFlashAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
             return "redirect:/";
         }else {
+            User user = (User)principal;
+            if(user.getPost() != null){
+                logger.info("[postWriteMouth] 사용자 게시물 이미 존재합니다");
 
-            logger.info("[postWriteMouth] GET 게시물 월세 작성 Controller 동작.");
-            MonthlyPostRequestDto monthlyPostRequestDto = new MonthlyPostRequestDto();
-            model.addAttribute("Dto",monthlyPostRequestDto);
-            model.addAttribute("areaEnum",AreaEnum.values());
-            return "writeMonth";
+                attr.addFlashAttribute("already_post","이미 게시물이 존재합니다.");
+                return "redirect:/";
+            }else{
+                logger.info("[postWriteMouth] GET 게시물 월세 작성 Controller 동작.");
+                MonthlyPostRequestDto monthlyPostRequestDto = new MonthlyPostRequestDto();
+                model.addAttribute("Dto",monthlyPostRequestDto);
+                model.addAttribute("areaEnum",AreaEnum.values());
+                return "writeMonth";
+            }
         }
     }
 
@@ -101,9 +108,17 @@ public class PostController {
             attr.addFlashAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
             return "redirect:/";
         }else {
+            User user = (User)principal;
+
+            if(user.getPost() != null){
+                logger.info("[postWriteMouth] 사용자 게시물 이미 존재합니다");
+
+                attr.addFlashAttribute("already_post","이미 게시물이 존재합니다.");
+                return "redirect:/";
+            }
             logger.info("[postWriteMouth] GET 게시물 전세 작성 Controller 동작.");
             LeasePostRequestDto leasePostRequestDto = new LeasePostRequestDto();
-            model.addAttribute("Dto",leasePostRequestDto);
+            model.addAttribute("dto",leasePostRequestDto);
             model.addAttribute("areaEnum",AreaEnum.values());
             return "writeBeforePay";
         }
