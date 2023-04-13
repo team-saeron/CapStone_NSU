@@ -56,17 +56,4 @@ public class HomeController {
         model.addAttribute("category",AreaEnum.values());
         return "home";
     }
-
-//    @GetMapping(value = "/test")
-//    public void login_session() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Object principal = authentication.getPrincipal();
-//
-//        if(principal =="anonymousUser"){
-//            logger.info("[login_session] user is anonymousUser");
-//        }else{
-//            logger.info("[login_session] user not equals anonymousUser");
-//        }
-//
-//    }
 }
