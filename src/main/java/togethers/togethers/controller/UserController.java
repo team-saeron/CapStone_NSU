@@ -71,7 +71,7 @@ public class UserController {
         MailDto mailDto = userService.sendEmail(findPassword);
         userService.mailSend(mailDto);
         log.info("[sendEmailPw] 임시 비밀번호 전송 완료.");
-        return "/sign-api/sign-in";
+        return "/login";
     }
 
     @PatchMapping("/user/editPassword")

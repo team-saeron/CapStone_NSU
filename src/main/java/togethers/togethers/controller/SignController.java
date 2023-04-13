@@ -62,7 +62,7 @@ public class SignController {
     }
 
     @PostMapping(value = "/login")
-    public String signUp(@Valid @ModelAttribute SignInRequestDto signInRequestDto,
+    public String signIn(@Valid @ModelAttribute SignInRequestDto signInRequestDto,
                          HttpServletResponse response, RedirectAttributes attr)
     {
         logger.info("[signIn] 로그인을 시도하고 있습니다. id : {}, pw : ****", signInRequestDto.getId());

@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    JavaMailSender mailSender;
+    private JavaMailSender mailSender;
 
 
     @Override
