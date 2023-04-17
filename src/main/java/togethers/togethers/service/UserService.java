@@ -14,7 +14,7 @@ public interface UserService {
 
     public User findIdByEmail(FindIdEmailDto findIdEmailDto);
 
-    public MailDto sendEmail(FindPassword findPassword);
+    public MailDto sendEmail(FindPasswordDto findPasswordDto);
 
     public String getTempPassword() ;
 

@@ -94,21 +94,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public MailDto sendEmail(FindPassword findPassword){
-        User user = userRepository.findByName(findPassword.getName()).orElse(null);
-        if(user.getUid().equals(findPassword.getId())&&user.getName().equals(findPassword.getName())&&user.getEmail().equals(findPassword.getEmail())){
-            log.info("[If문 findPassword] userPhone: {}, dtoPhone: {}", user.getPhoneNum());
-            // Mail Server 설정
-            String str = getTempPassword();
-            MailDto mailDto = new MailDto();
-            mailDto.setAddress(findPassword.getEmail());
-            mailDto.setTitle("Together 임시비밀번호 안내 이메일 입니다.");
-            mailDto.setMessage("안녕하세요. Together 임시비밀번호 안내 관련 이메일입니다."+" 회원님의 임시 비밀번호는 "+str+" 입니다. 로그인 후에 비밀번호를 변경을 해주세요." );
-            user.setPassword(str);
-            return mailDto;
-        }else{
-            log.info("[sendEmail] 사용자 정보 일치 하지 않음.");
+    public MailDto sendEmail(FindPasswordDto findPasswordDto){
+
+        log.info("[sendEmail] 임시 비밀번호 발급 Service 로직 동작. name :{}, email :{}, id:{}",findPasswordDto.getName(),findPasswordDto.getEmail(),findPasswordDto.getId());
+        User user = userRepository.findByNameAndEmailAndUid(findPasswordDto.getName(), findPasswordDto.getEmail(), findPasswordDto.getId()).orElse(null);
+        if(user == null)
+        {
             return null;
+        }else {
+            String tempPassword = getTempPassword();
+            MailDto mailDto = new MailDto();
+            mailDto.setAddress(findPasswordDto.getEmail());
+            mailDto.setTitle("Together 임시비밀번호 안내 이메일 입니다.");
+            mailDto.setMessage("안녕하세요. Together 임시비밀번호 안내 관련 이메일입니다.\n"+" 회원님의 임시 비밀번호는 \n"+tempPassword+"입니다. \n로그인 후에 비밀번호를 변경을 해주세요.");
+
+            user.setPassword(passwordEncoder.encode(tempPassword));
+            userRepository.flush();
+
+            return mailDto;
         }
     }
 
@@ -136,8 +139,8 @@ public class UserServiceImpl implements UserService {
         message.setTo(mailDto.getAddress());
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getMessage());
-        message.setFrom("songhyeon4643@gmail.com");
-        message.setReplyTo("songhyeon4643@gmail.com");
+        message.setFrom("wjdghrbs0504@gmail.com");
+        message.setReplyTo("wjdghrbs0504@gmail.com");
         System.out.println("message"+message);
         mailSender.send(message);
     }

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.User;
+import togethers.togethers.service.SignService;
 import togethers.togethers.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +25,12 @@ public class UserController {
     private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
+    private final SignService signService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, SignService signService){
         this.userService=userService;
+        this.signService = signService;
     }
 
 
@@ -120,16 +123,33 @@ public class UserController {
     }
 
     @GetMapping("/findPassword")
-    public String findPassword(Model model){
+    public String findPassword(){
         return "find/password";
     }
 
-    @PostMapping("/sendEmailPw")
-    public String sendEmailPw(@RequestBody FindPassword findPassword){
-        MailDto mailDto = userService.sendEmail(findPassword);
-        userService.mailSend(mailDto);
-        log.info("[sendEmailPw] 임시 비밀번호 전송 완료.");
-        return "/login";
+    @PostMapping("/findPassword")
+    public String sendEmailPw(HttpServletRequest request, RedirectAttributes attr){
+        log.info("[sendEmailPw] 비밀번호 찾기 POST controlloer 동작. name :{}, email :{}, id: {}"
+                ,request.getParameter("name")
+                ,request.getParameter("email"),
+                request.getParameter("id"));
+
+        FindPasswordDto findPasswordDto = new FindPasswordDto(request.getParameter("name")
+                ,request.getParameter("email"),
+                request.getParameter("id"));
+
+        MailDto mailDto = userService.sendEmail(findPasswordDto);
+        if(mailDto == null)
+        {
+            log.info("[sendEmailPw] DB 조회결과 일치하는 사용자 정보 없음 ");
+            attr.addFlashAttribute("NotFindUser", "일치하는 정보를 찾을수 없습니다");
+            return "redirect:/findPassword";
+        }else {
+            userService.mailSend(mailDto);
+            log.info("[sendEmailPw] 임시 비밀번호 전송 완료.");
+            attr.addFlashAttribute("SendTempPassword", "임시 비밀번호를 이메일로 전송하였습니다 확인하여주세요.");
+            return "redirect:/login";
+        }
     }
 
     @PatchMapping("/user/editPassword")
