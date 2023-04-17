@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +16,6 @@ import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 import togethers.togethers.repository.UserDetailRepository;
 import togethers.togethers.repository.UserRepository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 
 
 @Service
@@ -84,19 +76,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findId(FindUserDto findUserDto) {
+    public User findIdByPhoneNum(FindIdPhoneDto findIdPhoneDto)
+    {
+        log.info("[findId] 아이디 핸드폰 번호로 Service 로직 동작. Name : {} ,  phoneNum : {}", findIdPhoneDto.getName(), findIdPhoneDto.getPhoneNum());
+        User user = userRepository.findByNameAndPhoneNum(findIdPhoneDto.getName(), findIdPhoneDto.getPhoneNum()).orElse(null);
+        return user;
+    }
 
-        User user = userRepository.findByName(findUserDto.getName()).orElse(null);
-        log.info("[findId] userName : {}", user.getName());
-        log.info("[findId] userPhone: {}, dtoPhone: {}", user.getPhoneNum(),findUserDto.getPhoneNum());
-        if (user.getPhoneNum().equals(findUserDto.getPhoneNum()) && user != null) {
-            log.info("[If문 findId] userPhone: {}, dtoPhone: {}", user.getPhoneNum(),findUserDto.getPhoneNum());
-            return user;
-        } else {
-            return null;
-        }
-
-
+    @Override
+    @Transactional
+    public User findIdByEmail(FindIdEmailDto findIdEmailDto)
+    {
+        log.info("[findIdByEmail] 아이디 이메일로 찾기 Service 로직 동작. name: {}, email : {}",findIdEmailDto.getName(),findIdEmailDto.getEmail());
+        User user = userRepository.findByNameAndEmail(findIdEmailDto.getName(), findIdEmailDto.getEmail()).orElse(null);
+        return user;
     }
 
     @Override

@@ -13,17 +13,40 @@
  <div class="phone_container">
   <div class="phone_column">
   <div class="phone_box">
-     <h3 class="phone_tit"><strong>휴대전화로 아이디 찾기</strong></h3>
-      <div> <input class="phone_name" type="text" placeholder="이름"  /> </div>
-      <div><input class="phone" type="tel" placeholder="휴대전화(번호만 입력)"/>
-          <button class="phone_auth" >본인 인증</button></div>
-       <div><input class="ph_sub" type="submit" value="확인" style="color:white;"/></div>
-      <div class="find_href"><a href="/find/mail"><span class="find_email">이메일로 아이디 찾기</span></a>
-          <a href="/find/password"><span class="find_pw">비밀번호 찾기</span></a></div>
+      <form method="POST" action=/findId/phone>
+         <h3 class="phone_tit"><strong>휴대전화로 아이디 찾기</strong></h3>
+            <div>
+              <input class="phone_name" type="text" placeholder="이름" id="name" name="name" />
+            </div>
+            <div>
+                <input class="phone" type="text" placeholder="휴대전화(번호만 입력)" id="phoneNum" name = "phoneNum"/>
+            </div>
+            <div>
+                <input class="ph_sub" type="submit" value="확인" style="color:white;"/>
+            </div>
+            <div class="find_href">
+              <a href="/findId/mail"><span class="find_email">이메일로 아이디 찾기</span></a>
+              <a href="/find/password"><span class="find_pw">비밀번호 찾기</span></a>
+            </div>
+      </form>
+
+
   </div>
    </div>
 
  </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            let message = "[[${NotFindUser}]]";
+            if (message != "") {
+                alert(message);
+             }else {}
+        })
+
+    </script>
+
 
 </th:block>
 </body>

@@ -10,7 +10,9 @@ public interface UserService {
 
     public void editIntro(Long id, UserDetailUpdateDto userDetailUpdateDto);
 
-    public User findId(FindUserDto findUserDto);
+    public User findIdByPhoneNum(FindIdPhoneDto findIdPhoneDto);
+
+    public User findIdByEmail(FindIdEmailDto findIdEmailDto);
 
     public MailDto sendEmail(FindPassword findPassword);
 

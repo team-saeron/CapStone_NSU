@@ -13,16 +13,31 @@
     <div class="mail_container">
         <div class="mail_column">
             <div class="mail_box">
-                <h3 class="mail_tit"><strong>이메일로 아이디 찾기</strong></h3>
-                <div> <input class="mail_name" type="text" placeholder="이름"  /> </div>
-                <div><input class="mail" type="text" placeholder="이메일"/></div>
-                <div><input class="mail_sub" type="submit" value="확인" style="color:white;"/></div>
-                <div class="mail_href"><a href="/find/phone"><span class="mail_email">휴대전화로 아이디 찾기</span></a>
+                <form  method = "post" action="/findId/mail">
+                    <h3 class="mail_tit"><strong>이메일로 아이디 찾기</strong></h3>
+                    <div> <input class="mail_name" type="text" placeholder="이름" id="name" name="name"/> </div>
+                    <div><input class="mail" type="text" placeholder="이메일" id="email" name="email" /></div>
+                    <div><input class="mail_sub" type="submit" value="확인" style="color:white;"/></div>
+
+                    <div class="mail_href"><a href="/findId/phone"><span class="mail_email">휴대전화로 아이디 찾기</span></a>
                     <a href="/find/password"><span class="mail_pw">비밀번호 찾기</span></a></div>
+                </form>
             </div>
         </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            let message = "[[${NotFindUser}]]";
+            if (message != "") {
+                alert(message);
+             }else {}
+        })
+
+    </script>
+
 </th:block>
 </body>
 </html>
