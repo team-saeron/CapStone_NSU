@@ -10,5 +10,5 @@ public interface SignService {
     SignUpResultDto signUp(SignUpRequestDto signUpRequestDto);
     SignInResultDto signIn(SignInRequestDto signInRequestDto) throws RuntimeException;
 
-    int idCheck(String Uid);
+    boolean idCheck(String Uid);
 }

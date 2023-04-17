@@ -37,6 +37,24 @@ public class SignServiceImpl implements SignService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+    /************************ 아이디 중복 검증 로직*********************/
+    @Override
+    public boolean idCheck(String Uid)
+    {
+        User user = userRepository.findByUid(Uid).orElse(null);
+        if(user != null)
+        {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+
+
+    /************************ 회원가입 로직 *********************/
     @Override
     public SignUpResultDto signUp(SignUpRequestDto signUpRequestDto){
         SignUpResultDto signUpResultDto = new SignUpResultDto();
@@ -82,6 +100,13 @@ public class SignServiceImpl implements SignService {
         return signUpResultDto;
     }
 
+
+
+
+
+
+
+    /************************ 로그인 로직*********************/
     @Override
     public SignInResultDto signIn(SignInRequestDto signInRequestDto) throws RuntimeException {
         logger.info("[getSignInResult] signDataHandler로 회원 정보 요청");
@@ -121,17 +146,7 @@ public class SignServiceImpl implements SignService {
     }
 
 
-    @Override
-    public int idCheck(String Uid)
-    {
-        User user = userRepository.findByUid(Uid).orElse(null);
-        if(user == null)
-        {
-            return 0;
-        }else{
-            return 1;
-        }
-    }
+
 
 
     private void setSuccessResult(SignUpResultDto result)

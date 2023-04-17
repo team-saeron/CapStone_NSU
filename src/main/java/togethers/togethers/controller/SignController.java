@@ -26,6 +26,9 @@ public class SignController {
     Logger logger = LoggerFactory.getLogger(SignController.class);
     private final SignService signService;
 
+
+
+
     /** 회원가입 GET,POST 매핑 관련 Controller**/
     @GetMapping(value = "/member/new")
     public String signUp(Model model)
@@ -38,20 +41,28 @@ public class SignController {
 
 
     @PostMapping(value = "/member/new")
-    public String signUp(@Valid SignUpRequestDto dto, Model model)
+    public String signUp(@Valid SignUpRequestDto dto, RedirectAttributes attr)
     {
         logger.info("[signUp] POST 회원가입 컨트롤러 동작");
-        String email = dto.getEmail()+"@"+dto.getDomain();
-        logger.info("[signUp] name:{}, nickname:{}, email:{} birth : {}",dto.getName(),dto.getNickname(), dto.getEmail(),dto.getBirth());
-        dto.setRole("user");
-        SignUpResultDto signUpResultDto = signService.signUp(dto);
-
-        return "redirect:/login";
+        if(signService.idCheck(dto.getId())==false)
+        {
+            logger.info("[signUp] 아이디 중복 에러");
+            attr.addFlashAttribute("DuplicatedIdError","이미 존재하는 아이디 입니다.");
+            return "redirect:/member/new";
+        }else {
+            String email = dto.getEmail() + "@" + dto.getDomain();
+            logger.info("[signUp] name:{}, nickname:{}, email:{} birth : {}", dto.getName(), dto.getNickname(), dto.getEmail(), dto.getBirth());
+            dto.setRole("user");
+            SignUpResultDto signUpResultDto = signService.signUp(dto);
+            return "redirect:/login";
+        }
     }
 
 
-    /** 로그인 관련 GET, POST 매핑 관련 Controller**/
 
+
+
+    /** 로그인 관련 GET, POST 매핑 관련 Controller**/
     @GetMapping(value = "/login")
     public String singIn(Model model)
     {
@@ -89,16 +100,4 @@ public class SignController {
             return "redirect:/";
         }
     }
-
-
-    @PostMapping("/idCheck")
-    @ResponseBody
-    public int idCheck(@RequestParam("id")String id){
-        logger.info("[idCheck] id 중복 검사 Controller 동작 id: {}",id);
-        int cnt = signService.idCheck(id);
-        return cnt;
-    }
-
-
-
 }
