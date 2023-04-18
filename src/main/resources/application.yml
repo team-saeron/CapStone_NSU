@@ -1,6 +1,12 @@
 server:
  port: 8081
+
 spring:
+ jwt:
+  secret: sswsdkdslkjalkdaljdwlajdlwkjlkdlwnslmxwlkmwmwqkmxqwmdmw
+ mvc:
+  pathmatch:
+   matching-strategy: ant_path_matcher
  devtools:
   livereload:
    enabled: true
@@ -17,7 +23,15 @@ spring:
   show-sql: true
   hibernate:
    format_sql: true
-   ddl-auto: create
+   ddl-auto: update
+ servlet:
+  multipart:
+   maxFileSize: 10MB
+   maxRequestSize: 20MB
+   enabled: true
+ http:
+  csrf:
+   disabled: true
 
 logging:
  level:

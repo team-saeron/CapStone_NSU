@@ -10,40 +10,18 @@
 </style>
   <body>
   <div class="write_container">
-    <form class="write_column" th:action="@{/auth/writeContentProc}" th:method="POST">
+    <form class="write_column" th:action="@{/writeBeforePay}" th:object="${Dto}" th:method="POST">
       <div class="write_wrapper">
         <div class="write__content">
           <div class="write_column">
 
             <div class="option__column" >
               <div class="input-group">
-                <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" required>
-                  <option value="">-지역선택-</option>
-                  <option value="gang-nam-gu">강남구 </option>
-                  <option value="Gang-dong-gu">강동구</option>
-                  <option value="Gang-buk-gu">강북구</option>
-                  <option value="Gang-seo-gu">강서구</option>
-                  <option value="Gwan-ak-gu">관악구</option>
-                  <option value="Guro-gu">구로구</option>
-                  <option value="Geum-cheon-gu">금천구</option>
-                  <option value="No-won-gu">노원구</option>
-                  <option value="Do-bong-gu">도봉구</option>
-                  <option value="Dong-dae-mun-gu">동대문구</option>
-                  <option value="Dong-jak-gu">동작구</option>
-                  <option value="Ma-po-gu">마포구</option>
-                  <option value="Seo-dae-mun-gu">서대문구</option>
-                  <option value="Seo-cho-gu">서초구</option>
-                  <option value="Seong-dong-gu">성동구</option>
-                  <option value="Song-pa-gu">송파구</option>
-                  <option value="Yang-cheon-gu">양천구</option>
-                  <option value="Yeong-deung-po-gu">영등포구</option>
-                  <option value="Yong-san-gu">용산구</option>
-                  <option value="Eun-pyeong-gu">은평구</option>
-                  <option value="Jong-no-gu">종로구</option>
-                  <option value="Jung-gu">중구</option>
-                  <option value="Jung-nang-gu">중랑구</option>
 
+                <select class="custom-select" th:field="*{areaName}" aria-label="Example select with button addon" required>
+                  <option th:each="area: ${areaEnum}" th:value="${area}" th:text="${area}"></option>
                 </select>
+
               </div>
 
 
@@ -52,26 +30,25 @@
 
           </div>
           <div class="title_column">
-            <input class="write_title" type="text" placeholder="제목">
+            <input class="write_title" type="text" th:field="*{context}" style="width:750px" placeholder="제목" required>
           </div>
           <div class="write_location">
-            <input class="location" type="text" placeholder="주소">
+            <input class="location" type="text" placeholder="주소" style="width:750px"required>
           </div>
           <div class="write_price">
-            <input class="write__price" type="text" placeholder="보증금">
-            <input class="write__price" type="text" placeholder="월세">
-            <input class="write__price" type="text" placeholder="관리비">
+            <input class="write__price"  type="text" th:field="*{deposit}" placeholder="보증금"  style="width:200px">
+            <input class="write__price" type="text" th:field="*{monthly}" placeholder="월세" style="width:200px">
+            <input class="write__price" type="text" th:field="*{Management_fee}" placeholder="관리비" style="width:200px">
           </div>
           <div id='image_preview'>
-            <h3>이미지 올리기</h3>
             <input type='file' id='btnAtt' multiple='multiple' />
             <div id='att_zone'
                  data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
           </div>
-            <textarea class="house_detail" cols="37" rows="7"></textarea>
+            <textarea class="house_detail" cols="37" rows="7" th:field="*{context}" ></textarea>
 
             <div class="answer">
-              <h4>게시물 작성 후 다른 사람들이 연락할 수 있게 연락수단을 댓글로 남겨주세요.
+              <h4 class="last">게시물 작성 후 다른 사람들이 연락할 수 있게 연락수단을 댓글로 남겨주세요.
                 <input type="radio" name="answer" required > 확인했습니다<br></h4>
             </div>
           </div>

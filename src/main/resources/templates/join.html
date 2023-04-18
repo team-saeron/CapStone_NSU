@@ -8,6 +8,21 @@
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./js/join.js?ver=123"></script>
     <title>Together | 회원가입</title>
+    <style>
+        .circle {
+        display: inline-block;
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #007bff;
+        text-align: center;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+      }
+    </style>
 </head>
 <header>
     <div class="join__logo">
@@ -25,24 +40,23 @@
         <div class="join__tit">
             <h1 class="join_title"><span> 회원가입</span></h1>
         </div>
-        </h1>
-        <form class="join_column" th:action="@{/auth/joinProc}" th:method="POST">
+        <form class="join_column" th:action="@{/member/new}" th:method="POST" th:object="${dto}">
             <h5>이름</h5>
             <div class="join__column" id="join_name">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="이름" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <input type="text" class="form-control" placeholder="이름" th:field="*{name}" aria-label="Recipient's username" aria-describedby="button-addon2" required>
             </div>
             </div>
             <h5>닉네임</h5>
             <div class="join__column" id="join_nickname">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="닉네임" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                    <input type="text" class="form-control" placeholder="닉네임" th:field="*{nickname}" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                 </div>
             </div>
             <h5>아이디</h5>
             <div class="join__column" id="join_id">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <input type="text" class="form-control" th:field="*{id}" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
                 </div>
@@ -54,7 +68,7 @@
             <input autocomplete="false" type="password" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2"class="form-control key" required />
             <div class="keyShow">비밀번호 표시</div>
 
-            <input autocomplete="false" type="password" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2"class="form-control key" required />
+            <input autocomplete="false" type="password" placeholder="비밀번호" th:field="*{password}" aria-label="passward" aria-describedby="button-addon2"class="form-control key" required />
         </div>
         <div class="join__column" id="join_birth">
             <h5>생년월일</h5>
@@ -63,7 +77,7 @@
         <div class="join__column" id="join_tel">
             <h5>전화번호</h5>
             <div class="input-group mb-3">
-                <input type="tel" class="form-control" placeholder="전화번호" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <input type="tel" class="form-control" placeholder="전화번호" th:field="*{phoneNum}" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                 <div class="input-group-append">
                     <button type="button" class="btn btn-outline-secondary">본인인증</button>
                 </div>
@@ -71,7 +85,7 @@
         </div>
             <h5>이메일</h5>
         <div class="join__column" id="join_email">
-            <input type="text" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="button-addon2" required>
+            <input type="text" class="form-control" placeholder="이메일" th:field="*{email}" aria-label="email" aria-describedby="button-addon2" required>
             <div class="input-group">
                 <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                     <option value="">-선택-</option>
@@ -96,13 +110,14 @@
                     <li class="list-group-item"><a class="login_sns_icon"  href=""><i class="fab fa-twitter"></i> 트위터 계정으로 가입하기</a></li>
                 </ul>
             </div>
-		</script>
+
         </form>
     </div>
-    </div>
+
 
 
     <script type="text/javascript" th:src="@{/js/join.js}"></script>
+
 </th:block>
 
 </body>

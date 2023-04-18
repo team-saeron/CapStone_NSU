@@ -1,58 +1,51 @@
 package togethers.togethers.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import togethers.togethers.Enum.AreaEnum;
+import togethers.togethers.dto.PostSearchDto;
+import togethers.togethers.dto.RecentlyPostDto;
+import togethers.togethers.entity.Post;
+import togethers.togethers.service.PostService;
 
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 public class HomeController {
-    @RequestMapping("/")
-    public String main(Model model) {
-        model.addAttribute("date","2022");
+
+    private final PostService postService;
+
+    @Autowired
+    public HomeController(PostService postService) {
+        this.postService = postService;
+    }
+
+
+    @GetMapping(value = "/")
+    public String Home(Model model)
+    {
+        PostSearchDto postSearchDto = new PostSearchDto();
+
+        List<RecentlyPostDto> recentlyPost = postService.RecentlyPost();
+
+        for (RecentlyPostDto recentlyPostDto : recentlyPost) {
+            System.out.println("날짜 값: "+recentlyPostDto.getDate());
+        }
+
+        model.addAttribute("recentlyPost",recentlyPost);
+        model.addAttribute("dto",postSearchDto);
+        model.addAttribute("category",AreaEnum.values());
         return "home";
     }
 
+    @GetMapping(value = "/member/mypage")
+    public String myPage(Model model)
+    {
 
-    @GetMapping("/")
-    public String home() {
-        return "home";
+        return "member/mypage";
     }
-
-    @GetMapping("/agree")
-    public String agree(){
-        return "agree";
-    }
-
-    @GetMapping("/join")
-    public String join(){
-        return "join";
-    }
-
-    @GetMapping("/writeMonth")
-    public String writeMonth(){
-        return "writeMonth";
-    }
-
-    @GetMapping("/choose")
-    public String choose(){
-        return "choose";
-    }
-
-    @GetMapping("/chooseType")
-    public String chooseType(){
-        return "chooseType";
-    }
-
-    @GetMapping("/writeBeforePay")
-    public String writeBeforePay(){
-        return "writeBeforePay";
-    }
-
-
-
 
 }
-

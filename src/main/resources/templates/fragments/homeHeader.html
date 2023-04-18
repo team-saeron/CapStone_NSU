@@ -52,35 +52,10 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-start flex-grow-3 pe-3">
-                  <li><a class="seoul" href="#">강남구</a></li>
-                  <li><a class="seoul"href="#">강동구</a></li>
-                  <li><a class="seoul" href="#">강북구</a></li>
-                  <li><a class="seoul" href="#">강서구</a></li>
-                  <li><a class="seoul" href="#">관악구</a></li>
-                  <li><a class="seoul" href="#">광진구</a></li>
-                  <li><a class="seoul" href="#">구로구</a></li>
-                  <li><a class="seoul" href="#">금천구</a></li>
-                  <li><a class="seoul" href="#">노원구</a></li>
-                  <li><a class="seoul" href="#">도봉구</a></li>
-                  <li><a class="seoul" href="#">동대문구</a></li>
-                  <li><a class="seoul" href="#">동작구</a></li>
-                  <li><a class="seoul" href="#">마포구</a></li>
-                  <li><a class="seoul" href="#">서대문구</a></li>
-                  <li><a class="seoul" href="#">서초구</a></li>
-                  <li><a class="seoul" href="#">성동구</a></li>
-                  <li><a class="seoul" href="#">성북구</a></li>
-                  <li><a class="seoul" href="#">송파구</a></li>
-                  <li><a class="seoul" href="#">양천구</a></li>
-                  <li><a class="seoul" href="#">영등포구</a></li>
-                  <li><a class="seoul" href="#">용산구</a></li>
-                  <li><a class="seoul" href="#">은평구</a></li>
-                  <li><a class="seoul" href="#">종로구</a></li>
-                  <li><a class="seoul" href="#">중구</br></a></li>
-                  <li><a class="seoul" href="#">중랑구</a></li>
-
-
+                <ul class="navbar-nav justify-content-start flex-grow-3 pe-3" th:each="dto : ${category}">
+                  <li><a class="seoul" th:href="@{/post/searchList(areaId = ${dtoStat.index})}" th:text="${dto}">강남구</a></li>
                 </ul>
+
 
               </div>
             </div>
@@ -104,11 +79,12 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
         </li>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/join" style="color:white;" >회원가입</a>
+          <a class="nav-link" href="/member/new" style="color:white;" >회원가입</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/member/login"  style="color:white;" >로그인</a>
+          <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" style="color:white;">로그인</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="color:white;">로그아웃</a>
         </li>
 
         <li class="nav-item">
@@ -122,14 +98,14 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
     </div>
     <div class="search_div">
       <div class="search_text">어느 지역을 찾으세요?</div>
-    <nav class="navbar">
-      <div class="container-fluid">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
-          <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass" style="color:white;"></i></button>
-        </form>
-      </div>
-    </nav>
+      <nav class="navbar">
+        <div class="container-fluid">
+          <form class="d-flex" role="search" th:object="${dto}" th:method="post" th:action="@{/post/search}">
+            <input class="form-control me-2" type="text" placeholder="Search" th:field="*{keyword}" aria-label="Search" >
+            <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass" style="color:white;"></i></button>
+          </form>
+        </div>
+      </nav>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

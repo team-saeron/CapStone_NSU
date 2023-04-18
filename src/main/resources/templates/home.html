@@ -51,22 +51,11 @@
                         <tr>
                             <th>내용</th><th>날짜</th>
                         </tr>
-                        <tr>
-                            <td><a href="#">룸 메이트 구합니다</a></td>
-                            <td>2023-02-03</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">저랑 같이 살 사람 구해요</a></td>
-                            <td>2023-02-03</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">냥이랑 같이 살아주실 분 구합니다</a></td>
-                            <td>2023-02-03</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">룸메이트 구해용</a></td>
-                            <td>2023-02-03</td>
-                        </tr>
+                       <tr th:each="post : ${recentlyPost}">
+                        <td><a th:text="${post.title}" th:href="@{/post/detailPost/{postId}(postId = ${post.postId})}">룸 메이트 구합니다</a></td>
+                        <td th:text="${post.date}">2023-02-03</td>
+                    </tr>
+
 
 
                     </table>

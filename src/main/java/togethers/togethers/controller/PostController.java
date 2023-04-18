@@ -1,27 +1,195 @@
 package togethers.togethers.controller;
 
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import togethers.togethers.Enum.AreaEnum;
+import togethers.togethers.dto.*;
+import togethers.togethers.entity.Post;
+import togethers.togethers.entity.Reply;
+import togethers.togethers.entity.RoomPicture;
+import togethers.togethers.entity.User;
+import togethers.togethers.service.PostService;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 public class PostController {
 
-    @GetMapping("/postlist")
-    public String postlist()
+
+    private final PostService postService;
+    private AreaEnum[] area = AreaEnum.values();
+
+    @Autowired
+    public PostController(PostService postService)
     {
-        return "post/postlist";
+        this.postService = postService;
+    }
+    Logger logger = LoggerFactory.getLogger(PostController.class);
+
+
+    @GetMapping(value = "/chooseType")
+    public String chooseType()
+    {
+        logger.info("[chooseType] GET 게시물 작성하기전 게시물 월/전세 타입 선택 동작");
+        return "chooseType";
     }
 
 
-    @GetMapping("/detailPost")
-    public String detailPost()
+    /**월세 타입의 게시물 GET,POST MAPPING **/
+    @GetMapping(value = "/writeMonth")
+    public String postWriteMouth(Model model)
     {
+        logger.info("[postWriteMouth] GET 게시물 월세 작성 Controller 동작.");
+        MonthlyPostRequestDto monthlyPostRequestDto = new MonthlyPostRequestDto();
+
+        model.addAttribute("Dto",monthlyPostRequestDto);
+        model.addAttribute("areaEnum",AreaEnum.values());
+
+        return "writeMonth";
+    }
+
+    @PostMapping(value = "/writeMonth")
+    public String postWriteMouth(MonthlyPostRequestDto dto, MultipartFile file) throws Exception
+    {
+        logger.info("[postWriteMouth] POST 월세타입의 게시물 사진 업로드 동작");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        User user = (User)principal;
+
+        PostUpResultDto postUpResultDto = postService.MonthlyPostWrite(dto, file, user.getUid());
+
+        logger.info("[postWriteMouth] ResultDto 결과: {}, {}, {}",postUpResultDto.getCode(),postUpResultDto.getMsg(),postUpResultDto.getContext());
+        return "redirect:/";
+    }
+
+
+
+    /**전세 타입의 게시물 GET, POST 매핑**/
+    @GetMapping("/writeBeforePay")
+    public String writeBeforePay(Model model){
+
+        logger.info("[postWriteMouth] GET 게시물 전세 작성 Controller 동작.");
+        LeasePostRequestDto leasePostRequestDto = new LeasePostRequestDto();
+        model.addAttribute("dto",leasePostRequestDto);
+        model.addAttribute("areaEnum",AreaEnum.values());
+        return "TestWrite";
+    } // 전세 타입의 post
+
+
+    @PostMapping("/writeBeforePay")
+    public String writeBeforePay(LeasePostRequestDto dto,MultipartFile file) throws Exception
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        User user = (User)principal;
+
+        logger.info("[postWriteMouth] POST 게시물 전세 작성 Controller 동작.");
+
+        PostUpResultDto postUpResultDto = postService.LeasePostWrite(dto, file, user.getUid());
+
+        logger.info("[postWriteMouth] ResultDto 결과: {}, {}, {}",postUpResultDto.getCode(),postUpResultDto.getMsg(),postUpResultDto.getContext());
+        return "redirect:/";
+
+    }
+
+
+    @GetMapping(value = "post/postList")
+    public String post_postList(@PageableDefault Pageable pageable, Model model){
+        logger.info("[postList]게시물 목록 조회 controller 동작");
+
+        Page<Post>postList = postService.post_postList(pageable);
+
+        model.addAttribute("postList",postList);
+        logger.info("[postList] 총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
+                postList.getTotalElements(), postList.getTotalPages(), postList.getSize(),
+                postList.getNumber(), postList.getNumberOfElements());
+
+        return "post/postList";
+
+    }
+
+    @GetMapping(value = "/post/detailPost/{postId}")
+    public String post_detailPost(@PathVariable("postId")Long PostId, Model model)
+    {
+        Post post = postService.findPost(PostId);
+        RoomPicture photo = postService.findPhoto(PostId);
+        List<Reply> replies = postService.findReply(PostId);
+        DetailPostDto detailPostDto = postService.detail_post(post, photo);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        User user = (User)principal;
+
+        logger.info("[post_detailPost] 사용자 로그인 되어있음, 토큰 인증 완료. 로그인 완료후 게시물 세부사항 로직 동작. postId : {}, userId:{}", PostId,user.getUid());
+
+
+        model.addAttribute("user",user);
+        model.addAttribute("post",detailPostDto);
+        model.addAttribute("replies",replies);
+        model.addAttribute("postId",PostId);
+
+
         return "post/detailPost";
     }
+
+
+
+    /**게시물 검색 관련 로직**/
+    @PostMapping(value = "/post/search")
+    public String SearchPost(@PageableDefault Pageable pageable,Model model,PostSearchDto dto){
+
+        logger.info("[SearchPost] 게시물 검색 Controller 동작. keyword : {}",dto.getKeyword());
+        Page<Post> posts = postService.SearchPost(dto.getKeyword(), pageable);
+
+        logger.info("[SearchPost] 게시물 검색 결과 갯수: {}",posts.getTotalElements());
+
+        model.addAttribute("postList",posts);
+        return "post/searchList";
+
+    }
+
+    @GetMapping(value = "/post/searchList")
+    public String SearchPostUsingCategory(@RequestParam(value = "areaId",required = false,defaultValue = "")String areaId,
+                                          @PageableDefault Pageable pageable, Model model)
+    {
+        int aid = 0;
+        if(!areaId.equals("")){
+             aid = Integer.parseInt(areaId);
+        }
+
+        logger.info("[SearchPost]홈페이지에서 사용자가 카테고리 클릭후 해당 게시물 검색. areaID:{}",aid);
+
+
+        String areaName = area[aid].toString();
+        logger.info("[findArea] Service 에서 사용자가 클릭한 지역게시물 Enum에서 조회. 결과: {}",areaName);
+
+
+        Page<Post> posts = postService.SearchPostUsingCategory(areaName, pageable);
+        logger.info("[SearchPostUsingCategory] 카테고리 클릭후 해당지역 조회 게시물 결과. 지역이름:{} 게시물 갯수:{}",areaName,posts.getTotalElements());
+
+
+
+        model.addAttribute("AreaId",areaId);
+        model.addAttribute("postList",posts);
+
+        return "post/searchList";
+    }
+
 }
