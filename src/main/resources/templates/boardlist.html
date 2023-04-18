@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/write.css" />
+</th:block>
+<th:block layout:fragment="content">
+    <style>
+
+        .layout{
+        width : 500px;
+        margin : 0 auto;
+        margin-top: 40px;
+        }
+
+        .layout input{
+        width: 100%;
+        box-sizing: border-box;
+        }
+        .layout textarea{
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+        }
+</style>
+    <body>
+
+    <div class="layout">
+        <table>
+            <thead>
+                <tr>
+                    <th>글번호</th>
+                    <th>제목</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="board : ${List}">
+                    <td th:text="${board.id}">1</td>
+                    <td>
+                        <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    </body>
+
+</th:block>
+</body>
+</html>

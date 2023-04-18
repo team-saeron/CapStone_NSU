@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+.find_ti{
+text-align:center;
+margin-top:50px;
+margin-bottom:38px;}
+
+.find_container{
+display:flex;
+justify-content:center;
+margin-bottom:60px;
+
+
+}
+ul{
+   list-style:none;
+   }
+.ph_wrapper{
+background-color:#987095;
+margin-right:50px;
+width:310px;
+height:300px;
+text-align:center;
+}
+
+.mail_wrapper{
+background-color:#987095;
+margin-left:50px;
+width:310px;
+height:300px;
+text-align:center;
+
+}
+.fa-mobile-screen-button,.fa-envelope{
+color:white;
+line-height:280px;
+
+
+}
+.tit_mail,.tit_ph{
+color:white;
+}
+.txt{
+color:gray;
+}

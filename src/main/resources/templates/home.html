@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/home_layout">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/home.css" />
+</th:block>
+
+
+
+<th:block layout:fragment="content">
+    <div class="gradient_box"></div>
+    <div class="home__wrapper">
+
+        <div class="section_box">
+            <div class="home_column">
+                <div id="notice_box" class="section__box">
+                    <i class="fa-solid fa-plus"></i>
+                    <span id="notice_icon" class="fa-solid fa-pius">공지사항</span>
+                    <table>
+                        <tr>
+                            <th>내용</th><th>날짜</th>
+                        </tr>
+                        <tr>
+                            <td><a href="#">제 1회 together 워크숍에 초대합니다</a></td>
+                            <td>2023-02-03</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">자신과 맞는 룸메이트 찾기!</a></td>
+                            <td>2023-02-03</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">원하는 방 구하기!</a></td>
+                            <td>2023-02-03</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">together와 함께할 프론트엔드 개발자 구합니다.</a></td>
+                            <td>2023-02-03</td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="home_column">
+                <div id="latest_box" class="section__box">
+                    <i class="fa-solid fa-plus"></i>
+                    <span id="latest_icon" class="fa-solid fa-pius">최신 게시글</span>
+                    <table>
+                        <tr>
+                            <th>내용</th><th>날짜</th>
+                        </tr>
+                        <tr th:each="post : ${recentlyPost}">
+                            <td><a th:text="${post.title}" th:href="@{/post/detailPost/{postId}(postId = ${post.postId})}">룸 메이트 구합니다</a></td>
+                            <td th:text="${post.date}">2023-02-03</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="home_column">
+                <div id="map_box" class="section__box">
+                </div>
+            </div>
+        </div>
+        <div class="home_column">
+            <div id="ad_box" class="section__box">
+            </div>
+        </div>
+
+    <div id="suggestion_box">
+        <div class="post_container">
+            <div class="suggestion_title>"><h3><strong>추천 게시물</strong></h3></div>
+            <div class="slider">
+                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
+            </div>
+            <div class="list_word">
+                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
+                <div class="explain">월세 500/45</div>
+
+            </div>
+        </div>
+
+        <div class="post_container">
+            <div class="suggestion_title2>"><h3 class="none">추천 게시물</h3></div>
+            <div class="slider">
+                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
+            </div>
+            <div class="list_word">
+                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
+                <div class="explain">월세 500/45</div>
+
+            </div>
+        </div>
+
+        <div class="post_container">
+            <div class="suggestion_title2>"><h3 class="none">추천 게시물</h3></div>
+            <div class="slider">
+                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
+            </div>
+            <div class="list_word">
+                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
+                <div class="explain">월세 500/45</div>
+
+            </div>
+        </div>
+
+        <div class="post_container">
+            <div class="suggestion_title2>"><h3 class="none">추천 게시물</h3></div>
+            <div class="slider">
+                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
+            </div>
+            <div class="list_word">
+                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
+                <div class="explain">월세 500/45</div>
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script>
+            $(document).ready(function() {
+            let message = "[[${msg}]]";
+            if (message != "") {
+                alert(message);
+             }else {}
+            })
+
+
+            $(document).ready(function() {
+            let message = "[[${already_post}]]";
+            if (message != "") {
+                alert(message);
+             }else {}
+            })
+
+            $(document).ready(function() {
+            let message = "[[${no_userdetail}]]";
+            if (message != "") {
+                alert(message);
+                window.location.href = "/introduction";
+             }else {}
+            })
+
+
+    </script>
+
+
+</th:block>
+</html>

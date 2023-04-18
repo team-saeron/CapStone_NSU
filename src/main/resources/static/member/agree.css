@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+div{
+      margin:0 auto;
+}
+.input_chk{
+display:flex;
+justify-content:center;
+}
+
+btn_area double{
+display:inline-block;
+justify-content:center;}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/writeBeforePay.css" />
+</th:block>
+<th:block layout:fragment="content">
+  <style>
+</style>
+  <body>
+  <div class="write_container">
+    <form class="write_column" th:action="@{/writeBeforePay}" th:method="POST" th:object="${dto}" enctype="multipart/form-data">
+      <div class="write_wrapper">
+        <div class="write__content">
+          <div class="write_column">
+
+            <div class="option__column" >
+              <div class="input-group">
+                <select class="custom-select" th:field="*{area}" aria-label="Example select with button addon" required>
+                  <option th:each="area: ${areaEnum}" th:value="${area}" th:text="${area}">-지역선택-</option>
+                </select>
+              </div>
+              <input class="write_submit" type="submit" value="글올리기">
+              <div class="title_column">
+                <input class="write_title" th:field="*{title}" placeholder="제목" required>
+              </div>
+              <div class="detail_column">
+                <input class="write_detail" type="text" placeholder="주소">
+              </div>
+            </div>
+
+          </div>
+          <div class="write_price">
+            <input class="write_price" th:field="*{deposit}" placeholder="보증금">
+            <input class="write__price" th:field="*{Management_fee}" placeholder="관리비">
+          </div>
+          <div class="house_img">
+            <input type="file" name="file">
+            <div id="image_container"></div>
+            <textarea placeholder="방이나 본인에 대해서 설명해주세요" class="house_detail" th:field="*{context}" cols="37" rows="7" required></textarea>
+
+            <div class="answer">
+            <h4>게시물 작성 후 다른 사람들이 연락할 수 있게 연락수단을 댓글로 남겨주세요.
+            <input type="radio" name="answer" required > 확인했습니다<br></h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+
+  <script>
+      function setThumbnail(event) {
+        for (var image of event.target.files) {
+          var reader = new FileReader();
+
+          reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            document.querySelector("div#image_container").appendChild(img);
+          };
+
+          console.log(image);
+          reader.readAsDataURL(image);
+        }
+      }
+    </script>
+
+  </body>
+
+</th:block>
+</body>
+</html>

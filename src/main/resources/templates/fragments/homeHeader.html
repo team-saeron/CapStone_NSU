@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<th:block th:fragment="homeHeaderFragment">
+
+  <style>
+     body{overflow-x:hidden;
+          overflow-y:auto}
+        .header__wrapper{
+background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd, #f1eaf1);
+       height:70vh;
+
+
+        }
+        .header-wrap_top{
+        display:flex;
+        margin-left:-20vh;
+          margin-right:-10vh;
+
+        }
+
+        .search_div{
+        margin:10vh;}
+        .search_text{
+         color:white;
+         font-size:30px;
+        }
+        .seoul{
+
+        font-size:16.5px;
+        color:#987095;}
+
+#offcanvasNavbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+    </style>
+
+  <div class="header__wrapper">
+    <div class="header-wrap_top">
+    <div class="header_left">
+    <nav class="navbar">
+      <h1 id="header_logo">
+        <nav class="navbar bg-body-tertiary fixed-top">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" style=" border:none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"   >
+              <span> <i class="fa-solid fa-bars fa-lg" style="color:white"></i></span>
+            </button>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria  -labelledby="offcanvasNavbarLabel" style="overflow:scroll"   >
+              <div class="offcanvas-header">
+                <h2 class="offcanvas-title" id="offcanvasNavbarLabel">지역목록</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+
+                <ul class="navbar-nav justify-content-start flex-grow-3 pe-3" th:each="dto : ${category}">
+                  <li><a class="seoul" th:href="@{/post/searchList(areaId = ${dtoStat.index})}" th:text="${dto}">강남구</a></li>
+                </ul>
+
+              </div>
+            </div>
+          </div>
+        </nav>
+        <a id="header__logo" href="/"><img src="../image/logo.png" width="165" height ="110" ></a>
+      </h1>
+    </nav>
+    </div>
+  <div class="header_right">
+
+    <nav class="navbar">
+
+      <ul class="nav justify-content-end" style="widthL500px; position:fixed; right:-10px;">
+        <li class="nav-item">
+          <a class="nav-link active" href="/member/mypage" style="color:white;">마이페이지</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/chooseType" style="color:white;">작성하기</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/member/new" style="color:white;" >회원가입</a>
+        </li>
+
+        <li class="nav-item" th:if="${login_inform == false}">
+          <a class="nav-link" href="/login"  style="color:white;" >로그인</a>
+        </li>
+
+        <li class="nav-item" th:if="${login_inform == true}">
+          <a class="nav-link" href="/logout"  style="color:white;" >로그아웃</a>
+        </li>
+
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa-solid fa-bell fa-lg" style="color:white;"></i></a>
+        </li>
+      </ul>
+      </h4>
+
+    </nav>
+  </div>
+    </div>
+    <div class="search_div">
+      <div class="search_text">어느 지역을 찾으세요?</div>
+    <nav class="navbar">
+      <div class="container-fluid">
+        <form class="d-flex" role="search" th:object="${dto}" th:method="post" th:action="@{/post/search}">
+          <input class="form-control me-2" type="text" placeholder="Search" th:field="*{keyword}" aria-label="Search" >
+          <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass" style="color:white;"></i></button>
+        </form>
+      </div>
+    </nav>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</th:block>
+</html>
