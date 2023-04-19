@@ -75,7 +75,7 @@ public class PostController {
             }else{
                 logger.info("[postWriteMouth] GET 게시물 월세 작성 Controller 동작.");
                 MonthlyPostRequestDto monthlyPostRequestDto = new MonthlyPostRequestDto();
-                model.addAttribute("Dto",monthlyPostRequestDto);
+                model.addAttribute("dto",monthlyPostRequestDto);
                 model.addAttribute("areaEnum",AreaEnum.values());
                 return "writeMonth";
             }
@@ -83,17 +83,17 @@ public class PostController {
     }
 
     @PostMapping(value = "/writeMonth")
-    public String postWriteMouth(MonthlyPostRequestDto dto, MultipartFile file) throws Exception
+    public String postWriteMouth(MonthlyPostRequestDto dto, MultipartHttpServletRequest request) throws Exception
     {
         logger.info("[postWriteMouth] POST 월세타입의 게시물 사진 업로드 동작");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
+        List<MultipartFile> files = request.getFiles("btnAtt");
 
-        PostUpResultDto postUpResultDto = postService.MonthlyPostWrite(dto, file, user.getUid());
+        Long postId = postService.MonthlyPostWrite(dto, files, user.getUid());
 
-        logger.info("[postWriteMouth] ResultDto 결과: {}, {}, {}",postUpResultDto.getCode(),postUpResultDto.getMsg(),postUpResultDto.getContext());
         return "redirect:/";
     }
 
@@ -125,17 +125,17 @@ public class PostController {
     } // 전세 타입의 post
 
     @PostMapping("/writeBeforePay")
-    public String writeBeforePay(LeasePostRequestDto dto,MultipartFile file) throws Exception
+    public String writeBeforePay(LeasePostRequestDto dto,MultipartHttpServletRequest request) throws Exception
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
 
+        List<MultipartFile> files = request.getFiles("btnAtt");
         logger.info("[postWriteMouth] POST 게시물 전세 작성 Controller 동작.");
 
-        PostUpResultDto postUpResultDto = postService.LeasePostWrite(dto, file, user.getUid());
+        Long postId = postService.LeasePostWrite(dto, files, user.getUid());
 
-        logger.info("[postWriteMouth] ResultDto 결과: {}, {}, {}",postUpResultDto.getCode(),postUpResultDto.getMsg(),postUpResultDto.getContext());
         return "redirect:/";
 
     }
@@ -197,15 +197,16 @@ public class PostController {
 
 
         Post post = postService.findPost(PostId);
-        RoomPicture photo = postService.findPhoto(PostId);
+        List<RoomPicture> images = postService.findPhoto(PostId);
         List<Reply> replies = postService.findReply(PostId);
-        DetailPostDto detailPostDto = postService.detail_post(post, photo);
+        DetailPostDto detailPostDto = postService.detail_post(post);
 
 
         model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
         model.addAttribute("postId",PostId);
         model.addAttribute("category",AreaEnum.values());
+        model.addAttribute("images",images);
 
 
         return "post/detailPost";

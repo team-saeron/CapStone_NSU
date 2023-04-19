@@ -2,9 +2,10 @@
 
 .write_container{
 margin: 0 auto;
-margin-left:450px;
+margin-left:30px;
 height:980px;
 margin-top:20px;
+
 }
 
 .write_wrapper{
@@ -13,9 +14,6 @@ justify-content:center;
 align-items:center;
 text-align:center
 height:1100px;
-
-
-
 }
 .write_column{
 position:relative;
@@ -28,15 +26,12 @@ float:right;
 position:absolute;
 top:-10px;
 right:420px;
-left:350px;
+left:600px;
 
 }
 .input-group{
 margin-bottom:10px;
-}
-#write-img{
-width:30%;
-height:30%
+font-size:20px;
 }
 
 .write_column,.title_column,
@@ -45,12 +40,13 @@ height:30%
    margin:20px 0px;
 
 }
+
 .select_type{
 width:20%;
 height:50px;
 }
 .write_title,.write_detail{
-width:900px;
+width:750px;;
 height:50px;
 }
 input{
@@ -76,10 +72,101 @@ left:20px;
 
 textarea{
 resize:none;
-width:500px;
+margin-left:-20px;
+width:750px;
 }
 .answer{
 margin-top:150px;
 display:absolute;
 margin-left:-80px;
+}
+.write__price{
+margin-left:20px; display
+}
+.image {
+display:block;
+width:100%;
+
+ }
+ .inputFile,
+ #Preview,
+ #Preview li{
+     float:left
+ }
+ .inputFile{
+     margin-bottom: 10px;
+ }
+ .addImgBtn{
+     width: 80px !important;
+     height: 80px !important;
+     line-height: 71px !important;
+     background-color: #fff !important;
+     color: #b7b7b7 !important;
+     border: 2px solid #b7b7b7;
+     font-size: 35px !important;
+     padding: 0 !important;
+ }
+
+#att_zone {
+  width: 660px;
+  min-height: 150px;
+  padding: 10px;
+  border: 1px dotted gray;
+  margin-left:1px;
+}
+
+#att_zone:empty:before {
+  content: attr(data-placeholder);
+  color: #999;
+  font-size: .9em;
+}
+.last{
+margin-left:90px;
+}
+.dropzone {
+  width: 98%;
+  margin: 1%;
+  border: 2px dashed gray !important;
+  border-radius: 5px;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.dropzone.dz-drag-hover {
+  border: 2px solid #3498db !important;
+}
+
+.dz-message.needsclick img {
+  width: 50px;
+  display: block;
+  margin: auto;
+  opacity: .6;
+  margin-bottom: 15px;
+}
+
+span.plus {
+  display: none;
+}
+
+.dropzone.dz-started .dz-message {
+  display: inline-block !important;
+  width: 120px;
+  float: right;
+  border: 1px solid gray;
+  border-radius: 30px;
+  height: 120px;
+  margin: 16px;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.dropzone.dz-started .dz-message span.text {
+  display: none;
+}
+
+.dropzone.dz-started .dz-message span.plus {
+  display: block;
+  font-size: 70px;
+  color: #AAA;
+  line-height: 110px;
 }

@@ -13,8 +13,8 @@
 
     <div class="slider"> <!--이미지를 담고 있는 div-->
 
-      <div class="slider__item">
-        <img class="post_img" th:src="@{/files/}+${post.photo_name}">
+      <div class="slider__item" th:each="image : ${images}">
+        <img class="post_img" th:src="@{/files/}+${image.filename}">
       </div>
     </div>
 

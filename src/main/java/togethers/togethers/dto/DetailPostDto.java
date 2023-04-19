@@ -26,7 +26,5 @@ public class DetailPostDto {
     private String mounthly;
     private String lease;
 
-    private String photo_name;
-    private String photo_path;
 
 }

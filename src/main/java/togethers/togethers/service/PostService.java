@@ -58,10 +58,11 @@ public class PostService {
     }
 
     @Transactional
-    public RoomPicture findPhoto(Long PostId)
+    public List<RoomPicture> findPhoto(Long PostId)
     {
-        RoomPicture roomPicture = roompictureRepository.findByPost_PostId(PostId).orElse(null);
-        return roomPicture;
+        List<RoomPicture> images = roompictureRepository.findAllByPost_PostId(PostId);
+        logger.info("[findPhoto] 이미지 데이터 베이스 조회 동작. 이미지 갯수 : {}]",images.size());
+        return images;
     }
 
     @Transactional
@@ -102,118 +103,44 @@ public class PostService {
         return recentlyPostDto;
     }
 
+    @Transactional
+    public Long MonthlyPostWrite(MonthlyPostRequestDto dto,List<MultipartFile> files,String Uid) throws Exception
+    {
+        logger.info("[MonthlyPostWrite] 월세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {} 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
 
-    @Transactional(readOnly = false)
-    public PostUpResultDto post_save(PostUpRequestDto postUpRequestDto,
-                                     MultipartFile file,String Uid) throws Exception {
         User user = userRepository.findByUid(Uid).orElse(null);
-        logger.info("[post_save] 게시물 저장 로직 시작. id : {}", user.getUid());
 
-        PostUpResultDto postUpResultDto;
+        Post post = new Post(dto);
+        post.setUser(user);
+        postRepository.save(post);
 
-        if (user.getPost() != null) //사용자가 게시물이 이미 있을경우 예외처리
-        {
-            logger.info("[post_save] 사용자가 이미 게시물이 존재함. id: {}", user.getUid());
-            throw new IllegalStateException();
-        } else {
+        user.setPost(post);
+        userRepository.flush();
 
-            Post post = new Post(postUpRequestDto); //html에서 받아온 dto로 post 생성
-            post.setUser(user);
-            postRepository.save(post);
-
-
-            user.setPost(post);
-            userRepository.save(user);
-
+        for (MultipartFile file : files) {
             photo_save(post.getPostId(),file);
-
-            postUpResultDto = PostUpResultDto.builder()
-                    .title(post.getTitle())
-                    .context(post.getTitle())
-                    .build();
-
-
-            if (post.getPostId() == user.getPost().getPostId()) // post와 user,Roompicture pk 검증
-            {
-                setSuccessResult(postUpResultDto);
-            } else {
-                setFailResult(postUpResultDto);
-            }
         }
+        return post.getPostId();
 
-        return postUpResultDto;
     }
 
     @Transactional
-    public PostUpResultDto MonthlyPostWrite(MonthlyPostRequestDto dto,MultipartFile file,String Uid) throws Exception
+    public Long LeasePostWrite(LeasePostRequestDto dto,List<MultipartFile> files,String Uid) throws Exception
     {
-        logger.info("[MonthlyPostWrite] 월세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}",Uid,dto.getTitle());
-
+        logger.info("[MonthlyPostWrite] 전세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}, 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
         User user = userRepository.findByUid(Uid).orElse(null);
-        PostUpResultDto postUpResultDto;
 
-        if(user.getPost()!=null)
-        {
-            logger.info("[post_save] 사용자가 이미 게시물이 존재함. id: {}", user.getUid());
-            throw new IllegalStateException();
-        }else {
-            Post post = new Post(dto);
-            post.setUser(user);
-            postRepository.save(post);
+        Post post = new Post(dto);
+        post.setUser(user);
+        postRepository.save(post);
 
-            user.setPost(post);
-            userRepository.flush();
+        user.setPost(post);
+        userRepository.flush();
 
+        for (MultipartFile file : files) {
             photo_save(post.getPostId(),file);
-
-            postUpResultDto = PostUpResultDto.builder()
-                    .title(post.getTitle())
-                    .context(post.getTitle())
-                    .build();
-            if (post.getPostId() == user.getPost().getPostId()) // post와 user,Roompicture pk 검증
-            {
-                setSuccessResult(postUpResultDto);
-            } else {
-                setFailResult(postUpResultDto);
-            }
         }
-        return postUpResultDto;
-    }
-
-    @Transactional
-    public PostUpResultDto LeasePostWrite(LeasePostRequestDto dto,MultipartFile file,String Uid) throws Exception
-    {
-        logger.info("[MonthlyPostWrite] 전세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}",Uid,dto.getTitle());
-
-        User user = userRepository.findByUid(Uid).orElse(null);
-        PostUpResultDto postUpResultDto;
-
-        if(user.getPost()!=null)
-        {
-            logger.info("[post_save] 사용자가 이미 게시물이 존재함. id: {}", user.getUid());
-            throw new IllegalStateException();
-        }else {
-            Post post = new Post(dto);
-            post.setUser(user);
-            postRepository.save(post);
-
-            user.setPost(post);
-            userRepository.flush();
-
-            photo_save(post.getPostId(),file);
-
-            postUpResultDto = PostUpResultDto.builder()
-                    .title(post.getTitle())
-                    .context(post.getTitle())
-                    .build();
-            if (post.getPostId() == user.getPost().getPostId()) // post와 user,Roompicture pk 검증
-            {
-                setSuccessResult(postUpResultDto);
-            } else {
-                setFailResult(postUpResultDto);
-            }
-        }
-        return postUpResultDto;
+        return post.getPostId();
     }
 
     @Transactional
@@ -284,7 +211,7 @@ public class PostService {
 
 
     @Transactional
-    public DetailPostDto detail_post(Post post, RoomPicture photo)
+    public DetailPostDto detail_post(Post post)
     {
 
         User user = post.getUser();
@@ -298,10 +225,7 @@ public class PostService {
                 .userId(user.getId())
                 .area(post.getArea())
                 .Uid(user.getUid())
-                .photo_name(photo.getFilename())
-                .photo_path(photo.getFilepath())
                 .build();
-
         return detailPostDto;
     }
 

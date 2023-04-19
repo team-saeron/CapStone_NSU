@@ -35,10 +35,16 @@
             <input class="write_price" th:field="*{deposit}" placeholder="보증금">
             <input class="write__price" th:field="*{Management_fee}" placeholder="관리비">
           </div>
-          <div class="house_img">
-            <input type="file" name="file">
-            <div id="image_container"></div>
-            <textarea placeholder="방이나 본인에 대해서 설명해주세요" class="house_detail" th:field="*{context}" cols="37" rows="7" required></textarea>
+
+          <div id='image_preview'>
+            <input type='file' id='btnAtt' name="btnAtt" multiple='multiple' />
+            <div id='att_zone'
+                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+          </div>
+
+
+
+          <textarea placeholder="방이나 본인에 대해서 설명해주세요" class="house_detail" th:field="*{context}" cols="37" rows="7" required></textarea>
 
             <div class="answer">
             <h4>게시물 작성 후 다른 사람들이 연락할 수 있게 연락수단을 댓글로 남겨주세요.
@@ -47,28 +53,135 @@
           </div>
         </div>
 
-      </div>
+
 
 
     </form>
   </div>
 
   <script>
-      function setThumbnail(event) {
-        for (var image of event.target.files) {
-          var reader = new FileReader();
+( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
+  imageView = function imageView(att_zone, btn){
 
-          reader.onload = function(event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            document.querySelector("div#image_container").appendChild(img);
-          };
+    var attZone = document.getElementById(att_zone);
+    var btnAtt = document.getElementById(btn)
+    var sel_files = [];
 
-          console.log(image);
-          reader.readAsDataURL(image);
-        }
+    // 이미지와 체크 박스를 감싸고 있는 div 속성
+    var div_style = 'display:inline-block;position:relative;'
+                  + 'width:150px;height:120px;margin:5px;border:1px solid #00f;z-index:1';
+    // 미리보기 이미지 속성
+    var img_style = 'width:100%;height:100%;z-index:none';
+    // 이미지안에 표시되는 체크박스의 속성
+    var chk_style = 'width:30px;height:30px;position:absolute;font-size:24px;'
+                  + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00';
+
+    btnAtt.onchange = function(e){
+      var files = e.target.files;
+      var fileArr = Array.prototype.slice.call(files)
+      for(f of fileArr){
+        imageLoader(f);
       }
-    </script>
+    }
+
+
+    // 탐색기에서 드래그앤 드롭 사용
+    attZone.addEventListener('dragenter', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    }, false)
+
+    attZone.addEventListener('dragover', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+    }, false)
+
+    attZone.addEventListener('drop', function(e){
+      var files = {};
+      e.preventDefault();
+      e.stopPropagation();
+      var dt = e.dataTransfer;
+      files = dt.files;
+      for(f of files){
+        imageLoader(f);
+      }
+
+    }, false)
+
+
+
+    /*첨부된 이미리즐을 배열에 넣고 미리보기 */
+    imageLoader = function(file){
+      sel_files.push(file);
+      var reader = new FileReader();
+      reader.onload = function(ee){
+        let img = document.createElement('img')
+        img.setAttribute('style', img_style)
+        img.src = ee.target.result;
+        attZone.appendChild(makeDiv(img, file));
+      }
+
+      reader.readAsDataURL(file);
+    }
+
+    /*첨부된 파일이 있는 경우 checkbox와 함께 attZone에 추가할 div를 만들어 반환 */
+    makeDiv = function(img, file){
+      var div = document.createElement('div')
+      div.setAttribute('style', div_style)
+
+      var btn = document.createElement('input')
+      btn.setAttribute('type', 'button')
+      btn.setAttribute('value', 'x')
+      btn.setAttribute('delFile', file.name);
+      btn.setAttribute('style', chk_style);
+      btn.onclick = function(ev){
+        var ele = ev.srcElement;
+        var delFile = ele.getAttribute('delFile');
+        for(var i=0 ;i<sel_files.length; i++){
+          if(delFile== sel_files[i].name){
+            sel_files.splice(i, 1);
+          }
+        }
+
+        dt = new DataTransfer();
+        for(f in sel_files) {
+          var file = sel_files[f];
+          dt.items.add(file);
+        }
+        btnAtt.files = dt.files;
+        var p = ele.parentNode;
+        attZone.removeChild(p)
+      }
+      div.appendChild(img)
+      div.appendChild(btn)
+      return div
+    }
+  }
+)('att_zone', 'btnAtt')
+
+   function extractHashtags() {
+        const text = document.getElementById("text").value;
+        const regex = /#[\u3131-\uD79D\uAC00-\uD7A3a-zA-Z0-9_]+/g;
+        const hashtags = text.match(regex);
+        const circleContainer = document.getElementById("circle-container");
+        circleContainer.innerHTML = "";
+        if (hashtags) {
+          const center = document.createElement("div");
+          center.className = "circle center";
+          circleContainer.appendChild(center);
+          hashtags.forEach(hashtag => {
+            const circle = document.createElement("div");
+            circle.className = "circle";
+            circle.innerText = hashtag.substring(1);
+            circleContainer.appendChild(circle);
+          });
+        } else {
+          const center = document.createElement("div");
+          center.className = "circle center";
+          circleContainer.appendChild(center);
+        }
+      }</script>
 
   </body>
 

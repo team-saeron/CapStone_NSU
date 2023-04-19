@@ -2,9 +2,9 @@
 
 .write_container{
 margin: 0 auto;
-margin-left:450px;
+margin-left:30px;
 height:980px;
-margin-top:-110px;
+margin-top:-140px;
 
 }
 
@@ -16,10 +16,15 @@ text-align:center
 width:800px;
 height:1100px;
 position:relative;
+z-index:1;
 
 }
 .write_column{
 position:relative;
+}
+.input-group{
+margin-bottom:10px;
+font-size:20px;
 }
 .write_submit{
 
@@ -29,7 +34,7 @@ float:right;
 position:absolute;
 top:-10px;
 right:420px;
-
+left:600px;
 }
 #write-img{
 width:30%;
@@ -41,6 +46,11 @@ height:30%}
    margin:20px 0px;
 
 }
+.write_price{
+display:flex;
+margin:35px 120px;
+}
+
 .select_type{
 width:20%;
 height:50px;
@@ -72,7 +82,8 @@ left:20px;
 
 textarea{
 resize:none;
-width:500px;
+width:750px;
+margin-left:-20px;
 }
 .answer{
 margin-top:150px;
@@ -85,4 +96,20 @@ margin-left:10px;
 }
 .write_price{
 margin-left:-10px;
+}
+#att_zone {
+  width: 660px;
+  min-height: 150px;
+  padding: 10px;
+  border: 1px dotted gray;
+  margin-left:1px;
+}
+
+#att_zone:empty:before {
+  content: attr(data-placeholder);
+  color: #999;
+  font-size: .9em;
+}
+.last{
+margin-left:80px;
 }

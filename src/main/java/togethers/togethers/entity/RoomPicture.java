@@ -2,6 +2,8 @@ package togethers.togethers.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
