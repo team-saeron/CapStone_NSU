@@ -1,4 +1,4 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.post;
 
 
 import lombok.Data;

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import togethers.togethers.dto.UserDetails;
+import togethers.togethers.dto.mypage.UserDetails;
 import togethers.togethers.service.UserDetailsService;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +19,6 @@ import javax.crypto.SecretKey;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

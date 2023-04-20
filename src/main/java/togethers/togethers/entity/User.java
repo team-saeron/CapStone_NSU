@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import togethers.togethers.dto.UserDetails;
+import togethers.togethers.dto.mypage.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

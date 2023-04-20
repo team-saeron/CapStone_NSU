@@ -3,19 +3,17 @@ package togethers.togethers.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import togethers.togethers.dto.*;
-import togethers.togethers.entity.User;
+import togethers.togethers.dto.login.SignInRequestDto;
+import togethers.togethers.dto.login.SignInResultDto;
+import togethers.togethers.dto.login.SignUpRequestDto;
+import togethers.togethers.dto.login.SignUpResultDto;
 import togethers.togethers.service.SignService;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 

@@ -1,4 +1,4 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.mypage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;

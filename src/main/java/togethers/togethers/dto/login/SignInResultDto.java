@@ -1,4 +1,4 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.login;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @Builder
 @EqualsAndHashCode(callSuper=false)
-public class SignInResultDto extends SignUpResultDto{
+public class SignInResultDto extends SignUpResultDto {
     private Long id;
     private String token;
 

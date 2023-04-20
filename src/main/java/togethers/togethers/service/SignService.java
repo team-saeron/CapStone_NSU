@@ -1,9 +1,9 @@
 package togethers.togethers.service;
 
-import togethers.togethers.dto.SignInRequestDto;
-import togethers.togethers.dto.SignInResultDto;
-import togethers.togethers.dto.SignUpRequestDto;
-import togethers.togethers.dto.SignUpResultDto;
+import togethers.togethers.dto.login.SignInRequestDto;
+import togethers.togethers.dto.login.SignInResultDto;
+import togethers.togethers.dto.login.SignUpRequestDto;
+import togethers.togethers.dto.login.SignUpResultDto;
 
 public interface SignService {
 

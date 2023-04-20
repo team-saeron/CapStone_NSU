@@ -6,13 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.config.JwtTokenProvider;
-import togethers.togethers.dto.SignInRequestDto;
-import togethers.togethers.dto.SignInResultDto;
-import togethers.togethers.dto.SignUpRequestDto;
-import togethers.togethers.dto.SignUpResultDto;
+import togethers.togethers.dto.login.SignInRequestDto;
+import togethers.togethers.dto.login.SignInResultDto;
+import togethers.togethers.dto.login.SignUpRequestDto;
+import togethers.togethers.dto.login.SignUpResultDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.repository.UserRepository;
 

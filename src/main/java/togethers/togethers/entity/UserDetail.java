@@ -3,8 +3,8 @@ package togethers.togethers.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import togethers.togethers.dto.UserDetailSaveDto;
-import togethers.togethers.dto.UserDetailUpdateDto;
+import togethers.togethers.dto.mypage.UserDetailSaveDto;
+import togethers.togethers.dto.mypage.UserDetailUpdateDto;
 
 import javax.persistence.*;
 

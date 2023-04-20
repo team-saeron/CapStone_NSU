@@ -1,4 +1,4 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.mypage;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

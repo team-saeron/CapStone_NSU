@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import togethers.togethers.Enum.AreaEnum;
-import togethers.togethers.dto.PostSearchDto;
-import togethers.togethers.dto.RecentlyPostDto;
+import togethers.togethers.dto.post.PostSearchDto;
+import togethers.togethers.dto.post.RecentlyPostDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
 

@@ -11,7 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.JwtTokenProvider;
-import togethers.togethers.dto.*;
+import togethers.togethers.dto.login.*;
+import togethers.togethers.dto.mypage.UserDetailSaveDto;
+import togethers.togethers.dto.mypage.UserDetailUpdateDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 import togethers.togethers.repository.UserDetailRepository;
@@ -41,6 +43,13 @@ public class UserServiceImpl implements UserService {
     public String join(User user) {
         userRepository.save(user);
         return user.getUid();
+    }
+
+    @Override
+    @Transactional
+    public UserDetail findUserDetail(Long UserDetailId)
+    {
+        return userDetailRepository.findByUserDetailId(UserDetailId).orElse(null);
     }
 
 

@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +18,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
-import togethers.togethers.dto.*;
+import togethers.togethers.dto.post.DetailPostDto;
+import togethers.togethers.dto.post.LeasePostRequestDto;
+import togethers.togethers.dto.post.MonthlyPostRequestDto;
+import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.util.Enumeration;
 import java.util.List;
 
 @Controller
@@ -216,7 +214,7 @@ public class PostController {
 
     /**게시물 검색 관련 로직**/
     @PostMapping(value = "/post/search")
-    public String SearchPost(@PageableDefault Pageable pageable,Model model,PostSearchDto dto){
+    public String SearchPost(@PageableDefault Pageable pageable, Model model, PostSearchDto dto){
 
         logger.info("[SearchPost] 게시물 검색 Controller 동작. keyword : {}",dto.getKeyword());
         Page<Post> posts = postService.SearchPost(dto.getKeyword(), pageable);

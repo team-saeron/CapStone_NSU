@@ -10,10 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
+import togethers.togethers.dto.post.*;
 import togethers.togethers.entity.*;
 import togethers.togethers.repository.*;
 //import togethers.togethers.repository.UserRepository;
@@ -37,6 +37,8 @@ public class PostService {
     private final PostRepository postRepository;
     @Autowired
     private final RoompictureRepository roompictureRepository;
+
+
 
     @Autowired
     private final ReplyRepository replyRepository;
@@ -64,6 +66,8 @@ public class PostService {
         logger.info("[findPhoto] 이미지 데이터 베이스 조회 동작. 이미지 갯수 : {}]",images.size());
         return images;
     }
+
+
 
     @Transactional
     public boolean checkFavorite(Long postId,Long userId) {
@@ -104,7 +108,7 @@ public class PostService {
     }
 
     @Transactional
-    public Long MonthlyPostWrite(MonthlyPostRequestDto dto,List<MultipartFile> files,String Uid) throws Exception
+    public Long MonthlyPostWrite(MonthlyPostRequestDto dto, List<MultipartFile> files, String Uid) throws Exception
     {
         logger.info("[MonthlyPostWrite] 월세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {} 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
 
@@ -125,7 +129,7 @@ public class PostService {
     }
 
     @Transactional
-    public Long LeasePostWrite(LeasePostRequestDto dto,List<MultipartFile> files,String Uid) throws Exception
+    public Long LeasePostWrite(LeasePostRequestDto dto, List<MultipartFile> files, String Uid) throws Exception
     {
         logger.info("[MonthlyPostWrite] 전세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}, 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
         User user = userRepository.findByUid(Uid).orElse(null);
@@ -144,7 +148,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostUpResultDto post_edit(Long post_id,String Uid ,PostEditRequestDto postEditRequestDto)
+    public PostUpResultDto post_edit(Long post_id, String Uid , PostEditRequestDto postEditRequestDto)
     {
         logger.info("[post_edit] 게시물 수정 로직 동작 post_id:{}, Uid:{} ",post_id,Uid);
         PostUpResultDto postUpResultDto = new PostUpResultDto();

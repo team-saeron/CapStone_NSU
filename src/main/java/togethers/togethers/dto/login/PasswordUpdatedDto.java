@@ -1,4 +1,4 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.login;
 
 import lombok.Builder;
 import lombok.Getter;

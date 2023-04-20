@@ -10,8 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
-import togethers.togethers.dto.*;
+import togethers.togethers.dto.login.*;
+import togethers.togethers.dto.mypage.MyPageDto;
+import togethers.togethers.dto.mypage.UserDetailSaveDto;
 import togethers.togethers.entity.User;
+import togethers.togethers.entity.UserDetail;
 import togethers.togethers.service.SignService;
 import togethers.togethers.service.UserService;
 
@@ -45,6 +48,7 @@ public class UserController {
             return "redirect:/";
         }else {
             User user = (User)principal;
+
             MyPageDto myPageDto = new MyPageDto(user.getNickname(),user.getUid());
             PasswordUpdatedDto passwordUpdatedDto = new PasswordUpdatedDto();
 
@@ -84,15 +88,23 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PatchMapping(value="/introduction/edit")
-    public void editIntro(@Valid UserDetailUpdateDto userDetailUpdateDto){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = (User)principal;
-        LOGGER.info("name = {}, pw={}", user.getUid());
-        userService.editIntro(user.getId(), userDetailUpdateDto);
+    @GetMapping(value = "/member/rewriteIntroduction")
+    public String rewriteIntroduction (Model model)
+    {
+        log.info("[rewriteIntroduction] 나의 게시물 수정 Controller 동작.");
+        return "member/rewriteIntroduction";
     }
 
+    @GetMapping("/member/checkIntroduction")
+    public String checkIntroduction(@RequestParam("userDetailId")Long userDetailId, Model model)
+    {
+        log.info("[checkIntroduction] 다른 유저의 세부사항 정보 확인. 조회하고자 하는 Id : {}",userDetailId);
+        UserDetail userDetail = userService.findUserDetail(userDetailId);
 
+        model.addAttribute("userDetail",userDetail);
+        return "member/checkIntroduction";
+
+    }
 
 
 

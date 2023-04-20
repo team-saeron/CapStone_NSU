@@ -1,13 +1,14 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.reply;
 
 import lombok.*;
+import togethers.togethers.dto.BaseResultDto;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper=false)
-public class ReplyResultDto extends BaseResultDto{
+public class ReplyResultDto extends BaseResultDto {
 
 
     private Long userId;

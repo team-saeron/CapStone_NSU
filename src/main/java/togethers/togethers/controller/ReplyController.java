@@ -3,25 +3,16 @@ package togethers.togethers.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import togethers.togethers.Enum.AreaEnum;
-import togethers.togethers.dto.DetailPostDto;
-import togethers.togethers.dto.ReplyRequestDto;
-import togethers.togethers.entity.Post;
-import togethers.togethers.entity.Reply;
-import togethers.togethers.entity.RoomPicture;
+import togethers.togethers.dto.reply.ReplyRequestDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
 import togethers.togethers.service.ReplyService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class ReplyController {
