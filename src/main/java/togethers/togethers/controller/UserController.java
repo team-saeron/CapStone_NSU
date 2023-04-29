@@ -12,11 +12,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.User;
+import togethers.togethers.entity.UserDetail;
 import togethers.togethers.service.SignService;
 import togethers.togethers.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -155,6 +157,14 @@ public class UserController {
     @PatchMapping("/user/editPassword")
     public void updatePassword(Long id, String password){
         userService.updatePassword(id,password);
+    }
+
+    @PostMapping("/user/recommend")
+    public List<UserDetail> matching(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User)principal;
+        List<UserDetail> u = userService.matching(user.getUid());
+        return u;
     }
 }
 

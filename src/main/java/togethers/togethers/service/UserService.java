@@ -2,6 +2,9 @@ package togethers.togethers.service;
 
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.User;
+import togethers.togethers.entity.UserDetail;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -23,4 +26,6 @@ public interface UserService {
 
     public void updatePassword(Long id, String password);
 
+
+    public List<UserDetail> matching(String userId);
 }

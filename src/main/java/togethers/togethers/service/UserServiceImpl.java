@@ -12,10 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.JwtTokenProvider;
 import togethers.togethers.dto.*;
+import togethers.togethers.entity.Mbti;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
+import togethers.togethers.repository.MbtiRepository;
 import togethers.togethers.repository.UserDetailRepository;
 import togethers.togethers.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -23,10 +29,13 @@ import togethers.togethers.repository.UserRepository;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private MbtiRepository mbtiRepository;
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private final UserRepository userRepository;
+
     @Autowired
     private final UserDetailRepository userDetailRepository;
     private final JwtTokenProvider jwtTokenProvider;
@@ -151,5 +160,27 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(memberId).orElse(null);
         user.setPassword(password);
     }
+
+    @Override
+    @Transactional
+    public List<UserDetail> matching(String userId) {
+        User user = userRepository.findByUid(userId).orElse(null);
+        UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
+        List<UserDetail> recommend = userDetailRepository.findByGender(ud.getGender());
+        List<UserDetail> rclist = new ArrayList<>();
+        Mbti mbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
+
+        for(UserDetail i : recommend){
+            if(i.getMbti().equals(mbti.getFirstMbti())||i.getMbti().equals(mbti.getSecondMbti())||i.getMbti().equals(mbti.getThirdMbti())||i.getMbti().equals(mbti.getFourthMbti())){
+                rclist.add(i);
+            }else{
+                return null;
+            }
+        }
+        return rclist;
+
+
+    }
+
 
 }
