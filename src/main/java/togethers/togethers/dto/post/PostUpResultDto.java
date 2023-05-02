@@ -1,13 +1,14 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.post;
 
 import lombok.*;
+import togethers.togethers.dto.BaseResultDto;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper=false)
-public class PostUpResultDto extends BaseResultDto{
+public class PostUpResultDto extends BaseResultDto {
     private String title;
     private String context;
 

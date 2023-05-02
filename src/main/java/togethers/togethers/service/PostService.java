@@ -13,15 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
-import togethers.togethers.entity.Post;
-import togethers.togethers.entity.Reply;
-import togethers.togethers.entity.RoomPicture;
-import togethers.togethers.entity.User;
-import togethers.togethers.repository.PostRepository;
-import togethers.togethers.repository.ReplyRepository;
-import togethers.togethers.repository.RoompictureRepository;
+import togethers.togethers.dto.post.*;
+import togethers.togethers.entity.*;
+import togethers.togethers.repository.*;
 //import togethers.togethers.repository.UserRepository;
-import togethers.togethers.repository.UserRepository;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -43,8 +38,13 @@ public class PostService {
     @Autowired
     private final RoompictureRepository roompictureRepository;
 
+
+
     @Autowired
     private final ReplyRepository replyRepository;
+
+    @Autowired
+    private final FavoriteRepository likeRepository;
 
     @Transactional
     public Post findPost(Long post_id)
@@ -60,10 +60,25 @@ public class PostService {
     }
 
     @Transactional
-    public RoomPicture findPhoto(Long PostId)
+    public List<RoomPicture> findPhoto(Long PostId)
     {
-        RoomPicture roomPicture = roompictureRepository.findByPost_PostId(PostId).orElse(null);
-        return roomPicture;
+        List<RoomPicture> images = roompictureRepository.findAllByPost_PostId(PostId);
+        logger.info("[findPhoto] 이미지 데이터 베이스 조회 동작. 이미지 갯수 : {}]",images.size());
+        return images;
+    }
+
+
+
+    @Transactional
+    public boolean checkFavorite(Long postId,Long userId) {
+        Favorite favorite = likeRepository.findByPost_PostIdAndUser_Id(postId, userId).orElse(null);
+        boolean check;
+        if (favorite != null) {
+            check = true;
+        } else {
+            check = false;
+        }
+        return check;
     }
 
     @Transactional
@@ -92,122 +107,48 @@ public class PostService {
         return recentlyPostDto;
     }
 
-
-    @Transactional(readOnly = false)
-    public PostUpResultDto post_save(PostUpRequestDto postUpRequestDto,
-                                     MultipartFile file,String Uid) throws Exception {
-        User user = userRepository.findByUid(Uid).orElse(null);
-        logger.info("[post_save] 게시물 저장 로직 시작. id : {}", user.getUid());
-
-        PostUpResultDto postUpResultDto;
-
-        if (user.getPost() != null) //사용자가 게시물이 이미 있을경우 예외처리
-        {
-            logger.info("[post_save] 사용자가 이미 게시물이 존재함. id: {}", user.getUid());
-            throw new IllegalStateException();
-        } else {
-
-            Post post = new Post(postUpRequestDto); //html에서 받아온 dto로 post 생성
-            post.setUser(user);
-            postRepository.save(post);
-
-
-            user.setPost(post);
-            userRepository.save(user);
-
-            photo_save(post.getPostId(),file);
-
-            postUpResultDto = PostUpResultDto.builder()
-                    .title(post.getTitle())
-                    .context(post.getTitle())
-                    .build();
-
-
-            if (post.getPostId() == user.getPost().getPostId()) // post와 user,Roompicture pk 검증
-            {
-                setSuccessResult(postUpResultDto);
-            } else {
-                setFailResult(postUpResultDto);
-            }
-        }
-
-        return postUpResultDto;
-    }
-
     @Transactional
-    public PostUpResultDto MonthlyPostWrite(MonthlyPostRequestDto dto,MultipartFile file,String Uid) throws Exception
+    public Long MonthlyPostWrite(MonthlyPostRequestDto dto, List<MultipartFile> files, String Uid) throws Exception
     {
-        logger.info("[MonthlyPostWrite] 월세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}",Uid,dto.getTitle());
+        logger.info("[MonthlyPostWrite] 월세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {} 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
 
         User user = userRepository.findByUid(Uid).orElse(null);
-        PostUpResultDto postUpResultDto;
 
-        if(user.getPost()!=null)
-        {
-            logger.info("[post_save] 사용자가 이미 게시물이 존재함. id: {}", user.getUid());
-            throw new IllegalStateException();
-        }else {
-            Post post = new Post(dto);
-            post.setUser(user);
-            postRepository.save(post);
+        Post post = new Post(dto);
+        post.setUser(user);
+        postRepository.save(post);
 
-            user.setPost(post);
-            userRepository.flush();
+        user.setPost(post);
+        userRepository.flush();
 
+        for (MultipartFile file : files) {
             photo_save(post.getPostId(),file);
-
-            postUpResultDto = PostUpResultDto.builder()
-                    .title(post.getTitle())
-                    .context(post.getTitle())
-                    .build();
-            if (post.getPostId() == user.getPost().getPostId()) // post와 user,Roompicture pk 검증
-            {
-                setSuccessResult(postUpResultDto);
-            } else {
-                setFailResult(postUpResultDto);
-            }
         }
-        return postUpResultDto;
+        return post.getPostId();
+
     }
 
     @Transactional
-    public PostUpResultDto LeasePostWrite(LeasePostRequestDto dto,MultipartFile file,String Uid) throws Exception
+    public Long LeasePostWrite(LeasePostRequestDto dto, List<MultipartFile> files, String Uid) throws Exception
     {
-        logger.info("[MonthlyPostWrite] 전세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}",Uid,dto.getTitle());
-
+        logger.info("[MonthlyPostWrite] 전세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}, 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
         User user = userRepository.findByUid(Uid).orElse(null);
-        PostUpResultDto postUpResultDto;
 
-        if(user.getPost()!=null)
-        {
-            logger.info("[post_save] 사용자가 이미 게시물이 존재함. id: {}", user.getUid());
-            throw new IllegalStateException();
-        }else {
-            Post post = new Post(dto);
-            post.setUser(user);
-            postRepository.save(post);
+        Post post = new Post(dto);
+        post.setUser(user);
+        postRepository.save(post);
 
-            user.setPost(post);
-            userRepository.flush();
+        user.setPost(post);
+        userRepository.flush();
 
+        for (MultipartFile file : files) {
             photo_save(post.getPostId(),file);
-
-            postUpResultDto = PostUpResultDto.builder()
-                    .title(post.getTitle())
-                    .context(post.getTitle())
-                    .build();
-            if (post.getPostId() == user.getPost().getPostId()) // post와 user,Roompicture pk 검증
-            {
-                setSuccessResult(postUpResultDto);
-            } else {
-                setFailResult(postUpResultDto);
-            }
         }
-        return postUpResultDto;
+        return post.getPostId();
     }
 
     @Transactional
-    public PostUpResultDto post_edit(Long post_id,String Uid ,PostEditRequestDto postEditRequestDto)
+    public PostUpResultDto post_edit(Long post_id, String Uid , PostEditRequestDto postEditRequestDto)
     {
         logger.info("[post_edit] 게시물 수정 로직 동작 post_id:{}, Uid:{} ",post_id,Uid);
         PostUpResultDto postUpResultDto = new PostUpResultDto();
@@ -274,12 +215,12 @@ public class PostService {
 
 
     @Transactional
-    public DetailPostDto detail_post(Post post, RoomPicture photo)
+    public DetailPostDto detail_post(Post post)
     {
 
         User user = post.getUser();
 
-        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{},user Uid",post.getPostId(),user.getUid());
+        logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{},user Uid:{}",post.getPostId(),user.getUid());
         DetailPostDto detailPostDto = DetailPostDto.builder()
                 .title(post.getTitle())
                 .context(post.getContext())
@@ -288,10 +229,7 @@ public class PostService {
                 .userId(user.getId())
                 .area(post.getArea())
                 .Uid(user.getUid())
-                .photo_name(photo.getFilename())
-                .photo_path(photo.getFilepath())
                 .build();
-
         return detailPostDto;
     }
 
@@ -307,6 +245,7 @@ public class PostService {
 
 
 
+    @Transactional
     public Long photo_save(Long post_id, MultipartFile file)throws Exception //이미지 저장로직
     {
         logger.info("[Photo_save] 이미지 저장로직 동작 post_id:{}, 사진 제목:{}",post_id,file.getOriginalFilename());
@@ -315,8 +254,7 @@ public class PostService {
         Post post = postRepository.findById(post_id).orElse(null);
 
         RoomPicture roomPicture = new RoomPicture();
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image";
-        //System.getProperty("user.dir")
+        String projectPath =  System.getProperty("user.dir")+"//src//main//resources//static//image";
         //window는 경로를 //src//main//이렇게 슬래쉬 2개 필요.
 
         UUID uuid = UUID.randomUUID();
@@ -328,7 +266,7 @@ public class PostService {
 
         roomPicture.setFilename(fileName);
         post.setFileName(fileName);
-        roomPicture.setFilepath("/files/" + fileName);
+        roomPicture.setFilepath("//image//" + fileName);
         roomPicture.setPost(post);
 
         postRepository.flush();
@@ -337,7 +275,7 @@ public class PostService {
         return roomPicture.getId();
     }
 
-
+    @Transactional
     public Page<Post>SearchPost(String keyword,Pageable pageable)
     {
         logger.info("[SearchPost] 게시물 검색 Service 로직 동작. keyword: {}",keyword);
@@ -347,7 +285,7 @@ public class PostService {
 
     }
 
-
+    @Transactional
     public Page<Post>SearchPostUsingCategory(String areaName,Pageable pageable)
     {
         logger.info("[SearchPostUsingCategory] 카테고리에서 클릭한 지역이름을 이용해 게시물 조회 Service로직 동작 지역 이름: {}",areaName);
@@ -356,6 +294,37 @@ public class PostService {
 
         return postRepository.findByAreaContaining(areaName,pageRequest);
     }
+
+
+
+    @Transactional
+    public boolean saveLike(Long userId, Long PostId){
+
+        logger.info("[saveLike] 게시물 좋아요 Service 로직 동작. 유저 Id:{}, 게시물 pk:{}",userId, PostId);
+        boolean check = true;
+
+        User user = userRepository.findById(userId).orElse(null);
+
+        Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(PostId,user.getId()).orElse(null);
+
+        if(checkFavorite != null)
+        {
+            logger.info("[saveLike] 게시물 좋아요 취소 로직 동작 좋아요의 게시물:{} 유저 pk:{}",checkFavorite.getPost().getPostId(),checkFavorite.getUser().getId());
+            likeRepository.delete(checkFavorite);
+            check = false;
+        }else{
+            Post post = postRepository.findById(PostId).orElse(null);
+            Favorite favorite = new Favorite();
+            favorite.setPost(post);
+            favorite.setUser(user);
+            favorite.setMyFavorite(true);
+            likeRepository.save(favorite);
+        }
+        return check;
+    }
+
+
+
 
 
 

@@ -2,6 +2,14 @@ server:
  port: 8081
 
 spring:
+ mail:
+  host: smtp.gmail.com
+  port: 465
+  username: 하늘님구글이메일@gmail.com
+  password: sadasdasdada
+  properties:
+   mail.smtp.auth: true
+   mail.smtp.ssl.enabled: true
  jwt:
   secret: sswsdkdslkjalkdaljdwlajdlwkjlkdlwnslmxwlkmwmwqkmxqwmdmw
  mvc:

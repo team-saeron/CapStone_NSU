@@ -1,10 +1,10 @@
 package togethers.togethers.entity;
 
 import lombok.*;
-import togethers.togethers.dto.LeasePostRequestDto;
-import togethers.togethers.dto.MonthlyPostRequestDto;
-import togethers.togethers.dto.PostEditRequestDto;
-import togethers.togethers.dto.PostUpRequestDto;
+import togethers.togethers.dto.post.LeasePostRequestDto;
+import togethers.togethers.dto.post.MonthlyPostRequestDto;
+import togethers.togethers.dto.post.PostEditRequestDto;
+import togethers.togethers.dto.post.PostUpRequestDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -85,12 +85,6 @@ public class Post {
     private String management_fee;
 
     private Integer RoomPay_type;
-
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Like>likes = new ArrayList<>();
-
-
     private String area;
 
 //    @OneToMany(mappedBy = "post",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},

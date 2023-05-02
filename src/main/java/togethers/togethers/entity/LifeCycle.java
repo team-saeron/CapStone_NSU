@@ -17,3 +17,9 @@ public class LifeCycle {
 
     private String lifeCycle_value;
 }
+
+
+/**
+ * 아이디 비밀 번호 찾기 페이지
+ * 게시물 등록 페이지 디자인
+ **/

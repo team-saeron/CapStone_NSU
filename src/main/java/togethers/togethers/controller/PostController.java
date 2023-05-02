@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +15,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
-import togethers.togethers.dto.*;
+import togethers.togethers.dto.post.DetailPostDto;
+import togethers.togethers.dto.post.LeasePostRequestDto;
+import togethers.togethers.dto.post.MonthlyPostRequestDto;
+import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -53,29 +55,43 @@ public class PostController {
 
     /**월세 타입의 게시물 GET,POST MAPPING **/
     @GetMapping(value = "/writeMonth")
-    public String postWriteMouth(Model model)
+    public String postWriteMouth(Model model,RedirectAttributes attr)
     {
-        logger.info("[postWriteMouth] GET 게시물 월세 작성 Controller 동작.");
-        MonthlyPostRequestDto monthlyPostRequestDto = new MonthlyPostRequestDto();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal =="anonymousUser"){
+            logger.info("[postWriteMouth] 사용자가 로그인 하지 않아 게시물 작성 불가");
 
-        model.addAttribute("Dto",monthlyPostRequestDto);
-        model.addAttribute("areaEnum",AreaEnum.values());
+            attr.addFlashAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
+            return "redirect:/";
+        }else {
+            User user = (User)principal;
+            if(user.getPost() != null){
+                logger.info("[postWriteMouth] 사용자 게시물 이미 존재합니다");
 
-        return "writeMonth";
+                attr.addFlashAttribute("already_post","이미 게시물이 존재합니다.");
+                return "redirect:/";
+            }else{
+                logger.info("[postWriteMouth] GET 게시물 월세 작성 Controller 동작.");
+                MonthlyPostRequestDto monthlyPostRequestDto = new MonthlyPostRequestDto();
+                model.addAttribute("dto",monthlyPostRequestDto);
+                model.addAttribute("areaEnum",AreaEnum.values());
+                return "writeMonth";
+            }
+        }
     }
 
     @PostMapping(value = "/writeMonth")
-    public String postWriteMouth(MonthlyPostRequestDto dto, MultipartFile file) throws Exception
+    public String postWriteMouth(MonthlyPostRequestDto dto, MultipartHttpServletRequest request) throws Exception
     {
         logger.info("[postWriteMouth] POST 월세타입의 게시물 사진 업로드 동작");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
+        List<MultipartFile> files = request.getFiles("btnAtt");
 
-        PostUpResultDto postUpResultDto = postService.MonthlyPostWrite(dto, file, user.getUid());
+        Long postId = postService.MonthlyPostWrite(dto, files, user.getUid());
 
-        logger.info("[postWriteMouth] ResultDto 결과: {}, {}, {}",postUpResultDto.getCode(),postUpResultDto.getMsg(),postUpResultDto.getContext());
         return "redirect:/";
     }
 
@@ -83,28 +99,41 @@ public class PostController {
 
     /**전세 타입의 게시물 GET, POST 매핑**/
     @GetMapping("/writeBeforePay")
-    public String writeBeforePay(Model model){
+    public String writeBeforePay(Model model,RedirectAttributes attr){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal =="anonymousUser"){
+            logger.info("[postWriteMouth] 사용자가 로그인 하지 않아 게시물 작성 불가");
+            attr.addFlashAttribute("msg","로그인 이후 게시물 작성이 가능합니다");
+            return "redirect:/";
+        }else {
+            User user = (User)principal;
 
-        logger.info("[postWriteMouth] GET 게시물 전세 작성 Controller 동작.");
-        LeasePostRequestDto leasePostRequestDto = new LeasePostRequestDto();
-        model.addAttribute("dto",leasePostRequestDto);
-        model.addAttribute("areaEnum",AreaEnum.values());
-        return "TestWrite";
+            if(user.getPost() != null){
+                logger.info("[postWriteMouth] 사용자 게시물 이미 존재합니다");
+
+                attr.addFlashAttribute("already_post","이미 게시물이 존재합니다.");
+                return "redirect:/";
+            }
+            logger.info("[postWriteMouth] GET 게시물 전세 작성 Controller 동작.");
+            LeasePostRequestDto leasePostRequestDto = new LeasePostRequestDto();
+            model.addAttribute("dto",leasePostRequestDto);
+            model.addAttribute("areaEnum",AreaEnum.values());
+            return "writeBeforePay";
+        }
     } // 전세 타입의 post
 
-
     @PostMapping("/writeBeforePay")
-    public String writeBeforePay(LeasePostRequestDto dto,MultipartFile file) throws Exception
+    public String writeBeforePay(LeasePostRequestDto dto,MultipartHttpServletRequest request) throws Exception
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
 
+        List<MultipartFile> files = request.getFiles("btnAtt");
         logger.info("[postWriteMouth] POST 게시물 전세 작성 Controller 동작.");
 
-        PostUpResultDto postUpResultDto = postService.LeasePostWrite(dto, file, user.getUid());
+        Long postId = postService.LeasePostWrite(dto, files, user.getUid());
 
-        logger.info("[postWriteMouth] ResultDto 결과: {}, {}, {}",postUpResultDto.getCode(),postUpResultDto.getMsg(),postUpResultDto.getContext());
         return "redirect:/";
 
     }
@@ -113,10 +142,19 @@ public class PostController {
     @GetMapping(value = "post/postList")
     public String post_postList(@PageableDefault Pageable pageable, Model model){
         logger.info("[postList]게시물 목록 조회 controller 동작");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal == "anonymousUser"){
+            model.addAttribute("login_inform",false);
+        }else{
+            model.addAttribute("login_inform",true);
+        }
+
 
         Page<Post>postList = postService.post_postList(pageable);
 
         model.addAttribute("postList",postList);
+        model.addAttribute("category",AreaEnum.values());
         logger.info("[postList] 총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
                 postList.getTotalElements(), postList.getTotalPages(), postList.getSize(),
                 postList.getNumber(), postList.getNumberOfElements());
@@ -128,22 +166,45 @@ public class PostController {
     @GetMapping(value = "/post/detailPost/{postId}")
     public String post_detailPost(@PathVariable("postId")Long PostId, Model model)
     {
-        Post post = postService.findPost(PostId);
-        RoomPicture photo = postService.findPhoto(PostId);
-        List<Reply> replies = postService.findReply(PostId);
-        DetailPostDto detailPostDto = postService.detail_post(post, photo);
+
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
-        User user = (User)principal;
 
-        logger.info("[post_detailPost] 사용자 로그인 되어있음, 토큰 인증 완료. 로그인 완료후 게시물 세부사항 로직 동작. postId : {}, userId:{}", PostId,user.getUid());
+        boolean check;
+        String userId = new String();
+
+        if(principal =="anonymousUser"){
+            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 하지 않음 postId :{}",PostId);
+            check = false;
+            userId = "";
+            model.addAttribute("userId",userId);
+            model.addAttribute("check",check);
+            model.addAttribute("login_inform",false);
+
+        }else {
+            User user = (User)principal;
+            userId = user.getUid();
+            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",PostId,userId);
+            check = postService.checkFavorite(PostId, user.getId());
+            model.addAttribute("userId",userId);
+            model.addAttribute("check",check);
+            model.addAttribute("login_inform",true);
+
+        }
 
 
-        model.addAttribute("user",user);
+        Post post = postService.findPost(PostId);
+        List<RoomPicture> images = postService.findPhoto(PostId);
+        List<Reply> replies = postService.findReply(PostId);
+        DetailPostDto detailPostDto = postService.detail_post(post);
+
+
         model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
         model.addAttribute("postId",PostId);
+        model.addAttribute("category",AreaEnum.values());
+        model.addAttribute("images",images);
 
 
         return "post/detailPost";
@@ -153,7 +214,7 @@ public class PostController {
 
     /**게시물 검색 관련 로직**/
     @PostMapping(value = "/post/search")
-    public String SearchPost(@PageableDefault Pageable pageable,Model model,PostSearchDto dto){
+    public String SearchPost(@PageableDefault Pageable pageable, Model model, PostSearchDto dto){
 
         logger.info("[SearchPost] 게시물 검색 Controller 동작. keyword : {}",dto.getKeyword());
         Page<Post> posts = postService.SearchPost(dto.getKeyword(), pageable);
@@ -162,6 +223,29 @@ public class PostController {
 
         model.addAttribute("postList",posts);
         return "post/searchList";
+
+    }
+
+    @GetMapping(value = "/detailPost/Like")
+    public String saveLike(@RequestParam("postId")Long postId,RedirectAttributes attr)
+    {
+
+        logger.info("[saveLike] 게시물 좋아요 Controller동작. postId:{}",postId);
+
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal == "anonymousUser")
+        {
+            logger.info("[saveLike] 사용자가 로그인 하지 않아 게시물 좋아요 기능 동작 불가능");
+            attr.addFlashAttribute("like_msg","로그인 이후 이용하여 주세요");
+
+
+        }else{
+            User user = (User)principal;
+            logger.info("[saveLike] 게시물 좋아요 로직 동작. postId : {}, userId:{}",postId,user.getUid());
+            postService.saveLike(user.getId(), postId);
+        }
+        return "redirect:/post/detailPost/"+postId;
 
     }
 
@@ -191,5 +275,6 @@ public class PostController {
 
         return "post/searchList";
     }
+
 
 }

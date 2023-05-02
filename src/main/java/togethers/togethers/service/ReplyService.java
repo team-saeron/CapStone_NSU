@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
+import togethers.togethers.dto.reply.ReplyDeleteResultDto;
+import togethers.togethers.dto.reply.ReplyRequestDto;
+import togethers.togethers.dto.reply.ReplyResultDto;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.User;
@@ -65,7 +68,7 @@ public class ReplyService {
     }
 
     @Transactional
-    public ReplyDeleteResultDto reply_delete(Long PostId,Long UserId,Long ReplyId)
+    public ReplyDeleteResultDto reply_delete(Long PostId, Long UserId, Long ReplyId)
     {
         ReplyDeleteResultDto replyDeleteResultDto = new ReplyDeleteResultDto();
         replyDeleteResultDto.setUserId(UserId);

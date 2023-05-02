@@ -13,79 +13,53 @@
 
     <div class="slider"> <!--이미지를 담고 있는 div-->
 
-      <div class="slider__item">
-        <img class="post_img" th:src="@{/image/}+${post.photo_name}">
+      <div class="slider__item" th:each="image : ${images}">
+        <img class="post_img" th:src="@{/image/}+${image.filename}">
       </div>
     </div>
-
-    <div class="Like">
-      <table>
-        <tr>
-          <td>
-            <addr title="매칭률"><i class="fa-solid fa-fire fa-2x"></i></addr>
-            80%
-          </td>
-          <td>
-            <i class="fa-solid fa-heart fa-2x"></i>
-          </td>
-        </tr>
-      </table>
-
-
-    </div>
-
-    <hr>
-
     <!--방과 사람 정보-->
-    <div class="explain">
+  <div class="ContentBox">
+    <h4 class="ContentTit"><strong>방 정보</strong></h4>
+      <div class="Content">
+        <ul>
+       <li>
+         <div class="content_name"><strong>보증금</strong></div>
+         <div class="content_description" th:text="${post.lease}"></div>
+       </li>
 
-      <div class="room_explain">
-        <table class="ex_table">
-          <caption><strong>방 정보</strong></caption>
-          <tr>
-            <td>보증금</td>
-            <td th:text="${post.lease}"></td>
-          </tr>
-
-          <tr>
-            <td>월세</td>
-            <td th:text="${post.mounthly}"></td>
-          </tr>
-
-          <tr>
-            <td>내용</td>
-            <td th:text="${post.context}"></td>
-          </tr>
-
-          <tr>
-            <td>위치</td>
-            <td th:text="서울시 + ${post.area}"></td>
-          </tr>
-
-        </table>
+        <li>
+          <div class="content_name"><strong>월세</strong></div>
+          <div class="content_description" th:text="${post.mounthly}"></div>
+        </li>
+        <li>
+          <div class="content_name"><strong>관리비</strong></div>
+          <div class="content_description" ></div>
+        </li>
+        <li>
+          <div class="content_name"><strong>위치</strong></div>
+          <div class="content_description" th:text="서울시 + ${post.area}"></div>
+        </li>
+        </ul>
       </div>
 
-      <div class="personal_explain">
-
-        <table class="ex_table">
-          <caption><strong>게시물 정보</strong></caption>
-          <tr>
-            <td>방 id</td>
-            <td th:text="${post.postId}"></td>
-          </tr>
-          <tr>
-            <td>작성자 pk</td>
-            <td th:text="${post.userId}"></td>
-          </tr>
-          <tr>
-            <td>작성자 id</td>
-            <td th:text="${post.Uid}"></td>
-          </tr>
-        </table>
+    <div class="PersonalInfo">
+      <div class="Personal">
+      <i class="fa-solid fa-user fa fa-4x PersonalIcon"></i>
+        <addr title="매칭률"><i class="fa-solid fa-fire fa-4x match "></i></addr>
+        <span class="percent">80%</span>
+        </div>
+      <span class="WriterId"th:text="${post.Uid}"></span>
+      <span>님의 정보</span>
+      <div class="Info">
+        <i class="fa-sharp fa-solid fa-smoking fa-2x smoke"></i><span>    흡연자</span>
+        <i class="fa-solid fa-dog fa-2x pet"></i> 반려동물 유</br>
+        <i class="fa-solid fa-venus-mars fa-2x gender "></i><span>여자</span>
+        <i class="fa-solid fa-cloud-sun fa-2x pattern"></i>  아침형
       </div>
+      <button type="button" onclick="location.href='/member/checkIntroduction'" class="btn btn-primary btn-lg btn-block">작성자 정보 보러가기</button>
 
     </div>
-
+    <button type="button"><i class="fa-solid fa-heart fa-2x Like"></i></button>
     <!-- 댓글 html-->
     <div class="comment">
 
@@ -94,7 +68,7 @@
           <div class="my_inner_commnet">
             <div class="my_id">
               <i class="fa-solid fa-user fa fa-2x"></i>
-              <span th:text="${user.uid}"></span>
+              <span th:text="${userId}"></span>
             </div>
             <div class="my_text">
               <input type="text" cols="30" class="my_textarea" id="comment" name="comment">
@@ -132,7 +106,9 @@
   </div>
 
   </div>
+  <td>
 
+  </td>
   <!-- script 구역 -->
   <script>
         const SHOWING_CLASS = "showing";

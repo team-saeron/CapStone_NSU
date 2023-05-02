@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/writeBeforePay.css" />
+  <style>
+   #mindmap {
+      position: relative;
+      height: 500px;
+    }
+    .node {
+      position: absolute;
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 5px;
+      background-color: #F8F8F8;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .main-node {
+      left: calc(50% - 100px);
+      top: 50px;
+      width: 200px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .sub-node {
+      width: 120px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: normal;
+    }
+    .line {
+      position: absolute;
+      height: 2px;
+      background-color: black;
+    }
+    #input-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    #tag-input {
+      width: 300px;
+      height: 30px;
+      padding: 5px;
+      border: 1px solid black;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    #add-button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      border: 1px solid black;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #F8F8F8;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</th:block>
+<th:block layout:fragment="content">
+
+  <body>
+  <div class="write_container">
+    <form class="write_column" th:action="@{/writeBeforePay}" th:method="POST" th:object="${dto}" enctype="multipart/form-data">
+      <div class="write_wrapper">
+        <div class="write__content">
+          <div class="write_column">
+
+            <div class="option__column" >
+              <div class="input-group">
+                <select class="custom-select" th:field="*{area}" aria-label="Example select with button addon" required>
+                  <option th:each="area: ${areaEnum}" th:value="${area}" th:text="${area}">-지역선택-</option>
+                </select>
+              </div>
+              <input class="write_submit" type="submit" value="글올리기">
+              <div class="title_column">
+                <input class="write_title" th:field="*{title}" placeholder="제목" required>
+              </div>
+              <div class="detail_column">
+                <input class="write_detail" type="text" placeholder="주소">
+              </div>
+            </div>
+
+          </div>
+          <div class="write_price">
+            <input class="write_price" th:field="*{deposit}" placeholder="보증금">
+            <input class="write__price" th:field="*{Management_fee}" placeholder="관리비">
+          </div>
+          <div class="house_img">
+            <div
+                    class="dropzone"
+                    id="my-dropzone"></div>
+            <span>이미지는 10개까지 가능합니다!</span>
+            <div id="image_container"></div>
+            <textarea placeholder="방이나 본인에 대해서 설명해주세요" class="house_detail" th:field="*{context}" cols="37" rows="7" required></textarea>
+
+            <div class="answer">
+              <h4 class="last">게시물 작성 후 다른 사람들이 연락할 수 있게 연락수단을 댓글로 남겨주세요.
+                <input type="radio" name="answer" required > 확인했습니다<br></h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+  <div id="mindmap">
+    <div id="main-node" class="node main-node">Main Node</div>
+  </div>
+
+  <div id="input-container">
+    <input type="text" id="tag-input" placeholder="Enter tags separated by commas">
+    <button id="add-button">Add Node</button>
+  </div>
+
+  <script>
+      function setThumbnail(event) {
+        for (var image of event.target.files) {
+          var reader = new FileReader();
+
+          reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            document.querySelector("div#image_container").appendChild(img);
+          };
+
+          console.log(image);
+          reader.readAsDataURL(image);
+        }
+      }
+    const mindmap = document.getElementById("mindmap");
+    const mainNode = document.getElementById("main-node");
+    const nodes = [];
+
+    function addNode(text, x, y) {
+      const node = document.createElement("div");
+      node.className = "node sub-node";
+      node.textContent = text;
+      node.style.left = `${x}px`;
+      node.style.top = `${y}px`;
+      mindmap.appendChild(node);
+
+      const line = document.createElement("div");
+      line.className = "line";
+      mindmap.appendChild(line);
+
+      const nodeData = {
+        element: node,
+        line: line
+      };
+      nodes.push(nodeData);
+
+      connectNodes(mainNode, node);
+    }
+
+    function connectNodes(node1, node2) {
+      const line = document.createElement("div");
+      line.className = "line";
+      mindmap.appendChild(line);
+
+      const x1 = node1.offsetLeft + node1.offsetWidth / 2;
+      const y1 = node1.offsetTop + node1.offsetHeight / 2;
+      const x2 = node2.offsetLeft + node2.offsetWidth / 2;
+      const y2 = node2.offsetTop + node2.offsetHeight / 2;
+
+      const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+
+      line.style.width = `${distance}px`;
+      line.style.transform = `translate(${x1}px, ${y1}px) rotate(${angle}rad)`;
+    }
+
+    const addButton = document.getElementById("add-button");
+    addButton.addEventListener("click", () => {
+      const input = document.getElementById("tag-input");
+      const tags = input.value.split(",");
+      const x = Math.floor(Math.random() * (mindmap.offsetWidth - 120));
+      const y = Math.floor(Math.random() * (mindmap.offsetHeight - 60)) + 60;
+
+      tags.forEach(tag => {
+        addNode(tag.trim(), x, y);
+      });
+
+      input.value = "";
+    });
+    </script>
+  <script>
+    // 제이쿼리도 지원
+    $("div.dropzone").dropzone({
+        url: "https://httpbin.org/post",
+        method: 'post',
+    });
+</script>
+
+  </body>
+
+</th:block>
+</body>
+</html>

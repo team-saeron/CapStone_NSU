@@ -1,19 +1,15 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.post;
 
 
 import lombok.Data;
 
-
 @Data
-public class MonthlyPostRequestDto {
+public class LeasePostRequestDto {
 
     private String title;
     private String context;
-    private String areaName;
-    private String monthly;
     private String deposit;
     private String Management_fee;
-
-
+    private String area;
 
 }

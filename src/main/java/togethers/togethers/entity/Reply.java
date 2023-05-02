@@ -1,8 +1,7 @@
 package togethers.togethers.entity;
 
-import lombok.Builder;
 import lombok.Data;
-import togethers.togethers.dto.ReplyRequestDto;
+import togethers.togethers.dto.reply.ReplyRequestDto;
 
 import javax.persistence.*;
 import java.util.Date;

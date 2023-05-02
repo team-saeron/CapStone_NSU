@@ -1,4 +1,4 @@
-package togethers.togethers.dto;
+package togethers.togethers.dto.post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,9 +26,5 @@ public class DetailPostDto {
     private String mounthly;
     private String lease;
 
-    private String photo_name;
-    private String photo_path;
 
-
-    //월세, 전세
 }

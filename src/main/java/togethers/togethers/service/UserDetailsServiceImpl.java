@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import togethers.togethers.dto.UserDetails;
+import togethers.togethers.dto.mypage.UserDetails;
 import togethers.togethers.repository.UserRepository;
 
 @Service
@@ -22,6 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username){
         LOGGER.info("[loadUserByUsername] loadUserByUsername 수행. username : {}", username);
-        return userRepository.getByUid(username).get();
+        return userRepository.findByUid(username).orElse(null);
     }
 }

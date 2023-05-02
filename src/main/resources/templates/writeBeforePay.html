@@ -15,34 +15,7 @@
   <link rel="stylesheet" href="/writeBeforePay.css" />
 </th:block>
 <th:block layout:fragment="content">
-  <style>
-       .circle-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
-      .circle {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #007bff;
-        text-align: center;
-        line-height: 50px;
-        color: white;
-        font-weight: bold;
-        font-size: 20px;
-      }
-      .center {
-        border: 3px solid #007bff;
-      }
-    </style>
+
   <body>
   <div class="write_container">
     <form class="write_column" th:action="@{/writeBeforePay}" th:method="POST" th:object="${dto}">
@@ -76,6 +49,7 @@
               <div id='att_zone'
                    data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
             </div>
+
             <textarea placeholder="방이나 본인에 대해서 설명해주세요" class="house_detail" th:field="*{context}" cols="37" rows="7" required></textarea>
            <div class="answer">
             <h4 class="last">게시물 작성 후 다른 사람들이 연락할 수 있게 연락수단을 댓글로 남겨주세요.
@@ -85,13 +59,8 @@
         </div>
        </form>
       </div>
-  <h1>Hashtag Circle</h1>
-  <p>Enter some text with hashtags:</p>
-  <textarea id="text"></textarea>
-  <button onclick="extractHashtags()">Extract Hashtags</button>
-  <div id="circle-container"></div>
-    </form>
-  </div>
+  <svg width="800" height="600"></svg>
+
   <script>
 ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
   imageView = function imageView(att_zone, btn){
@@ -192,29 +161,70 @@
     }
   }
 )('att_zone', 'btnAtt')
+  const data = {
+        nodes: [
+          { id: "myhashtag1", group: 1 },
+          { id: "myhashtag2", group: 1 },
+          { id: "myhashtag3", group: 2 },
+          { id: "myhashtag4", group: 2 }
+        ],
+        links: [
+          { source: "myhashtag1", target: "myhashtag2" },
+          { source: "myhashtag2", target: "myhashtag3" },
+          { source: "myhashtag3", target: "myhashtag4" }
+        ]
+      };
 
-   function extractHashtags() {
-        const text = document.getElementById("text").value;
-        const regex = /#[\u3131-\uD79D\uAC00-\uD7A3a-zA-Z0-9_]+/g;
-        const hashtags = text.match(regex);
-        const circleContainer = document.getElementById("circle-container");
-        circleContainer.innerHTML = "";
-        if (hashtags) {
-          const center = document.createElement("div");
-          center.className = "circle center";
-          circleContainer.appendChild(center);
-          hashtags.forEach(hashtag => {
-            const circle = document.createElement("div");
-            circle.className = "circle";
-            circle.innerText = hashtag.substring(1);
-            circleContainer.appendChild(circle);
-          });
-        } else {
-          const center = document.createElement("div");
-          center.className = "circle center";
-          circleContainer.appendChild(center);
-        }
-      }</script>
+      const width = 800;
+      const height = 600;
+
+      const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+      const svg = d3.select("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      const simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(d => d.id))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+      const link = svg.append("g")
+        .attr("class", "links")
+        .selectAll("line")
+        .data(data.links)
+        .enter().append("line");
+
+      const node = svg.append("g")
+        .attr("class", "nodes")
+        .selectAll("g")
+        .data(data.nodes)
+        .enter().append("g");
+
+      const circles = node.append("circle")
+        .attr("r", 5)
+        .attr("fill", d => color(d.group));
+
+      const labels = node.append("text")
+        .text(d => "#" + d.id)
+        .attr("font-size", "10px")
+        .attr("dx", 12)
+        .attr("dy", 4);
+
+      simulation.nodes(data.nodes).on("tick", ticked);
+      simulation.force("link").links(data.links);
+
+      function ticked() {
+        link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+
+        node
+          .attr("transform", d => `translate(${d.x}, ${d.y})`);
+      }
+  </script>
   </body>
 
 </th:block>
