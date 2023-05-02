@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.PostSearchDto;
 import togethers.togethers.dto.RecentlyPostDto;
+import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
+import togethers.togethers.entity.UserDetail;
 import togethers.togethers.service.PostService;
+import togethers.togethers.service.UserService;
 
 import java.util.List;
 
@@ -19,12 +22,17 @@ import java.util.List;
 public class HomeController {
 
     private final PostService postService;
+    private final UserService userService;
+
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
-    public HomeController(PostService postService) {
+    public HomeController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
+
+
 
 
     @GetMapping(value = "/")
@@ -40,6 +48,12 @@ public class HomeController {
             {
                 model.addAttribute("no_userdetail","나를 소개하는 글을 작성해 주세요!");
             }
+
+
+            List<User> matching = userService.matching(user.getUid());
+
+
+            model.addAttribute("recommend",matching);
             model.addAttribute("login_inform",true);
         }
 

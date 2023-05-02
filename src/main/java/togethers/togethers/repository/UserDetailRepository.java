@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface UserDetailRepository extends JpaRepository<UserDetail,Long> {
     Optional<UserDetail> findByUserDetailId(Long id);
 
-    List<UserDetail> findByGender(String gender);
+    List<UserDetail> findAllByGender(String gender);
 }

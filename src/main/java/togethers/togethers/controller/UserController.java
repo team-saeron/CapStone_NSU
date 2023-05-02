@@ -159,13 +159,7 @@ public class UserController {
         userService.updatePassword(id,password);
     }
 
-    @PostMapping("/user/recommend")
-    public List<UserDetail> matching(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = (User)principal;
-        List<UserDetail> u = userService.matching(user.getUid());
-        return u;
-    }
+
 }
 
 

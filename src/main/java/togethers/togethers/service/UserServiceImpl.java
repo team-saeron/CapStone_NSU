@@ -13,15 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.JwtTokenProvider;
 import togethers.togethers.dto.*;
 import togethers.togethers.entity.Mbti;
+import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 import togethers.togethers.repository.MbtiRepository;
+import togethers.togethers.repository.PostRepository;
 import togethers.togethers.repository.UserDetailRepository;
 import togethers.togethers.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -29,6 +30,8 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private PostRepository postRepository;
     @Autowired
     private MbtiRepository mbtiRepository;
 
@@ -163,24 +166,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<UserDetail> matching(String userId) {
+    public List<User> matching(String userId) {
         User user = userRepository.findByUid(userId).orElse(null);
         UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
-        List<UserDetail> recommend = userDetailRepository.findByGender(ud.getGender());
+        List<UserDetail> recommend = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
+
         List<UserDetail> rclist = new ArrayList<>();
         Mbti mbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
 
-        for(UserDetail i : recommend){
-            if(i.getMbti().equals(mbti.getFirstMbti())||i.getMbti().equals(mbti.getSecondMbti())||i.getMbti().equals(mbti.getThirdMbti())||i.getMbti().equals(mbti.getFourthMbti())){
+
+        for (UserDetail i : recommend) {
+            log.info(i.getMbti());
+            if (i.getMbti().equals(mbti.getFirstMbti()) || i.getMbti().equals(mbti.getSecondMbti()) || i.getMbti().equals(mbti.getThirdMbti()) || i.getMbti().equals(mbti.getFourthMbti())) {
                 rclist.add(i);
-            }else{
-                return null;
+            } else {
+                continue;
             }
         }
-        return rclist;
 
+        List<User> recommend_user = new ArrayList<>();
 
-    }
-
+        // 만약 5개가 안되면 ? --> MBTI말고 다른 조건으로 추가 조회 로직 동작.
+        for (UserDetail x : rclist) {
+                User temp_user = userRepository.findByUserDetail_UserDetailId(x.getUserDetailId()).orElse(null);
+                log.info("추천 유저의 이름: {}}",temp_user.getUid());
+                recommend_user.add(temp_user);
+            }
+            return recommend_user;
+        }
 
 }
