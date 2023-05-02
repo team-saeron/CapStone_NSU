@@ -21,9 +21,10 @@ public interface UserService {
 
     public MailDto sendEmail(FindPasswordDto findPasswordDto);
 
-    public String getTempPassword() ;
-
-
+    public String getTempPassword();
+    
+    public User findByPostId(Long PostId);
+    
     public void mailSend(MailDto mailDto);
 
     public boolean updatePassword(PasswordUpdatedDto passwordUpdatedDto);
