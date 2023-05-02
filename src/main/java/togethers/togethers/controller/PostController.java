@@ -198,6 +198,7 @@ public class PostController {
         List<RoomPicture> images = postService.findPhoto(PostId);
         List<Reply> replies = postService.findReply(PostId);
         DetailPostDto detailPostDto = postService.detail_post(post);
+        User writer = userService.findByPostId(PostId);
 
 
         model.addAttribute("post",detailPostDto);
@@ -205,6 +206,7 @@ public class PostController {
         model.addAttribute("postId",PostId);
         model.addAttribute("category",AreaEnum.values());
         model.addAttribute("images",images);
+        model.addAttribute("writer",writer);
 
 
         return "post/detailPost";
