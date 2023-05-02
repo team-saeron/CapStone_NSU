@@ -99,7 +99,7 @@ public class UserController {
     public String checkIntroduction(@RequestParam("userDetailId")Long userDetailId, Model model)
     {
         log.info("[checkIntroduction] 다른 유저의 세부사항 정보 확인. 조회하고자 하는 Id : {}",userDetailId);
-        UserDetail userDetail = userService.findUserDetail(userDetailId);
+        UserDetail userDetail = userService.findByUserDetailId(userDetailId);
 
         model.addAttribute("userDetail",userDetail);
         return "member/checkIntroduction";

@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import groovyjarjarantlr.PythonCodeGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,20 +28,26 @@ import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
+import togethers.togethers.service.UserService;
 
 import java.util.List;
+
+
 
 @Controller
 public class PostController {
 
 
+
     private final PostService postService;
+    private final UserService userService;
     private AreaEnum[] area = AreaEnum.values();
 
     @Autowired
-    public PostController(PostService postService)
+    public PostController(PostService postService, UserService userService)
     {
         this.postService = postService;
+        this.userService = userService;
     }
     Logger logger = LoggerFactory.getLogger(PostController.class);
 
@@ -51,6 +58,7 @@ public class PostController {
         logger.info("[chooseType] GET 게시물 작성하기전 게시물 월/전세 타입 선택 동작");
         return "chooseType";
     }
+
 
 
     /**월세 타입의 게시물 GET,POST MAPPING **/
@@ -198,6 +206,8 @@ public class PostController {
         List<RoomPicture> images = postService.findPhoto(PostId);
         List<Reply> replies = postService.findReply(PostId);
         DetailPostDto detailPostDto = postService.detail_post(post);
+        User writer = userService.findByPostId(PostId);
+
 
 
         model.addAttribute("post",detailPostDto);
@@ -205,6 +215,9 @@ public class PostController {
         model.addAttribute("postId",PostId);
         model.addAttribute("category",AreaEnum.values());
         model.addAttribute("images",images);
+        model.addAttribute("writer",writer);
+
+
 
 
         return "post/detailPost";

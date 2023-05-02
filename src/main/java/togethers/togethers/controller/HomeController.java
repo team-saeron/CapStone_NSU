@@ -40,6 +40,8 @@ public class HomeController {
             {
                 model.addAttribute("no_userdetail","나를 소개하는 글을 작성해 주세요!");
             }
+
+
             model.addAttribute("login_inform",true);
         }
 

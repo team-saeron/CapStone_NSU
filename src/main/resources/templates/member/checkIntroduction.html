@@ -9,7 +9,7 @@
 <th:block layout:fragment="content">
   <div class="container">
     <!--    <form class="introduction_form" th:action="@{/auth/introductionProc}" th:method="POST">-->
-    <h1><b>자기소개 </b></h1>
+    <h1><b th:text ="${userDetail.user.nickname}"> </b></h1>
 
     <table >
       <tr><td class="detail_name"><h4>닉네임</h4></td>

@@ -47,9 +47,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDetail findUserDetail(Long UserDetailId)
+    public UserDetail findByUserDetailId(Long UserDetailId)
     {
         return userDetailRepository.findByUserDetailId(UserDetailId).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public User findByPostId(Long PostId)
+    {
+        return userRepository.findByPost_PostId(PostId).orElse(null);
     }
 
 
