@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User>findById(Long id); //pk로 찾기
 
     Optional<User> findByUserDetail_UserDetailId(Long id);
+    
+    Optional<User>findByPost_PostId(Long PostId);
 
 
     Optional<User>findByNameAndPhoneNum(String name, String phoneNum);
