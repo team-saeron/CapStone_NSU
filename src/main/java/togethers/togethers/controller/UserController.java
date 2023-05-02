@@ -95,7 +95,7 @@ public class UserController {
         return "member/rewriteIntroduction";
     }
 
-    @GetMapping("/member/checkIntroduction")
+    @GetMapping("/member/checkIntroduction/{userDetailId}")
     public String checkIntroduction(@RequestParam("userDetailId")Long userDetailId, Model model)
     {
         log.info("[checkIntroduction] 다른 유저의 세부사항 정보 확인. 조회하고자 하는 Id : {}",userDetailId);

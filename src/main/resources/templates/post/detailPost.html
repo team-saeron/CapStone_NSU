@@ -110,6 +110,7 @@
 
   </td>
   <!-- script 구역 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script>
         const SHOWING_CLASS = "showing";
         const firstslide = document.querySelector(".slider__item:first-child");
@@ -131,6 +132,21 @@
         }
         slide();
         setInterval(slide,3000);
+                $(document).ready(function()
+        {
+            let message = "[[${reply_msg}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+            })
+
+        $(document).ready(function()
+        {
+            let message = "[[${like_msg}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+            })
     </script>
 
 
