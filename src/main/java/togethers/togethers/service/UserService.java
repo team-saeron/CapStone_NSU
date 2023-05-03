@@ -3,8 +3,11 @@ package togethers.togethers.service;
 import togethers.togethers.dto.login.*;
 import togethers.togethers.dto.mypage.UserDetailSaveDto;
 import togethers.togethers.dto.mypage.UserDetailUpdateDto;
+import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -29,5 +32,7 @@ public interface UserService {
     public void mailSend(MailDto mailDto);
 
     public boolean updatePassword(PasswordUpdatedDto passwordUpdatedDto);
+
+    public List<Post> matching(String userId);
 
 }

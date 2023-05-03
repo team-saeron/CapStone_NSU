@@ -61,65 +61,30 @@
             </div>
 
             <div class="home_column">
-                <div id="map_box" class="section__box">
+                <div id="map_box" class="section__box"></div>
+            </div>
+        </div>
+            <div class="home_column">
+                <div id="ad_box" class="section__box">
                 </div>
             </div>
+
+            <div id="suggestion_box" th:each="post : ${RecommendDto}">
+                <div class="post_container">
+                    <div class="suggestion_title>"><h3><strong>추천 게시물</strong></h3></div>
+                    <div class="slider">
+                        <a th:href="@{/post/detailPost/{postId}(postId = ${post.postId})}"><img class="detailPost_img" th:src="@{/files/}+${post.filename}"/></a>
+                    </div>
+                    <div class="list_word">
+                        <div class="subject"> <b th:text="${post.subject}">강남구 투룸 룸메이트 gody</b></div>
+                        <div class="explain" th:text="${post.explain}">월세 500/45</div>
+
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-        <div class="home_column">
-            <div id="ad_box" class="section__box">
-            </div>
-        </div>
-
-    <div id="suggestion_box">
-        <div class="post_container">
-            <div class="suggestion_title>"><h3><strong>추천 게시물</strong></h3></div>
-            <div class="slider">
-                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
-            </div>
-            <div class="list_word">
-                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
-                <div class="explain">월세 500/45</div>
-
-            </div>
-        </div>
-
-        <div class="post_container">
-            <div class="suggestion_title2>"><h3 class="none">추천 게시물</h3></div>
-            <div class="slider">
-                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
-            </div>
-            <div class="list_word">
-                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
-                <div class="explain">월세 500/45</div>
-
-            </div>
-        </div>
-
-        <div class="post_container">
-            <div class="suggestion_title2>"><h3 class="none">추천 게시물</h3></div>
-            <div class="slider">
-                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
-            </div>
-            <div class="list_word">
-                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
-                <div class="explain">월세 500/45</div>
-
-            </div>
-        </div>
-
-        <div class="post_container">
-            <div class="suggestion_title2>"><h3 class="none">추천 게시물</h3></div>
-            <div class="slider">
-                <a href="/detailPost"><img class="detailPost_img" src="https://img.freepik.com/premium-photo/3d-rendering-of-modern-living-room-with-tv-screen-and-sofa-on-nature-background_224530-1796.jpg?w=2000"/></a>
-            </div>
-            <div class="list_word">
-                <div class="subject"> <b>강남구 투룸 룸메이트 구해요</b></div>
-                <div class="explain">월세 500/45</div>
-
-            </div>
-        </div>
-
-    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>

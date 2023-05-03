@@ -10,20 +10,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.dto.post.RecentlyPostDto;
+import togethers.togethers.dto.post.RecommendPostDto;
+import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
+import togethers.togethers.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class HomeController {
 
     private final PostService postService;
+    private final UserService userService;
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
-    public HomeController(PostService postService) {
+    public HomeController(PostService postService,UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
 
 
@@ -32,16 +38,26 @@ public class HomeController {
     {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if(principal == "anonymousUser"){
+        if(principal == "anonymousUser")
+        {
             model.addAttribute("login_inform",false);
-        }else{
+        }
+        else
+        {
             User user = (User)principal;
             if(user.getUserDetail() == null)
             {
                 model.addAttribute("no_userdetail","나를 소개하는 글을 작성해 주세요!");
             }
-
-
+            else
+            {
+                List<Post>matching = userService.matching(user.getUid());
+                List<RecommendPostDto> recommendPostDto = new ArrayList<>();
+                for (Post post : matching) {
+                    recommendPostDto.add(new RecommendPostDto(post));
+                }
+                model.addAttribute("RecommendDto",recommendPostDto);
+            }
             model.addAttribute("login_inform",true);
         }
 

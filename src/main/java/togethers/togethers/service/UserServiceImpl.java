@@ -14,10 +14,17 @@ import togethers.togethers.config.JwtTokenProvider;
 import togethers.togethers.dto.login.*;
 import togethers.togethers.dto.mypage.UserDetailSaveDto;
 import togethers.togethers.dto.mypage.UserDetailUpdateDto;
+import togethers.togethers.entity.Mbti;
+import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
+import togethers.togethers.repository.MbtiRepository;
+import togethers.togethers.repository.PostRepository;
 import togethers.togethers.repository.UserDetailRepository;
 import togethers.togethers.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -30,12 +37,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private final UserRepository userRepository;
     @Autowired
+    private final PostRepository postRepository;
+    @Autowired
     private final UserDetailRepository userDetailRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private MbtiRepository mbtiRepository;
 
 
     @Override
@@ -176,6 +188,41 @@ public class UserServiceImpl implements UserService {
             userRepository.flush();
             return true;
         }
+    }
+    @Override
+    @Transactional
+    public List<Post> matching(String userId) {
+        User user = userRepository.findByUid(userId).orElse(null);
+        UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
+        List<UserDetail> recommend = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
+
+        List<UserDetail> rclist = new ArrayList<>();
+        Mbti mbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
+
+
+        for (UserDetail i : recommend) {
+            log.info(i.getMbti());
+            if (i.getMbti().equals(mbti.getFirstMbti()) || i.getMbti().equals(mbti.getSecondMbti()) || i.getMbti().equals(mbti.getThirdMbti()) || i.getMbti().equals(mbti.getFourthMbti())) {
+                rclist.add(i);
+            } else {
+                continue;
+            }
+        }
+
+        List<Post> recommend_post = new ArrayList<>();
+
+        // 만약 5개가 안되면 ? --> MBTI말고 다른 조건으로 추가 조회 로직 동작.
+        for (UserDetail x : rclist) {
+            User temp_user = userRepository.findByUserDetail_UserDetailId(x.getUserDetailId()).orElse(null);
+            if(temp_user.getPost()==null)
+            {
+                continue;
+            }else{
+                Post post = postRepository.findBypostId(temp_user.getPost().getPostId()).orElse(null);
+                recommend_post.add(post);
+            }
+        }
+        return recommend_post;
     }
 
 }

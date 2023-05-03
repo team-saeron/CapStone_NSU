@@ -265,8 +265,9 @@ public class PostService {
         file.transferTo(saveFile);
 
         roomPicture.setFilename(fileName);
-        post.setFileName(fileName);
+
         roomPicture.setFilepath("/files/" + fileName);
+        post.setFileName(fileName);
         roomPicture.setPost(post);
 
         postRepository.flush();
