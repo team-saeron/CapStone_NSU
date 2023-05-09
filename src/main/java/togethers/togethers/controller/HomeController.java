@@ -74,4 +74,7 @@ public class HomeController {
         model.addAttribute("category",AreaEnum.values());
         return "home";
     }
+
+
+
 }

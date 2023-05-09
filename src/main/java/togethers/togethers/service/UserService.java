@@ -8,6 +8,7 @@ import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -17,6 +18,8 @@ public interface UserService {
     public void editIntro(Long id, UserDetailUpdateDto userDetailUpdateDto);
 
     public User findIdByPhoneNum(FindIdPhoneDto findIdPhoneDto);
+
+    public User findUserByEmail(String email);
 
     public User findIdByEmail(FindIdEmailDto findIdEmailDto);
 

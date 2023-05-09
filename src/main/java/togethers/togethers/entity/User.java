@@ -36,14 +36,14 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     @NotEmpty(message="비밀번호를 입력해주세요.")
-    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(length = 30, nullable = false)
     @NotEmpty(message = "이름을 입력해주세요.")
     private String name;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String phoneNum;
 
     @Column(length = 30,nullable = false)
@@ -51,7 +51,7 @@ public class User implements UserDetails {
     @Email
     private String email; //실제쓰는이메미일
 
-//    @Temporal(TemporalType.TIMESTAMP)
+
     private Date birth;
 
     @Column(length = 30,nullable = false)
@@ -90,11 +90,18 @@ public class User implements UserDetails {
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername(){
         return this.uid;
     }
+
+//    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public String getPassword(){
+        return this.password;
+    }
+
 
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @Override

@@ -35,7 +35,7 @@
                 </div>
                 <div class="login_sns">
 
-                    <li><a class="login_sns_icon" href=""><i class="fa-brands fa-google"></i></a></li>
+                    <li><a class="login_sns_icon" href="https://kauth.kakao.com/oauth/authorize?client_id=dc6c22266260fc5caeb2c46de3dd83e8&redirect_uri=http://localhost:8081/kakao_login&response_type=code"><i class="fa-solid fa-comment"></i></a></li>
                     <li><a class="login_sns_icon" href=""><i class="fab fa-facebook-f"></i></a></li>
                     <li><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i></a></li>
 
@@ -81,6 +81,15 @@
                 alert(message);
             }else {}
         })
+
+        $(document).ready(function()
+        {
+            let message = "[[${SuceesJoin}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+        })
+
 
     </script>
 

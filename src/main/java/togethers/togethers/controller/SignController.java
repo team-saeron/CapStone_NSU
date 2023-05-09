@@ -52,6 +52,7 @@ public class SignController {
             logger.info("[signUp] name:{}, nickname:{}, email:{} birth : {}", dto.getName(), dto.getNickname(), dto.getEmail(), dto.getBirth());
             dto.setRole("user");
             SignUpResultDto signUpResultDto = signService.signUp(dto);
+            attr.addFlashAttribute("SuceesJoin", "회원가입이 완료 되었습니다. 로그인하여주세요");
             return "redirect:/login";
         }
     }
