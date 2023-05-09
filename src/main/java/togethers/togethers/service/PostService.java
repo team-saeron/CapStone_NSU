@@ -44,6 +44,9 @@ public class PostService {
     @Autowired
     private final FavoriteRepository likeRepository;
 
+    @Autowired
+    private final NotificationRepository notificationRepository;
+
     @Transactional
     public Post findPost(Long post_id)
     {
@@ -376,7 +379,7 @@ public class PostService {
         boolean check = true;
 
         User user = userRepository.findById(userId).orElse(null);
-
+        User postUser = userRepository.findByPost_PostId(PostId).orElse(null);
         Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(PostId,user.getId()).orElse(null);
 
         if(checkFavorite != null)
@@ -391,6 +394,12 @@ public class PostService {
             favorite.setUser(user);
             favorite.setMyFavorite(true);
             likeRepository.save(favorite);
+            Notification notification = Notification.builder()
+                    .title("좋아요 알림")
+                    .user(postUser)
+                    .message(user.getNickname()+"님이 회원님의 게시물을 좋아합니다.")
+                    .build();
+            notificationRepository.save(notification);
         }
         return check;
     }

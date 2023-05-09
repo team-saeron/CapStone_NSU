@@ -70,6 +70,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @OneToMany
+    @JoinColumn(name="id")
+    private List<Notification> nt = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "userDetail_id")

@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.dto.*;
+import togethers.togethers.entity.Notification;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.User;
+import togethers.togethers.repository.NotificationRepository;
 import togethers.togethers.repository.PostRepository;
 import togethers.togethers.repository.ReplyRepository;
 import togethers.togethers.repository.UserRepository;
@@ -22,12 +24,15 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final NotificationRepository notificationRepository;
 
     @Autowired
-    public ReplyService(ReplyRepository repository, UserRepository userRepository, PostRepository postRepository) {
+    public ReplyService(ReplyRepository repository, UserRepository userRepository, PostRepository postRepository,
+                        NotificationRepository notificationRepository) {
         this.replyRepository = repository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @Transactional(readOnly = false) // 추후에 /detailPost/{post_id}/Reply로변경
@@ -38,6 +43,7 @@ public class ReplyService {
 
         Reply reply = new Reply(dto);
         User user = userRepository.findById(dto.getId()).orElse(null);
+        User postUser = userRepository.findByPost_PostId(dto.getPostId()).orElse(null);
         Post post = postRepository.findById(dto.getPostId()).orElse(null);
 
         //user가 똑같은 게시물에 댓글을 한번 더달을 경우
@@ -54,6 +60,12 @@ public class ReplyService {
                 .postId(reply.getPost().getPostId())
                 .comment(reply.getComment())
                 .build();
+        Notification notification = Notification.builder()
+                .title("댓글 알림")
+                .user(postUser)
+                .message(reply.getUser().getNickname()+"님이 댓글을 달았습니다.")
+                .build();
+        notificationRepository.save(notification);
 
         if(reply.getUser().getUid()==user.getUid()&&reply.getPost().getPostId()==post.getPostId())
         {
