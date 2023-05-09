@@ -238,6 +238,7 @@ public class SocialController {
                     .uid(kakaoProfile.getKakao_account().getEmail())
                     .roles(Collections.singletonList("ROLE_USER"))
                     .password(passwordEncoder.encode(key))
+                    .socialName(SocialName.KAKAO)
                     .build();
 
             socialService.saveSocialUser(user);
@@ -312,7 +313,6 @@ public class SocialController {
         SocialLoginDto socialLoginDto = SocialLoginDto.builder()
                 .nickname(kakaoProfile.getProperties().getNickname())
                 .email(kakaoProfile.getKakao_account().getEmail())
-                .password(passwordEncoder.encode(key))
                 .build();
         SignInResultDto signInResultDto = socialService.kakaoLogin(socialLoginDto);
 

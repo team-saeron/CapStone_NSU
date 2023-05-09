@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import togethers.togethers.dto.mypage.UserDetails;
+import togethers.togethers.social.SocialName;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -71,13 +72,16 @@ public class User implements UserDetails {
     private Post post;
 
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL)
     @JoinColumn(name = "userDetail_id")
     private UserDetail userDetail;
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
+    @Enumerated
+    private SocialName socialName;
 
 
     @Builder.Default

@@ -8,7 +8,6 @@ import lombok.Getter;
 public class SocialLoginDto {
     private String nickname;
     private String email;
-    private String password;
 
 
 }

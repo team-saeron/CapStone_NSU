@@ -6,5 +6,5 @@ import togethers.togethers.entity.Mbti;
 import java.util.Optional;
 
 public interface MbtiRepository extends JpaRepository<Mbti,Long> {
-    Optional<Mbti> findByMbti(String mbti);
+    Optional<Mbti> findByMyMbti(String mbti);
 }

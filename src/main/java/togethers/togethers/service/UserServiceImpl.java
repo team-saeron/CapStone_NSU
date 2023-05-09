@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService {
         List<UserDetail> recommend = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
 
         List<UserDetail> rclist = new ArrayList<>();
-        Mbti mbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
+        Mbti mbti = mbtiRepository.findByMyMbti(ud.getMbti()).orElse(null);
 
 
         for (UserDetail i : recommend) {
