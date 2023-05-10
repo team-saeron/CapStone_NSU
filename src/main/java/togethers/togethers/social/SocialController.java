@@ -45,120 +45,6 @@ public class SocialController {
     @Value("${social.key}")
     private String key;
 
-//    @GetMapping("/kakao/login")
-//    public String kakaoCallback(String code, RedirectAttributes attr,HttpServletResponse httpServletResponse) {
-//        logger.info("[kakaoLogin] kakao 계정으로 회원가입 컨트롤러 동작.");
-//
-//        RestTemplate rt = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-//
-//        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        params.add("grant_type", "authorization_code");
-//        params.add("client_id", "dc6c22266260fc5caeb2c46de3dd83e8");
-//        params.add("redirect_uri", "http://localhost:8081/kakao_callback");
-//        params.add("code", code);
-//
-//        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
-//                new HttpEntity<>(params, headers);
-//
-//        ResponseEntity<String> response = rt.exchange(
-//                "https://kauth.kakao.com/oauth/token",
-//                HttpMethod.POST,
-//                kakaoTokenRequest,
-//                String.class
-//        );
-//
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        OAuthToken oAuthToken = null;
-//        try {
-//            oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
-//        } catch (JsonMappingException e) {
-//            e.printStackTrace();
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//        logger.info("[kakaoCallback] code : {}, KakaoToken", code, oAuthToken);
-//
-//
-//        /**카카오 서버로 부터받은 Token을 이용해 사용자 정보 요청하기**/
-//        RestTemplate rt2 = new RestTemplate();
-//        HttpHeaders headers2 = new HttpHeaders();
-//        headers2.add("Authorization", "Bearer " + oAuthToken.getAccess_token());
-//        headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-//
-//        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest =
-//                new HttpEntity<>(headers2);
-//
-//        ResponseEntity<String> response2 = rt2.exchange(
-//                "https://kapi.kakao.com/v2/user/me",
-//                HttpMethod.POST,
-//                kakaoProfileRequest,
-//                String.class
-//        );
-//
-//        ObjectMapper objectMapper2 = new ObjectMapper();
-//        KakaoProfile kakaoProfile = null;
-//        try {
-//            kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
-//        } catch (JsonMappingException e) {
-//            e.printStackTrace();
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//        User user = User.builder()
-//                .name(kakaoProfile.getKakao_account().getProfile().getNickname())
-//                .nickname(kakaoProfile.getKakao_account().getProfile().getNickname())
-//                .email(kakaoProfile.getKakao_account().getEmail())
-//                .uid(kakaoProfile.getKakao_account().getEmail())
-//                .roles(Collections.singletonList("ROLE_USER"))
-//                .password(passwordEncoder.encode(key))
-//                .build();
-//
-//        SocialLoginDto socialLoginDto = SocialLoginDto.builder()
-//                                        .nickname(kakaoProfile.getProperties().getNickname())
-//                                        .email(kakaoProfile.getKakao_account().getEmail())
-//                                        .build();
-//
-//
-//        SignInResultDto signInResultDto = new SignInResultDto();
-//        if (userService.findUserByEmail(user.getEmail()) != null)
-//        {
-//            logger.info("[kakaoCallback] 이미 DB에 존재하는 아이디.  로그인 진행");
-//            signInResultDto = socialService.kakaoSignIn(socialLoginDto);
-//        }else {
-//            logger.info("[kakaoCallback] 이미 DB에 존재하지 않는 아이디.  회원가입 진행");
-//            socialService.saveSocialUser(user);
-//           signInResultDto = socialService.kakaoSignIn(socialLoginDto);
-//        }
-//
-//        if (signInResultDto.getCode() == -1)
-//        {
-//            attr.addFlashAttribute("id_error_msg", "존재하지 않는 아이디 입니다");
-//            return "redirect:/login";
-//
-//        }
-//        else if (signInResultDto.getCode() == -2)
-//        {
-//            attr.addFlashAttribute("password_error_msg", "비밀번호가 일치하지 않습니다.");
-//            return "redirect:/login";
-//        }
-//        else
-//        {
-//            String token = signInResultDto.getToken();
-//            httpServletResponse.setHeader("X-AUTH-TOKEN", token);
-//            lo
-//
-//            Cookie cookie = new Cookie("X-AUTH-TOKEN", token);
-//            cookie.setPath("/");
-//            cookie.setSecure(true);
-//            cookie.setHttpOnly(true);
-//            httpServletResponse.addCookie(cookie);
-//
-//            return "redirect:/";
-//        }
-//
-//    }
 
     @GetMapping(value = "/kakao_callback")
     public String KakaoJoin(String code, RedirectAttributes attr)
@@ -177,6 +63,7 @@ public class SocialController {
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
                 new HttpEntity<>(params, headers);
+
 
         ResponseEntity<String> response = rt.exchange(
                 "https://kauth.kakao.com/oauth/token",

@@ -58,6 +58,7 @@ public class HomeController {
                 }
                 model.addAttribute("RecommendDto",recommendPostDto);
             }
+
             model.addAttribute("login_inform",true);
         }
 

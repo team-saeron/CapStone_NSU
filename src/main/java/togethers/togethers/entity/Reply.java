@@ -38,11 +38,11 @@ public class Reply {
     private Post post;
 
 
-    public String getUid()
+    public Long getId()
     {
-        String uid = this.user.getUid();
+        Long id = this.user.getId();
 
-        return uid;
+        return id;
     }
 
 }

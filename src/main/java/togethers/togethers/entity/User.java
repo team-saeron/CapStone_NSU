@@ -72,7 +72,7 @@ public class User implements UserDetails {
     private Post post;
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL)
+    @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "userDetail_id")
     private UserDetail userDetail;
 

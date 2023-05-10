@@ -8,83 +8,42 @@
 </th:block>
 <th:block layout:fragment="content">
   <div class="container">
-    <!--    <form class="introduction_form" th:action="@{/auth/introductionProc}" th:method="POST">-->
-    <h1><b th:text ="${userDetail.user.nickname}"> </b></h1>
+    <h1><span th:text="|${dto.nickname} 님의 자기소개|"></span></h1>
 
-    <table >
+    <table>
       <tr><td class="detail_name"><h4>닉네임</h4></td>
         <div class="column">
-          <td><input type="text" placeholder="닉네임" th:text="${userDetail.user.nickname}"></td>
+          <td><div class="name" th:text="${dto.nickname}">ㅇㅅㅇ</div></td>
         </div>
       </tr>
       <tr><td class="detail_name"><h4>성별(필수)</h4></td>
         <div class="column">
-          <td><input type="radio" name="chk_info" value="남">남</input>
-            <input type="radio" name="chk_info" value="여">여</input></td>
+          <td>
+            <div th:text="${dto.gender}">여 </div></td>
         </div>
       </tr>
       <tr>
         <td class="detail_name"><h4>희망지역</h4></td>
         <div class="column">
-          <td><select class="select" title="지역 선택">
-            <option value="">-선택-</option>
-            <option value="gang-nam-gu">강남구 </option>
-            <option value="Gang-dong-gu">강동구</option>
-            <option value="Gang-buk-gu">강북구</option>
-            <option value="Gang-seo-gu">강서구</option>
-            <option value="Gwan-ak-gu">관악구</option>
-            <option value="Guro-gu">구로구</option>
-            <option value="Geum-cheon-gu">금천구</option>
-            <option value="No-won-gu">노원구</option>
-            <option value="Do-bong-gu">도봉구</option>
-            <option value="Dong-dae-mun-gu">동대문구</option>
-            <option value="Dong-jak-gu">동작구</option>
-            <option value="Ma-po-gu">마포구</option>
-            <option value="Seo-dae-mun-gu">서대문구</option>
-            <option value="Seo-cho-gu">서초구</option>
-            <option value="Seong-dong-gu">성동구</option>
-            <option value="Song-pa-gu">송파구</option>
-            <option value="Yang-cheon-gu">양천구</option>
-            <option value="Yeong-deung-po-gu">영등포구</option>
-            <option value="Yong-san-gu">용산구</option>
-            <option value="Eun-pyeong-gu">은평구</option>
-            <option value="Jong-no-gu">종로구</option>
-            <option value="Jung-gu">중구</option>
-            <option value="Jung-nang-gu">중랑구</option>
-          </select></td>
+          <td><div th:text="${dto.area}">강남구</div></td>
         </div>
       </tr>
       <tr>
         <td class="detail_name"><h4>월세/전세 선택</h4></td>
         <div class="column">
-          <td><select class="select" title="지역 선택">
-            <option value="">-선택-</option>
-            <option value="gang-nam-gu">월세 </option>
-            <option value="Gang-dong-gu">전세</option>
-
-          </select></td>
-        </div>
-      </tr>
-      <tr><td class="detail_name"><h4>(필수)</h4></td>
-        <div class="column">
-          <td><input type="radio" name="chk_info" value="남">남</input>
-            <input type="radio" name="chk_info" value="여">여</input></td>
+          <td><div th:text="${dto.room_type}">월세</div></td>
         </div>
       </tr>
 
       <tr><td class="detail_name"><h4>보증금 예산(필수)</h4></td>
         <div class="column">
-          <td><input class="deposit_value" type="range" name="deposit" step="100" min="200" max="100000000" oninput="document.getElementById('deposit_value').innerHTML=this.value;">
-            <span id="deposit_value">200</span>
-            </input></td>
+          <td><div th:text="${dto.deposit}">300</div></td>
         </div>
       </tr>
 
       <tr> <td class="detail_name"><h4>월세 예산(필수)</h4></td>
         <div class="column">
-          <td> <input class="monthlyRent_value" type="range" name="monthly_rent" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
-            <span id="monthlyRent_value">40</span></td>
-          </input>
+          <td> <div th:text="${dto.month_fee}">55</div> </td>
         </div>
       </tr>
 
@@ -92,22 +51,7 @@
       <tr>
         <td class="detail_name"><h4>Mbti(필수)</h4></td>
         <div class="column">
-          <td><div class="mbti_chk">
-            <input type="checkbox" name="chk_info" value="외향적(E)">외향적(E)</input>
-            <input type="checkbox" name="chk_info" value="내향적(I)">내향적(I)</input>
-          </div>
-            <div class="mbti_chk">
-              <input type="checkbox" name="chk_info" value="현실적(S)">현실적(S)</input>
-              <input type="checkbox" name="chk_info" value="이상적(N)">이상적(N)</input>
-            </div>
-            <div class="mbti_chk">
-              <input type="checkbox" name="chk_info" value="이성적(T)">이성적(T)</input>
-              <input type="checkbox" name="chk_info" value="감성적(F)">감성적(F)</input>
-            </div>
-            <div class="mbti_chk">
-              <input type="checkbox" name="chk_info" value="계획적(J)">계획적(J)</input>
-              <input type="checkbox" name="chk_info" value="즉흥적(P)">즉흥적(P)</input>
-            </div></td>
+          <td><div th:text="${dto.mbti}">ESTP</div></td>
         </div></tr>
 
 
@@ -116,18 +60,7 @@
 
         <div class="column">
           <td>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option1">
-              <label class="form-check-label" for="inlineCheckbox6">좋아요</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option2">
-              <label class="form-check-label" for="inlineCheckbox7">싫어요</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option1">
-              <label class="form-check-label" for="inlineCheckbox8">상관없어요</label>
-            </div>
+            <div th:text="${dto.pet}">상관없어요</div>
           </td>
 
 
@@ -137,40 +70,21 @@
       <tr>
         <td class="detail_name"><h4>흡연</h4></td>
         <div class="column">
-          <td><div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option1">
-            <label class="form-check-label" for="inlineCheckbox3">좋아요</label>
-          </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
-              <label class="form-check-label" for="inlineCheckbox4">싫어요</label>
-            </div><div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option1">
-              <label class="form-check-label" for="inlineCheckbox5">상관없어요</label>
-            </div>
-          </td>
+          <td><div th:text="${dto.smoking}">상관없어요</div></td>
         </div></tr>
 
 
       <tr>
         <td class="detail_name"><h4>생활패턴</h4></td>
         <div class="column">
-          <td><div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">아침형</label>
-          </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-              <label class="form-check-label" for="inlineCheckbox2">야행성</label>
-            </div>
-          </td>
+          <td><div th:text="${dto.life_cycle}">아침형</div></td>
         </div>
       </tr>
       <tr>
         <td class="detail_name"><h4>내가 원하는 룸메이트</h4></td>
         <div class="column">
           <td><div class="form-group">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:text="${dto.wish_roommate}"></textarea>
           </div>
           </td>
         </div>

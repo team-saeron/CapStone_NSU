@@ -1,6 +1,5 @@
 package togethers.togethers.controller;
 
-import groovyjarjarantlr.PythonCodeGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,7 +205,7 @@ public class PostController {
         List<RoomPicture> images = postService.findPhoto(PostId);
         List<Reply> replies = postService.findReply(PostId);
         DetailPostDto detailPostDto = postService.detail_post(post);
-        User writer = userService.findByPostId(PostId);
+        User writer = userService.findPostByPostId(PostId);
 
 
 

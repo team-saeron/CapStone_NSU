@@ -91,7 +91,9 @@
             <li>
               <div class="other_inner_comment">
                 <div class="other_id">
-                  <i class="fa-solid fa-user fa fa-2x"></i>
+                  <a th:href="@{/member/checkIntroduction(userDetailId = ${reply.getUser().getUserDetail().getUserDetailId()},postId = ${postId})}">
+                    <i class="fa-solid fa-user fa fa-2x"></i>
+                  </a>
                   <span th:text="${reply.user.uid}"></span>
                 </div>
                 <div class="other_text">
@@ -148,6 +150,14 @@
                 alert(message);
             }else {}
             })
+        $(document).ready(function()
+        {
+            let message = "[[${no_login}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+        })
+
     </script>
 
 

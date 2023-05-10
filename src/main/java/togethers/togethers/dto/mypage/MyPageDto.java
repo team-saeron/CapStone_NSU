@@ -2,6 +2,7 @@ package togethers.togethers.dto.mypage;
 
 import lombok.Getter;
 import lombok.Setter;
+import togethers.togethers.social.SocialName;
 
 @Getter
 @Setter
@@ -10,8 +11,11 @@ public class MyPageDto
     private String nickname;
     private String Uid;
 
-    public MyPageDto(String nickname, String uid) {
+    private String socialName;
+
+    public MyPageDto(String nickname, String uid,String socialName) {
         this.nickname = nickname;
-        Uid = uid;
+        this.Uid = uid;
+        this.socialName =  socialName;
     }
 }

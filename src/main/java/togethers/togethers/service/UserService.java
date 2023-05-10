@@ -8,7 +8,6 @@ import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -17,19 +16,21 @@ public interface UserService {
 
     public void editIntro(Long id, UserDetailUpdateDto userDetailUpdateDto);
 
-    public User findIdByPhoneNum(FindIdPhoneDto findIdPhoneDto);
+    public User findUserByIdAndPhoneNum(FindIdPhoneDto findIdPhoneDto);
 
     public User findUserByEmail(String email);
 
-    public User findIdByEmail(FindIdEmailDto findIdEmailDto);
+    public User findUserByEmail(FindIdEmailDto findIdEmailDto);
 
-    public UserDetail findByUserDetailId(Long UserDatailId);
+    public User findUserByUserDetailId(Long user_detail_id);
+
+    public UserDetail findUserDetailByUserDetailId(Long UserDatailId);
 
     public MailDto sendEmail(FindPasswordDto findPasswordDto);
 
     public String getTempPassword();
 
-    public User findByPostId(Long PostId);
+    public User findPostByPostId(Long PostId);
 
 
     public void mailSend(MailDto mailDto);

@@ -23,7 +23,8 @@
         <div class="edit_member">
             <h4>아이디</h4>
             <div class="id" th:text = "${dto.Uid}">saeron2022</div>
-            <div class="edit_password">
+
+            <div class="edit_password" th:if = "${dto.socialName.equals('NOTHING')}">
 
                 <form th:action="@{/editPassword}" th:method= "post" th:object="${passwordupdatedto}">
                 <h4>비밀번호 수정</h4>
@@ -41,6 +42,10 @@
                     <button type="button" onclick="location.href='/member/rewriteIntroduction'" class="btn btn-primary btn-lg btn-block">세부사항 수정하기</button>
                     </div>
                 </form>
+            </div>
+
+            <div th:if = "${dto.socialName.equals('KAKAO')} or ${dto.socialName.equals('NAVER')} or ${dto.socialName.equals('GOOGLE')}">
+                <button type="button" onclick="location.href='/member/rewriteIntroduction'" class="btn btn-primary btn-lg btn-block">세부사항 수정하기</button>
             </div>
 
         </div>

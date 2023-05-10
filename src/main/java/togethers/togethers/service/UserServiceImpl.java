@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDetail findByUserDetailId(Long UserDetailId)
+    public UserDetail findUserDetailByUserDetailId(Long UserDetailId)
     {
         return userDetailRepository.findByUserDetailId(UserDetailId).orElse(null);
     }
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findByPostId(Long PostId)
+    public User findPostByPostId(Long PostId)
     {
         return userRepository.findByPost_PostId(PostId).orElse(null);
     }
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findIdByPhoneNum(FindIdPhoneDto findIdPhoneDto)
+    public User findUserByIdAndPhoneNum(FindIdPhoneDto findIdPhoneDto)
     {
         log.info("[findId] 아이디 핸드폰 번호로 Service 로직 동작. Name : {} ,  phoneNum : {}", findIdPhoneDto.getName(), findIdPhoneDto.getPhoneNum());
         User user = userRepository.findByNameAndPhoneNum(findIdPhoneDto.getName(), findIdPhoneDto.getPhoneNum()).orElse(null);
@@ -120,11 +120,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findIdByEmail(FindIdEmailDto findIdEmailDto)
+    public User findUserByEmail(FindIdEmailDto findIdEmailDto)
     {
         log.info("[findIdByEmail] 아이디 이메일로 찾기 Service 로직 동작. name: {}, email : {}",findIdEmailDto.getName(),findIdEmailDto.getEmail());
         User user = userRepository.findByNameAndEmail(findIdEmailDto.getName(), findIdEmailDto.getEmail()).orElse(null);
         return user;
+    }
+
+    @Override
+    @Transactional
+    public User findUserByUserDetailId(Long user_detail_id)
+    {
+        return userRepository.findByUserDetail_UserDetailId(user_detail_id).orElse(null);
     }
 
     @Override

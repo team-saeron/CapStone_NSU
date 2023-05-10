@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class Favorite {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)// pk값, 값이 들어올때마다 pk가 자동으로 증가함
     private Long favorite_id;

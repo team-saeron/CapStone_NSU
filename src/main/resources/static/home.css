@@ -8,7 +8,9 @@ position:relative;
 
 
 }
-
+.sugeestion_body{
+display: flex;
+}
 .home_column{
 display:flex;
 justify-content:center;

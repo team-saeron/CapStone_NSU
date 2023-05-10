@@ -4,20 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.login.*;
+import togethers.togethers.dto.mypage.CheckIntroductionDto;
 import togethers.togethers.dto.mypage.MyPageDto;
 import togethers.togethers.dto.mypage.UserDetailSaveDto;
 import togethers.togethers.entity.User;
@@ -56,7 +50,8 @@ public class UserController {
         }else {
             User user = (User)principal;
 
-            MyPageDto myPageDto = new MyPageDto(user.getNickname(),user.getUid());
+            log.info("@@@@ {}, {}, {}",user.getNickname(),user.getUid(),user.getSocialName().name());
+            MyPageDto myPageDto = new MyPageDto(user.getNickname(),user.getUid(),user.getSocialName().name());
             PasswordUpdatedDto passwordUpdatedDto = new PasswordUpdatedDto();
 
             model.addAttribute("passwordupdatedto",passwordUpdatedDto);
@@ -64,9 +59,6 @@ public class UserController {
             return "member/mypage";
         }
     }
-
-
-
 
 
 
@@ -103,14 +95,37 @@ public class UserController {
     }
 
     @GetMapping("/member/checkIntroduction")
-    public String checkIntroduction(@RequestParam("userDetailId")Long userDetailId, Model model)
+    public String checkIntroduction(@RequestParam("userDetailId")Long userDetailId,@RequestParam("postId")Long post_id ,Model model, RedirectAttributes attr)
     {
         log.info("[checkIntroduction] 다른 유저의 세부사항 정보 확인. 조회하고자 하는 Id : {}",userDetailId);
-        UserDetail userDetail = userService.findByUserDetailId(userDetailId);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal == "anonymousUser")
+        {
+            log.info("[checkIntroduction] 사용자가 로그인하지 않아 다른 사람의 자기소개 볼수 없음");
+            attr.addFlashAttribute("no_login","로그인 이후 다른 사용자의 자기소개글을 볼 수 있습니다");
+            return "redirect:/post/detailPost/"+post_id;
+        }
+        else{
+            User reply_user = userService.findUserByUserDetailId(userDetailId);
+            UserDetail reply_user_detail = reply_user.getUserDetail();
 
-        model.addAttribute("userDetail",userDetail);
-        return "member/checkIntroduction";
+            CheckIntroductionDto checkIntroductionDto = CheckIntroductionDto.builder()
+                    .nickname(reply_user.getNickname())
+                    .gender(reply_user_detail.getGender())
+                    .area(reply_user_detail.getRegions())
+                    .room_type("월세")
+                    .deposit(reply_user_detail.getLease_fee())
+                    .month_fee(reply_user_detail.getMonthly_fee())
+                    .mbti(reply_user_detail.getMbti())
+                    .pet(reply_user_detail.getPet())
+                    .smoking(reply_user_detail.getSmoking())
+                    .life_cycle(reply_user_detail.getLife_cycle())
+                    .wish_roommate(reply_user_detail.getWish_roommate())
+                    .build();
+            model.addAttribute("dto",checkIntroductionDto);
+            return "member/checkIntroduction";
 
+        }
     }
 
 
@@ -137,7 +152,7 @@ public class UserController {
     public String findIdByPhoneNum(HttpServletRequest request, RedirectAttributes attr){
         log.info("[findIdByPhoneNum] 핸드폰 번호를 이용한 아이디 찾기 POST 매핑 동작 name : {}, phoneNum : {}",request.getParameter("name"),request.getParameter("phoneNum"));
         FindIdPhoneDto findIdPhoneDto = new FindIdPhoneDto(request.getParameter("name"),request.getParameter("phoneNum"));
-        User user = userService.findIdByPhoneNum(findIdPhoneDto);
+        User user = userService.findUserByIdAndPhoneNum(findIdPhoneDto);
         if(user == null){
             attr.addFlashAttribute("NotFindUser","일치 하는 정보가 없습니다");
             return "redirect:/findId/phone";
@@ -164,7 +179,7 @@ public class UserController {
     {
         log.info("[findIdByEmail] 이메일로 아이디 찾기 POST controller 동작 name: {} , email : {}",request.getParameter("name"),request.getParameter("email"));
         FindIdEmailDto findIdEmailDto = new FindIdEmailDto(request.getParameter("name"),request.getParameter("email"));
-        User user = userService.findIdByEmail(findIdEmailDto);
+        User user = userService.findUserByEmail(findIdEmailDto);
         if(user == null)
         {
             attr.addFlashAttribute("NotFindUser","일치하는 정보를 찾을수 없습니다");
