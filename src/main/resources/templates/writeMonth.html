@@ -10,7 +10,7 @@
 </style>
   <body>
   <div class="write_container">
-    <form class="write_column" th:action="@{/writeBeforePay}" th:object="${Dto}" th:method="POST">
+    <form class="write_column" th:action="@{/writeMonth}" th:object="${dto}" th:method="POST" enctype="multipart/form-data">
       <div class="write_wrapper">
         <div class="write__content">
           <div class="write_column">
@@ -40,8 +40,9 @@
             <input class="write__price" type="text" th:field="*{monthly}" placeholder="월세" style="width:200px">
             <input class="write__price" type="text" th:field="*{Management_fee}" placeholder="관리비" style="width:200px">
           </div>
+
           <div id='image_preview'>
-            <input type='file' id='btnAtt' multiple='multiple' />
+            <input type='file' id='btnAtt' name="btnAtt" multiple='multiple' />
             <div id='att_zone'
                  data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
           </div>

@@ -80,7 +80,8 @@ color:inherit;
 
 #latest_box{
 margin-top:40px;
-margin-right:60px;
+margin-right:-50px;
+margin-left:50px;
  border-top solid 35px;
 }
 #latest_box>table{

@@ -37,9 +37,7 @@ spring:
    maxFileSize: 10MB
    maxRequestSize: 20MB
    enabled: true
- http:
-  csrf:
-   disabled: true
+
 
 logging:
  level:

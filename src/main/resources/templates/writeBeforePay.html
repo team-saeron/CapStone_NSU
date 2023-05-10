@@ -18,7 +18,7 @@
 
   <body>
   <div class="write_container">
-    <form class="write_column" th:action="@{/writeBeforePay}" th:method="POST" th:object="${dto}">
+    <form class="write_column" th:action="@{/writeBeforePay}" th:method="POST" th:object="${dto}" enctype="multipart/form-data">
       <div class="write_wrapper">
         <div class="write__content">
           <div class="write_column">
@@ -45,7 +45,7 @@
           </div>
 
             <div id='image_preview'>
-              <input type='file' id='btnAtt' multiple='multiple' />
+              <input type='file' id='btnAtt' name="btnAtt" multiple='multiple' />
               <div id='att_zone'
                    data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
             </div>

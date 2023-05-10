@@ -87,7 +87,7 @@
         <div class="join__column" id="join_email">
             <input type="text" class="form-control" placeholder="이메일" th:field="*{email}" aria-label="email" aria-describedby="button-addon2" required>
             <div class="input-group">
-                <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                <select class="custom-select" th:field="*{domain}" aria-label="Example select with button addon">
                     <option value="">-선택-</option>
                     <option value="naver.com">naver.com</option>
                     <option value="gmail.com">gmail.com</option>

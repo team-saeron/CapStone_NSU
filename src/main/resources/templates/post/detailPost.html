@@ -56,9 +56,8 @@
           <i class="fa-solid fa-venus-mars fa-2x gender "></i><span th:text="${writer.getUserDetail().getGender()}">여자</span>
           <i class="fa-solid fa-cloud-sun fa-2x pattern"></i><span th:text="${writer.getUserDetail().getLife_cycle()}"></span>
         </div>
-        <a th:href="@{/member/checkIntroduction(userDetailId = ${writer.getUserDetail().getUserDetailId()})}">
-          <button type="button"  class="btn btn-primary btn-lg btn-block">작성자 정보 보러가기</button>
-        </a>
+        <button type="button" onclick="location.href='/member/checkIntroduction'" class="btn btn-primary btn-lg btn-block">작성자 정보 보러가기</button>
+
       </div>
       <button type="button"><i class="fa-solid fa-heart fa-2x Like"></i></button>
       <!-- 댓글 html-->

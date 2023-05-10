@@ -27,6 +27,7 @@ import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
+import togethers.togethers.service.UserService;
 
 import java.util.List;
 
@@ -35,14 +36,18 @@ public class PostController {
 
 
     private final PostService postService;
+    private final UserService userService;
     private AreaEnum[] area = AreaEnum.values();
 
     @Autowired
-    public PostController(PostService postService)
+    public PostController(PostService postService, UserService userService)
     {
         this.postService = postService;
+        this.userService = userService;
     }
     Logger logger = LoggerFactory.getLogger(PostController.class);
+
+
 
 
     @GetMapping(value = "/chooseType")
@@ -257,7 +262,7 @@ public class PostController {
     {
         int aid = 0;
         if(!areaId.equals("")){
-             aid = Integer.parseInt(areaId);
+            aid = Integer.parseInt(areaId);
         }
 
         logger.info("[SearchPost]홈페이지에서 사용자가 카테고리 클릭후 해당 게시물 검색. areaID:{}",aid);
