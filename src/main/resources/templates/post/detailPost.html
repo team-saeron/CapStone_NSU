@@ -56,7 +56,7 @@
           <i class="fa-solid fa-venus-mars fa-2x gender "></i><span th:text="${writer.getUserDetail().getGender()}">여자</span>
           <i class="fa-solid fa-cloud-sun fa-2x pattern"></i><span th:text="${writer.getUserDetail().getLife_cycle()}"></span>
         </div>
-        <a th:href="@{/member/checkIntroduction(userDetailId = ${writer.getUserDetail().getUserDetailId()})}">
+        <a th:href="@{/member/checkIntroduction(userDetailId = ${writer.getUserDetail().getUserDetailId()},postId = ${postId})}">
           <button type="button"  class="btn btn-primary btn-lg btn-block">작성자 정보 보러가기</button>
         </a>
       </div>
@@ -69,7 +69,7 @@
             <div class="my_inner_commnet">
               <div class="my_id">
                 <i class="fa-solid fa-user fa fa-2x"></i>
-                <span th:text="${userId}"></span>
+                <span th:text="${user_nickname}"></span>
               </div>
               <div class="my_text">
                 <input type="text" cols="30" class="my_textarea" id="comment" name="comment">
@@ -94,7 +94,7 @@
                   <a th:href="@{/member/checkIntroduction(userDetailId = ${reply.getUser().getUserDetail().getUserDetailId()},postId = ${postId})}">
                     <i class="fa-solid fa-user fa fa-2x"></i>
                   </a>
-                  <span th:text="${reply.user.uid}"></span>
+                  <span th:text="${reply.user.nickname}"></span>
                 </div>
                 <div class="other_text">
                   <span th:text="${reply.comment}">이집 마음에 들어요!</span>

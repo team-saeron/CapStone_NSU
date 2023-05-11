@@ -179,22 +179,22 @@ public class PostController {
         Object principal = authentication.getPrincipal();
 
         boolean check;
-        String userId = new String();
+        String user_nickname = new String();
 
         if(principal =="anonymousUser"){
             logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 하지 않음 postId :{}",PostId);
             check = false;
-            userId = "";
-            model.addAttribute("userId",userId);
+            user_nickname = "";
+            model.addAttribute("user_nickname",user_nickname);
             model.addAttribute("check",check);
             model.addAttribute("login_inform",false);
 
         }else {
             User user = (User)principal;
-            userId = user.getUid();
-            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",PostId,userId);
+            user_nickname = user.getNickname();
+            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",PostId,user_nickname);
             check = postService.checkFavorite(PostId, user.getId());
-            model.addAttribute("userId",userId);
+            model.addAttribute("user_nickname",user_nickname);
             model.addAttribute("check",check);
             model.addAttribute("login_inform",true);
 
