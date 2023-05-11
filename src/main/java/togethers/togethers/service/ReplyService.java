@@ -33,38 +33,37 @@ public class ReplyService {
         this.postRepository = postRepository;
     }
 
-    @Transactional(readOnly = false) // 추후에 /detailPost/{post_id}/Reply로변경
+    @Transactional(readOnly = false)
     public ReplyResultDto Reply_write(ReplyRequestDto dto)
     {
         logger.info("[Reply_write] 댓글 저장 로직 동작. user:{},post:{}, comment:{}",dto.getId(),dto.getPostId(),dto.getComment());
+        Reply check_reply = replyRepository.findByPost_PostIdAndUser_Id(dto.getPostId(), dto.getId()).orElse(null);
+        ReplyResultDto reply_result_dto = new ReplyResultDto();
 
-
-        Reply reply = new Reply(dto);
-        User user = userRepository.findById(dto.getId()).orElse(null);
-        Post post = postRepository.findById(dto.getPostId()).orElse(null);
-
-        //user가 똑같은 게시물에 댓글을 한번 더달을 경우
-
-        reply.setUser(user);
-        reply.setPost(post);
-
-        post.getReplies().add(reply);
-
-        replyRepository.save(reply);
-
-        ReplyResultDto replyResultDto = ReplyResultDto.builder()
-                .userId(reply.getUser().getId())
-                .postId(reply.getPost().getPostId())
-                .comment(reply.getComment())
-                .build();
-
-        if(reply.getUser().getUid()==user.getUid()&&reply.getPost().getPostId()==post.getPostId())
+        if(check_reply == null)
         {
-            setSuccessResult(replyResultDto);
-        }else {
-            setFailResult(replyResultDto);
+            Reply new_reply = new Reply(dto);
+            logger.info("[Reply_write] 새로운 댓글 작성 로직 동작.");
+            User user = userRepository.findById(dto.getId()).orElse(null);
+            Post post = postRepository.findById(dto.getPostId()).orElse(null);
+
+            new_reply.setUser(user);
+            new_reply.setPost(post);
+
+            post.getReplies().add(new_reply);
+            replyRepository.save(new_reply);
+            setSuccessResult(reply_result_dto);
+            reply_result_dto.setCode(1);
+        }else{
+            logger.info("[Reply_write] 댓글 수정 로직 동작.");
+            check_reply.setComment(dto.getComment());
+
+            replyRepository.flush();
+            setSuccessResult(reply_result_dto);
+            reply_result_dto.setCode(2);
         }
-        return replyResultDto;
+
+        return reply_result_dto;
     }
 
     @Transactional

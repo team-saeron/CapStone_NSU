@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.dto.reply.ReplyRequestDto;
+import togethers.togethers.dto.reply.ReplyResultDto;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.PostService;
 import togethers.togethers.service.ReplyService;
@@ -49,10 +50,16 @@ public class ReplyController {
                     .id(user.getId())
                     .comment(request.getParameter("comment"))
                     .build();
-            replyService.Reply_write(dto);
+            ReplyResultDto replyResultDto = replyService.Reply_write(dto);
+
+            if (replyResultDto.getCode() == 1)
+            {
+                attr.addFlashAttribute("new_reply_write_success","댓글 작성이 완료 되었습니다");
+            }else{
+                attr.addFlashAttribute("modify_reply_write_success","댓글 수정이 완료 되었습니다");
+
+            }
         }
-
-
         return "redirect:/post/detailPost/"+p_id;
     }
 }

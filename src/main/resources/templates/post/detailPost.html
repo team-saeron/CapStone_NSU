@@ -135,13 +135,14 @@
         }
         slide();
         setInterval(slide,3000);
-                $(document).ready(function()
+
+        $(document).ready(function()
         {
             let message = "[[${reply_msg}]]";
             if (message != "") {
                 alert(message);
             }else {}
-            })
+        })
 
         $(document).ready(function()
         {
@@ -149,7 +150,8 @@
             if (message != "") {
                 alert(message);
             }else {}
-            })
+        })
+
         $(document).ready(function()
         {
             let message = "[[${no_login}]]";
@@ -157,6 +159,23 @@
                 alert(message);
             }else {}
         })
+
+        $(document).ready(function()
+        {
+            let message = "[[${new_reply_write_success}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+        })
+
+        $(document).ready(function()
+        {
+            let message = "[[${modify_reply_write_success}]]";
+            if (message != "") {
+                alert(message);
+            }else {}
+        })
+
 
     </script>
 
