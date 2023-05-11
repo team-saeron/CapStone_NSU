@@ -214,7 +214,9 @@ public class UserServiceImpl implements UserService {
         Mbti mbti = mbtiRepository.findByMyMbti(ud.getMbti()).orElse(null);
 
 
-        for (UserDetail i : recommend) {
+
+        for (UserDetail i : recommend)
+        {
             log.info(i.getMbti());
             if (i.getMbti().equals(mbti.getFirstMbti()) || i.getMbti().equals(mbti.getSecondMbti()) || i.getMbti().equals(mbti.getThirdMbti()) || i.getMbti().equals(mbti.getFourthMbti())) {
                 rclist.add(i);
@@ -223,12 +225,15 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        log.info("[matching] 나와 같은 성별을 가진 유저의 수 : {}",recommend.size());
+        log.info("[matching] 같은 성별과 비슷한 MBTI 유저의 수 : {}",rclist.size());
+
         List<Post> recommend_post = new ArrayList<>();
 
         // 만약 5개가 안되면 ? --> MBTI말고 다른 조건으로 추가 조회 로직 동작.
         for (UserDetail x : rclist) {
             User temp_user = userRepository.findByUserDetail_UserDetailId(x.getUserDetailId()).orElse(null);
-            if(temp_user.getPost()==null)
+            if(temp_user == null ||temp_user.getPost()==null)
             {
                 continue;
             }else{
@@ -236,6 +241,7 @@ public class UserServiceImpl implements UserService {
                 recommend_post.add(post);
             }
         }
+
         return recommend_post;
     }
 

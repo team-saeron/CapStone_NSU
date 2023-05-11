@@ -2,7 +2,6 @@ package togethers.togethers.dto.mypage;
 
 import lombok.Getter;
 import lombok.Setter;
-import togethers.togethers.social.SocialName;
 
 @Getter
 @Setter

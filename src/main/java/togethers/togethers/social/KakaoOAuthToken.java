@@ -3,7 +3,7 @@ package togethers.togethers.social;
 import lombok.Data;
 
 @Data
-public class OAuthToken {
+public class KakaoOAuthToken {
 
     private String access_token;
     private String token_type;

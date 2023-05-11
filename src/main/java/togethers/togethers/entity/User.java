@@ -5,7 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import togethers.togethers.dto.mypage.UserDetails;
-import togethers.togethers.social.SocialName;
+import togethers.togethers.Enum.SocialName;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

@@ -1,4 +1,4 @@
-package togethers.togethers.social;
+package togethers.togethers.Enum;
 
 public enum SocialName {
     NOTHING, NAVER, KAKAO, GOOGLE

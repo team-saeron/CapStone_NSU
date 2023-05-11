@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,16 +18,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.dto.login.SignInResultDto;
-import togethers.togethers.entity.User;
+import togethers.togethers.dto.login.SignUpResultDto;
 import togethers.togethers.service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 
 @Controller
-public class SocialController {
-    private Logger logger = LoggerFactory.getLogger(SocialController.class);
+public class KakaoController {
+    private Logger logger = LoggerFactory.getLogger(KakaoController.class);
 
     private final UserService userService;
     private final SocialService socialService;
@@ -36,15 +34,11 @@ public class SocialController {
 
 
     @Autowired
-    public SocialController(SocialService socialService, PasswordEncoder passwordEncoder,UserService userService) {
+    public KakaoController(SocialService socialService, PasswordEncoder passwordEncoder, UserService userService) {
         this.socialService = socialService;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
-
-    @Value("${social.key}")
-    private String key;
-
 
     @GetMapping(value = "/kakao_callback")
     public String KakaoJoin(String code, RedirectAttributes attr)
@@ -73,9 +67,9 @@ public class SocialController {
         );
 
         ObjectMapper objectMapper = new ObjectMapper();
-        OAuthToken oAuthToken = null;
+        KakaoOAuthToken oAuthToken = null;
         try {
-            oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+            oAuthToken = objectMapper.readValue(response.getBody(), KakaoOAuthToken.class);
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (JsonProcessingException e) {
@@ -110,27 +104,14 @@ public class SocialController {
             e.printStackTrace();
         }
 
-        /**계정 중복 여부 검사**/
-        if (userService.findUserByEmail(kakaoProfile.getKakao_account().getEmail()) != null)
+        SignUpResultDto signUpResultDto = socialService.KakaoSignUp(kakaoProfile);
+        if (signUpResultDto.getCode()==-1)
         {
-            logger.info("[KakaoJoin] 이미 회원가입 되어있는 email 오류.");
-            attr.addFlashAttribute("DuplicatedIdError","이미 존재 하는 아이디 입니다.");
+            attr.addFlashAttribute("DuplicatedIdError","이미 존재하는 이메일 아이디 입니다.");
             return "redirect:/member/new";
         }
-        else{
-            User user = User.builder()
-                    .name(kakaoProfile.getKakao_account().getProfile().getNickname())
-                    .nickname(kakaoProfile.getKakao_account().getProfile().getNickname())
-                    .email(kakaoProfile.getKakao_account().getEmail())
-                    .uid(kakaoProfile.getKakao_account().getEmail())
-                    .roles(Collections.singletonList("ROLE_USER"))
-                    .password(passwordEncoder.encode(key))
-                    .socialName(SocialName.KAKAO)
-                    .build();
-
-            socialService.saveSocialUser(user);
-            logger.info("[KakaoJoin] 카카오 계정으로 회원기입 완료. email: {}, nickname: {}, uid:{}",user.getEmail(),user.getNickname(),user.getUid());
-            attr.addFlashAttribute("SuceesJoin","회원가입에 성공하였습니다. 로그인하여 주세요");
+        else {
+            attr.addFlashAttribute("SuceesJoin","회원가입이 완료 되었습니다. 로그인하여주세요");
             return "redirect:/login";
         }
     }
@@ -160,9 +141,9 @@ public class SocialController {
         );
 
         ObjectMapper objectMapper = new ObjectMapper();
-        OAuthToken oAuthToken = null;
+        KakaoOAuthToken oAuthToken = null;
         try {
-            oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+            oAuthToken = objectMapper.readValue(response.getBody(), KakaoOAuthToken.class);
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (JsonProcessingException e) {
@@ -198,10 +179,9 @@ public class SocialController {
         }
 
         SocialLoginDto socialLoginDto = SocialLoginDto.builder()
-                .nickname(kakaoProfile.getProperties().getNickname())
                 .email(kakaoProfile.getKakao_account().getEmail())
                 .build();
-        SignInResultDto signInResultDto = socialService.kakaoLogin(socialLoginDto);
+        SignInResultDto signInResultDto = socialService.SocialLogin(socialLoginDto);
 
         if(signInResultDto.getCode()==-1)
         {
