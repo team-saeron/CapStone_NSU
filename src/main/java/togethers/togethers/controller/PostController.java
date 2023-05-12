@@ -171,9 +171,13 @@ public class PostController {
     }
 
     @GetMapping(value = "/post/detailPost/{postId}")
-    public String post_detailPost(@PathVariable("postId")Long PostId, Model model)
+    public String post_detailPost(@PathVariable("postId")Long PostId, Model model, RedirectAttributes attr)
     {
-
+        if (PostId == 0)
+        {
+            attr.addFlashAttribute("no_post","작성하신 게시물이 없습니다");
+            return "redirect:/";
+        }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
@@ -215,9 +219,6 @@ public class PostController {
         model.addAttribute("category",AreaEnum.values());
         model.addAttribute("images",images);
         model.addAttribute("writer",writer);
-
-
-
 
         return "post/detailPost";
     }

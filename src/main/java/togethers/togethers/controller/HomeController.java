@@ -45,6 +45,7 @@ public class HomeController {
         else
         {
             User user = (User)principal;
+
             if(user.getUserDetail() == null)
             {
                 model.addAttribute("no_userdetail","나를 소개하는 글을 작성해 주세요!");
@@ -57,6 +58,13 @@ public class HomeController {
                     recommendPostDto.add(new RecommendPostDto(post));
                 }
                 model.addAttribute("RecommendDto",recommendPostDto);
+            }
+
+            if(user.getPost() == null)
+            {
+                model.addAttribute("postId",0);
+            }else {
+                model.addAttribute("postId",user.getPost().getPostId());
             }
 
             model.addAttribute("login_inform",true);

@@ -157,7 +157,6 @@ public class SocialService {
         }
 
 
-        RestTemplate rt2 = new RestTemplate();
         HttpHeaders headers2 = new HttpHeaders();
         headers2.add("Authorization","Bearer "+oAuthToken.getAccess_token());
 
@@ -171,8 +170,8 @@ public class SocialService {
                 naver_profile_request,
                 String.class
         );
+        logger.info("네이버 프로필 JSON : {}",naver_profile_response);
 
-        ObjectMapper objectMapper2 = new ObjectMapper();
         NaverProfile naverProfile = null;
 
         try {
