@@ -154,3 +154,7 @@ min-height: 80px;
      text-align:center;
      cursor:pointer;
  }
+ #start_kakao{
+ display:flex;
+ justify-content:center;
+ }

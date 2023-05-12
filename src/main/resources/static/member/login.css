@@ -14,10 +14,6 @@ justify-content:center;
 color:black;
 }
 
-.login_sns_icon{
- text-decoration: none;
-  color: black;
-}
 
 .login_sns{
 display:flex;
@@ -36,7 +32,6 @@ border-radius: 50px;
 background: white;
 font-size: 20px;
 margin:10px;
-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
 
 }
 .login_id{

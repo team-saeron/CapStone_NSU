@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/default_layout">
+<th:block layout:fragment="css">
 <head>
   <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 
@@ -11,7 +12,7 @@
   <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="./js/write.js?ver=123"></script>
 </head>
-<th:block layout:fragment="css">
+
   <link rel="stylesheet" href="/writeBeforePay.css" />
 </th:block>
 <th:block layout:fragment="content">
