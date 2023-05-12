@@ -91,7 +91,24 @@ public class UserController {
     public String rewriteIntroduction (Model model)
     {
         log.info("[rewriteIntroduction] 나의 게시물 수정 Controller 동작.");
+
+        UserDetailSaveDto userDetailSaveDto = new UserDetailSaveDto();
+
+        model.addAttribute("areaEnum", AreaEnum.values());
+        model.addAttribute("dto",userDetailSaveDto);
+
         return "member/rewriteIntroduction";
+    }
+
+    @PostMapping(value = "/member/rewriteIntroduction")
+    public String rewriteIntroduction (UserDetailSaveDto userDetailSaveDto, RedirectAttributes attr)
+    {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userDetailId = user.getUserDetail().getUserDetailId();
+
+        userService.editIntro(userDetailId,userDetailSaveDto);
+        attr.addFlashAttribute("success_modify_introduction","자기 소개가 변경 되었습니다.");
+        return "redirect:/member/mypage";
     }
 
     @GetMapping("/member/checkIntroduction")

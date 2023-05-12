@@ -284,6 +284,7 @@ public class PostController {
 
         model.addAttribute("AreaId",areaId);
         model.addAttribute("postList",posts);
+        model.addAttribute("category",AreaEnum.values());
 
         return "post/searchList";
     }

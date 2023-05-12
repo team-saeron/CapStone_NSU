@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Getter
 @Builder
 public class CheckIntroductionDto {
+
     private String nickname;
     private String gender;
     private String area;

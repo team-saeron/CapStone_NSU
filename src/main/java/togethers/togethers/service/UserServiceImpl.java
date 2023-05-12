@@ -98,14 +98,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = false)
-    public void editIntro(Long id, UserDetailUpdateDto userDetailUpdateDto) {
-        User user = userRepository.findByUserDetail_UserDetailId(id).orElse(null);
-        UserDetail userDetail = userDetailRepository.findByUserDetailId(id).orElse(null);
+    public void editIntro(Long user_detail_id, UserDetailSaveDto user_detail_save_dto) {
+        UserDetail userDetail = userDetailRepository.findByUserDetailId(user_detail_id).orElse(null);
+        UserDetail temp_detail = new UserDetail(user_detail_save_dto);
 
-        userDetail.updateUserDetail(userDetailUpdateDto);
-
+        userDetail = temp_detail;
         userDetailRepository.flush();
-
     }
 
 

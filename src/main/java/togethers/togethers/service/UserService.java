@@ -14,7 +14,7 @@ public interface UserService {
     public String join(User user);
     public void saveIntro(String name, UserDetailSaveDto userDetailSaveDto);
 
-    public void editIntro(Long id, UserDetailUpdateDto userDetailUpdateDto);
+    public void editIntro(Long id, UserDetailSaveDto userDetailSaveDto);
 
     public User findUserByIdAndPhoneNum(FindIdPhoneDto findIdPhoneDto);
 
