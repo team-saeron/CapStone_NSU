@@ -70,22 +70,91 @@
             </div>
 
 
-            <div id="suggestion_box" th:each="post : ${RecommendDto}">
-                <div class="post_container">
-                    <div class="suggestion_title>"><h3><strong>추천 게시물</strong></h3></div>
+
+        <table id="suggestion_box" th:if="${login_inform == true}">
+            <th><h3><strong>추천 게시물</strong></h3></th>
+            <tr>
+                <td>
                     <div class="slider">
-                        <a th:href="@{/post/detailPost/{postId}(postId = ${post.postId})}"><img class="detailPost_img" th:src="@{/files/}+${post.filename}"/></a>
+                        <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(0).getPostId()})}">
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(0).getFilename()}"/>
+                        </a>
                     </div>
-                    <div class="list_word">
-                        <div class="subject"> <b th:text="${post.subject}">강남구 투룸 룸메이트 gody</b></div>
-                        <div class="explain" th:text="${post.explain}">월세 500/45</div>
+                </td>
 
+                <td>
+                    <div class="slider">
+                        <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(1).getPostId()})}">
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(1).getFilename()}"/>
+                        </a>
                     </div>
-                </div>
+                </td>
 
-            </div>
+                <td>
+                    <div class="slider">
+                        <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(2).getPostId()})}">
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(2).getFilename()}"/>
+                        </a>
+                    </div>
+                </td>
 
-        </div>
+                <td>
+                    <div class="slider">
+                        <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(3).getPostId()})}">
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(3).getFilename()}"/>
+                        </a>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="subject">
+                        <b th:text="${recommendPostDto.get(0).getSubject()}">강남구 투룸 룸메이트 구해요</b>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="subject">
+                        <b th:text="${recommendPostDto.get(1).getSubject()}">강남구 투룸 룸메이트 구해요</b>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="subject">
+                        <b th:text="${recommendPostDto.get(2).getSubject()}">강남구 투룸 룸메이트 구해요</b>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="subject">
+                        <b th:text="${recommendPostDto.get(3).getSubject()}">강남구 투룸 룸메이트 구해요</b>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="explain" th:text="${recommendPostDto.get(0).getExplain()}">월세 500/45</div>
+                </td>
+
+                <td>
+                    <div class="explain" th:text="${recommendPostDto.get(1).getExplain()}">월세 500/45</div>
+                </td>
+
+                <td>
+                    <div class="explain" th:text="${recommendPostDto.get(2).getExplain()}">월세 500/45</div>
+                </td>
+
+                <td>
+                    <div class="explain" th:text="${recommendPostDto.get(3).getExplain()}">월세 500/45</div>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>

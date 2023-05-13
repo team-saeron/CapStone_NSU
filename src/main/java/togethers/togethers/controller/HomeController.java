@@ -57,7 +57,9 @@ public class HomeController {
                 for (Post post : matching) {
                     recommendPostDto.add(new RecommendPostDto(post));
                 }
-                model.addAttribute("RecommendDto",recommendPostDto);
+
+
+                model.addAttribute("recommendPostDto",recommendPostDto);
             }
 
             if(user.getPost() == null)

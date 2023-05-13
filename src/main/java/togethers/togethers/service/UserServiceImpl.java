@@ -206,30 +206,28 @@ public class UserServiceImpl implements UserService {
     public List<Post> matching(String userId) {
         User user = userRepository.findByUid(userId).orElse(null);
         UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
-        List<UserDetail> recommend = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
+        List<UserDetail> same_gender_list = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
 
-        List<UserDetail> rclist = new ArrayList<>();
+        List<UserDetail> same_mbti_list = new ArrayList<>();
         Mbti mbti = mbtiRepository.findByMyMbti(ud.getMbti()).orElse(null);
 
 
 
-        for (UserDetail i : recommend)
+        for (UserDetail i : same_gender_list)
         {
             log.info(i.getMbti());
-            if (i.getMbti().equals(mbti.getFirstMbti()) || i.getMbti().equals(mbti.getSecondMbti()) || i.getMbti().equals(mbti.getThirdMbti()) || i.getMbti().equals(mbti.getFourthMbti())) {
-                rclist.add(i);
-            } else {
+            if (i.getMbti().equals(mbti.getFirstMbti()) || i.getMbti().equals(mbti.getSecondMbti()) || i.getMbti().equals(mbti.getThirdMbti()) || i.getMbti().equals(mbti.getFourthMbti()))
+            {
+                same_mbti_list.add(i);
+            }
+            else
+            {
                 continue;
             }
         }
 
-        log.info("[matching] 나와 같은 성별을 가진 유저의 수 : {}",recommend.size());
-        log.info("[matching] 같은 성별과 비슷한 MBTI 유저의 수 : {}",rclist.size());
-
         List<Post> recommend_post = new ArrayList<>();
-
-        // 만약 5개가 안되면 ? --> MBTI말고 다른 조건으로 추가 조회 로직 동작.
-        for (UserDetail x : rclist) {
+        for (UserDetail x : same_mbti_list) {
             User temp_user = userRepository.findByUserDetail_UserDetailId(x.getUserDetailId()).orElse(null);
             if(temp_user == null ||temp_user.getPost()==null)
             {
@@ -240,6 +238,28 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        if (recommend_post.size() < 4)
+        {
+            log.info("[matching] recommend_post의 갯수가 4개이하여서 추가 등록 로직 동작");
+            for (UserDetail userDetail : same_gender_list) {
+                User same_gender_user = userRepository.findByUserDetail_UserDetailId(userDetail.getUserDetailId()).orElse(null);
+                log.info("[matching] same_gender_user id :{}",same_gender_user);
+
+                if(same_gender_user == null || same_gender_user.getPost() == null)
+                {
+                    continue;
+                }else {
+                    Post post = postRepository.findBypostId(same_gender_user.getPost().getPostId()).orElse(null);
+                    recommend_post.add(post);
+                }
+                if (recommend_post.size() == 4)
+                {
+                    break;
+                }
+            }
+        }
+
+        log.info("[matching] recomment_post 게시물 갯수 :{}",recommend_post.size());
         return recommend_post;
     }
 
