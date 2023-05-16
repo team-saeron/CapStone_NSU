@@ -180,3 +180,7 @@ background-color:white;
 position:absolute;
 left:100px;
 }
+
+img{
+object-fit:contain;
+}

@@ -297,3 +297,16 @@ background-color:white;
 display:flex;
 border:1px solid gray;
 }
+.cont_tit{
+font-size:30px;
+margin-left:160px;
+margin-top:30px;
+}
+.cont{
+font-size:20px;
+margin-left:165px;
+}
+.content_detail{
+display:inline-block;
+width:980px;
+}

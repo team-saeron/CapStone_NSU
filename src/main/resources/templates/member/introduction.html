@@ -88,17 +88,19 @@
                     <div class="column">
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" th:field = "*{pet}" type="radio" id="pet1" th:value="좋아요">
+                                <input class="form-check-input" name="chk_pet" th:field = "*{pet}" type="radio" id="pet1" th:value="좋아요">
                                 <label class="form-check-label" for="pet1">좋아요</label>
+
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" th:field = "*{pet}" type="radio" id="pet2" th:value="싫어요">
+                                <input class="form-check-input" name="chk_pet" th:field = "*{pet}" type="radio" id="pet2" th:value="싫어요">
                                 <label class="form-check-label" for="pet2">싫어요</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" th:field = "*{pet}" type="radio" id="pet3" th:value="상관없어요" th:checked="checked">
+                                <input class="form-check-input" name="chk_pet" th:field = "*{pet}" type="radio" id="pet3" th:value="상관없어요">
                                 <label class="form-check-label" for="pet3">상관없어요</label>
                             </div>
+                            <input type="reset" value="Reset">
                     </div>
                     </td>
                 </tr>
