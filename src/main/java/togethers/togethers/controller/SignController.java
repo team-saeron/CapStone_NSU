@@ -3,6 +3,7 @@ package togethers.togethers.controller;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,13 @@ public class SignController {
     Logger logger = LoggerFactory.getLogger(SignController.class);
     private final SignService signService;
 
+    @Value("${spring.oauth.kakao.client-id}")
+    private String kakao_client_id;
+
+    @Value("${spring.oauth.naver.client-id}")
+    private String naver_client_id;
+
+
 
 
 
@@ -34,6 +42,8 @@ public class SignController {
         logger.info("[signUp] GET 회원가입 컨트롤러 동작 ");
         SignUpRequestDto signUpRequestDto = new SignUpRequestDto();
         model.addAttribute("dto",signUpRequestDto);
+        model.addAttribute("kakao_client_id",kakao_client_id);
+        model.addAttribute("naver_client_id",naver_client_id);
         return "join";
     }
 
@@ -68,6 +78,8 @@ public class SignController {
         logger.info("[singIn] GET 로그인 컨트롤러 동작");
         SignInRequestDto signInRequestDto = new SignInRequestDto();
         model.addAttribute("SignInRequestDto",signInRequestDto);
+        model.addAttribute("kakao_client_id",kakao_client_id);
+        model.addAttribute("naver_client_id",naver_client_id);
         return "member/login";
     }
 

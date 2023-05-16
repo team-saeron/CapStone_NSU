@@ -43,6 +43,18 @@ public class SocialService {
     @Value("${social.key}")
     private String key;
 
+    @Value("${spring.oauth.kakao.client-id}")
+    private String kakao_client_id;
+
+    @Value("${spring.oauth.naver.secret}")
+    private String naver_secret;
+
+    @Value("${spring.oauth.naver.client-id}")
+    private String naver_client_id;
+
+
+
+
     @Autowired
     public SocialService(UserRepository userRepository, JwtTokenProvider jwtTokenProvider,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -67,7 +79,7 @@ public class SocialService {
 
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "dc6c22266260fc5caeb2c46de3dd83e8");
+        params.add("client_id", kakao_client_id);
         params.add("redirect_uri", "http://localhost:8081/kakao_login");
         params.add("code", code);
 
@@ -130,8 +142,8 @@ public class SocialService {
 
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "TCaKGyOMHwb8QZ0oSMyV");
-        params.add("client_secret", "k9iThEg12Q");
+        params.add("client_id", naver_client_id);
+        params.add("client_secret", naver_secret);
         params.add("code", code);
         params.add("state", state);
 
