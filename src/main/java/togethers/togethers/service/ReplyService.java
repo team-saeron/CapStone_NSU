@@ -11,12 +11,17 @@ import togethers.togethers.dto.*;
 import togethers.togethers.dto.reply.ReplyDeleteResultDto;
 import togethers.togethers.dto.reply.ReplyRequestDto;
 import togethers.togethers.dto.reply.ReplyResultDto;
+import togethers.togethers.entity.Notification;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.Reply;
 import togethers.togethers.entity.User;
+import togethers.togethers.repository.NotificationRepository;
 import togethers.togethers.repository.PostRepository;
 import togethers.togethers.repository.ReplyRepository;
 import togethers.togethers.repository.UserRepository;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Service
 public class ReplyService {
@@ -26,11 +31,14 @@ public class ReplyService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
+    private final NotificationRepository notificationRepository;
+
     @Autowired
-    public ReplyService(ReplyRepository repository, UserRepository userRepository, PostRepository postRepository) {
+    public ReplyService(ReplyRepository repository, UserRepository userRepository, PostRepository postRepository,NotificationRepository notificationRepository) {
         this.replyRepository = repository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @Transactional(readOnly = false)
@@ -45,6 +53,7 @@ public class ReplyService {
             Reply newReply = new Reply(dto);
             logger.info("[Reply_write] 새로운 댓글 작성 로직 동작.");
             User user = userRepository.findById(dto.getId()).orElse(null);
+            User postUser = userRepository.findByPost_PostId(dto.getPostId()).orElse(null);
             Post post = postRepository.findById(dto.getPostId()).orElse(null);
 
             newReply.setUser(user);
@@ -52,6 +61,15 @@ public class ReplyService {
 
             post.getReplies().add(newReply);
             replyRepository.save(newReply);
+
+            /**댓글 작성 알림 컨트롤러 추가**/
+            Notification notification = Notification.builder()
+                    .title("댓글 알림")
+                    .user(postUser)
+                    .message(newReply.getUser().getNickname() + "님이 댓글을 달았습니다.")
+                    .created(LocalDateTime.now())
+                    .build();
+            notificationRepository.save(notification);
             setSuccessResult(replyResultDto);
             replyResultDto.setCode(1);
         }else{

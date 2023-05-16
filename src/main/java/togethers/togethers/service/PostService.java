@@ -20,6 +20,7 @@ import togethers.togethers.repository.*;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,13 +39,14 @@ public class PostService {
     @Autowired
     private final RoompictureRepository roompictureRepository;
 
-
-
     @Autowired
     private final ReplyRepository replyRepository;
 
     @Autowired
     private final FavoriteRepository likeRepository;
+
+    @Autowired
+    private final NotificationRepository notificationRepository;
 
     @Transactional
     public Post findPost(Long postId)
@@ -226,6 +228,7 @@ public class PostService {
                 .context(post.getContext())
                 .monthly(post.getMonthly())
                 .lease(post.getDeposit())
+                .maintenanceCost(post.getManagement_fee())
                 .userId(user.getId())
                 .area(post.getArea())
                 .Uid(user.getUid())
@@ -305,6 +308,7 @@ public class PostService {
         boolean check = true;
 
         User user = userRepository.findById(userId).orElse(null);
+        User postUser = userRepository.findByPost_PostId(postId).orElse(null);
 
         Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(postId,user.getId()).orElse(null);
 
@@ -320,6 +324,15 @@ public class PostService {
             favorite.setUser(user);
             favorite.setMyFavorite(true);
             likeRepository.save(favorite);
+
+            /**게시물 작성자에게 알림**/
+            Notification notification = Notification.builder()
+                    .title("좋아요 알림")
+                    .user(postUser)
+                    .message(user.getNickname() + "님이 회원님의 게시물을 좋아합니다")
+                    .created(LocalDateTime.now())
+                    .build();
+            notificationRepository.save(notification);
         }
         return check;
     }

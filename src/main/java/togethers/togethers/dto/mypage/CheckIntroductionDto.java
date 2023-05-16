@@ -10,9 +10,9 @@ public class CheckIntroductionDto {
     private String nickname;
     private String gender;
     private String area;
-    private String room_type;
+    private String roomType;
     private int deposit;
-    private int month_fee;
+    private int monthFee;
     private String mbti;
     private String pet;
     private String smoking;

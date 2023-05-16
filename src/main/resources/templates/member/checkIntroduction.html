@@ -31,7 +31,7 @@
       <tr>
         <td class="detail_name"><h4>월세/전세 선택</h4></td>
         <div class="column">
-          <td><div th:text="${dto.room_type}">월세</div></td>
+          <td><div th:text="${dto.roomType}">월세</div></td>
         </div>
       </tr>
 
@@ -43,7 +43,7 @@
 
       <tr> <td class="detail_name"><h4>월세 예산(필수)</h4></td>
         <div class="column">
-          <td> <div th:text="${dto.month_fee}">55</div> </td>
+          <td> <div th:text="${dto.monthFee}">55</div> </td>
         </div>
       </tr>
 
@@ -77,14 +77,14 @@
       <tr>
         <td class="detail_name"><h4>생활패턴</h4></td>
         <div class="column">
-          <td><div th:text="${dto.life_cycle}">아침형</div></td>
+          <td><div th:text="${dto.lifeCycle}">아침형</div></td>
         </div>
       </tr>
       <tr>
         <td class="detail_name"><h4>내가 원하는 룸메이트</h4></td>
         <div class="column">
           <td><div class="form-group">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:text="${dto.wish_roommate}"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:text="${dto.wishRoommate}"></textarea>
           </div>
           </td>
         </div>

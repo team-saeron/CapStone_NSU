@@ -123,21 +123,21 @@ public class UserController {
             return "redirect:/post/detailPost/"+postId;
         }
         else{
-            User reply_user = userService.findUserByUserDetailId(userDetailId);
-            UserDetail reply_user_detail = reply_user.getUserDetail();
+            User replyUser = userService.findUserByUserDetailId(userDetailId);
+            UserDetail replyUserDetail = replyUser.getUserDetail();
 
             CheckIntroductionDto checkIntroductionDto = CheckIntroductionDto.builder()
-                    .nickname(reply_user.getNickname())
-                    .gender(reply_user_detail.getGender())
-                    .area(reply_user_detail.getRegions())
-                    .room_type("월세")
-                    .deposit(reply_user_detail.getLease_fee())
-                    .month_fee(reply_user_detail.getMonthly_fee())
-                    .mbti(reply_user_detail.getMbti())
-                    .pet(reply_user_detail.getPet())
-                    .smoking(reply_user_detail.getSmoking())
-                    .lifeCycle(reply_user_detail.getLife_cycle())
-                    .wishRoommate(reply_user_detail.getWish_roommate())
+                    .nickname(replyUser.getNickname())
+                    .gender(replyUserDetail.getGender())
+                    .area(replyUserDetail.getRegions())
+                    .roomType("월세")
+                    .deposit(replyUserDetail.getLease_fee())
+                    .monthFee(replyUserDetail.getMonthly_fee())
+                    .mbti(replyUserDetail.getMbti())
+                    .pet(replyUserDetail.getPet())
+                    .smoking(replyUserDetail.getSmoking())
+                    .lifeCycle(replyUserDetail.getLife_cycle())
+                    .wishRoommate(replyUserDetail.getWish_roommate())
                     .build();
             model.addAttribute("dto",checkIntroductionDto);
             return "member/checkIntroduction";

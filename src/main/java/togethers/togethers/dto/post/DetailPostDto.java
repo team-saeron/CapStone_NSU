@@ -17,10 +17,12 @@ public class DetailPostDto {
     private String title;
     private String context;
     private String area;
+
     private Integer roomPayType;
 
     private String monthly;
     private String lease;
+    private String maintenanceCost;
 
 
 }
