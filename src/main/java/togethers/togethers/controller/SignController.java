@@ -26,11 +26,13 @@ public class SignController {
     private final SignService signService;
 
     @Value("${spring.oauth.kakao.client-id}")
-    private String kakao_client_id;
+    private String kakaoClientId;
 
     @Value("${spring.oauth.naver.client-id}")
-    private String naver_client_id;
+    private String naverClientId;
 
+    @Value("${spring.oauth.google.client-id}")
+    private String googleClientId;
 
 
 
@@ -42,8 +44,9 @@ public class SignController {
         logger.info("[signUp] GET 회원가입 컨트롤러 동작 ");
         SignUpRequestDto signUpRequestDto = new SignUpRequestDto();
         model.addAttribute("dto",signUpRequestDto);
-        model.addAttribute("kakao_client_id",kakao_client_id);
-        model.addAttribute("naver_client_id",naver_client_id);
+        model.addAttribute("kakao_client_id", kakaoClientId);
+        model.addAttribute("naver_client_id", naverClientId);
+        model.addAttribute("google_client_id", googleClientId);
         return "join";
     }
 
@@ -78,14 +81,15 @@ public class SignController {
         logger.info("[singIn] GET 로그인 컨트롤러 동작");
         SignInRequestDto signInRequestDto = new SignInRequestDto();
         model.addAttribute("SignInRequestDto",signInRequestDto);
-        model.addAttribute("kakao_client_id",kakao_client_id);
-        model.addAttribute("naver_client_id",naver_client_id);
+        model.addAttribute("kakao_client_id", kakaoClientId);
+        model.addAttribute("naver_client_id", naverClientId);
+        model.addAttribute("google_client_id", googleClientId);
         return "member/login";
     }
 
     @PostMapping(value = "/login")
     public String signIn(@Valid @ModelAttribute SignInRequestDto signInRequestDto,
-                         HttpServletResponse response, RedirectAttributes attr)
+                         HttpServletResponse res, RedirectAttributes attr)
     {
         logger.info("[signIn] 로그인을 시도하고 있습니다. id : {}, pw : ****", signInRequestDto.getId());
         SignInResultDto signInResultDto = signService.signIn(signInRequestDto);
@@ -100,13 +104,13 @@ public class SignController {
         }
         else{
             String token = signInResultDto.getToken();
-            response.setHeader("X-AUTH-TOKEN",token);
+            res.setHeader("X-AUTH-TOKEN",token);
 
             Cookie cookie = new Cookie("X-AUTH-TOKEN", token);
             cookie.setPath("/");
             cookie.setSecure(true);
             cookie.setHttpOnly(true);
-            response.addCookie(cookie);
+            res.addCookie(cookie);
 
             return "redirect:/";
         }

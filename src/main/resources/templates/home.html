@@ -71,13 +71,13 @@
 
 
 
-        <table id="suggestion_box" th:if="${login_inform == true}">
+        <table id="suggestion_box" th:if="${login_inform == true} and ${userdetail_id != 0}">
             <th><h3><strong>추천 게시물</strong></h3></th>
             <tr>
                 <td>
                     <div class="slider">
                         <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(0).getPostId()})}">
-                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(0).getFilename()}"/>
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(0).getFileName()}"/>
                         </a>
                     </div>
                 </td>
@@ -85,7 +85,7 @@
                 <td>
                     <div class="slider">
                         <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(1).getPostId()})}">
-                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(1).getFilename()}"/>
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(1).getFileName()}"/>
                         </a>
                     </div>
                 </td>
@@ -93,7 +93,7 @@
                 <td>
                     <div class="slider">
                         <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(2).getPostId()})}">
-                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(2).getFilename()}"/>
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(2).getFileName()}"/>
                         </a>
                     </div>
                 </td>
@@ -101,7 +101,7 @@
                 <td>
                     <div class="slider">
                         <a th:href="@{/post/detailPost/{postId}(postId = ${recommendPostDto.get(3).getPostId()})}">
-                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(3).getFilename()}"/>
+                            <img class="detailPost_img" th:src="@{/files/}+${recommendPostDto.get(3).getFileName()}"/>
                         </a>
                     </div>
                 </td>

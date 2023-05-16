@@ -37,7 +37,7 @@
 
                     <li><a class="login_sns_icon" th:href="@{https://kauth.kakao.com/oauth/authorize(client_id = ${kakao_client_id}, redirect_uri = 'http://localhost:8081/kakao_login', response_type = 'code')}"><i class="fa-solid fa-comment"></i></a></li>
                     <li><a class="login_sns_icon" th:href="@{https://nid.naver.com/oauth2.0/authorize(client_id = ${naver_client_id}, redirect_uri = 'http://localhost:8081/naver_login', response_type = 'code')}"><i class="fa-solid fa-n"></i></a></li>
-                    <li><a class="login_sns_icon" href=""><i class="fab fa-twitter"></i></a></li>
+                    <li class="list-group-item"><a class="login_sns_icon"  th:href="@{https://accounts.google.com/o/oauth2/v2/auth(response_type = 'code', client_id = ${google_client_id}, redirect_uri = 'http://localhost:8081/google_login', scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')}"><i class="fa-brands fa-google"></i> </a></li>
 
                 </div>
             </form>

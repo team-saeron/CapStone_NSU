@@ -40,7 +40,7 @@ public class Post {
         this.area = Dto.getAreaName();
         this.deposit = Dto.getDeposit();
         this.monthly = Dto.getMonthly();
-        this.management_fee = Dto.getManagement_fee();
+        this.management_fee = Dto.getManagementFee();
         this.publishDate = new Date();
         this.RoomPay_type = 0; //0이면 월세라는 뜻.
     }
@@ -51,7 +51,7 @@ public class Post {
         this.context = Dto.getContext();
         this.deposit = Dto.getDeposit();
         this.area = Dto.getArea();
-        this.management_fee = Dto.getManagement_fee();
+        this.management_fee = Dto.getManagementFee();
         this.publishDate = new Date();
         this.RoomPay_type = 1; //1이면 월세라는 뜻.
     }
@@ -121,7 +121,7 @@ public class Post {
         this.title = postEditRequestDto.getTitle();
         this.context = postEditRequestDto.getContext();
         this.deposit = postEditRequestDto.getLease();
-        this.monthly = postEditRequestDto.getMounthly();
+        this.monthly = postEditRequestDto.getMonthly();
 
         if(postEditRequestDto.getRoomType()==true)
         {

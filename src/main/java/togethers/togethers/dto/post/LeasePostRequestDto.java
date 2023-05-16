@@ -9,7 +9,7 @@ public class LeasePostRequestDto {
     private String title;
     private String context;
     private String deposit;
-    private String Management_fee;
+    private String managementFee;
     private String area;
 
 }

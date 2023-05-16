@@ -37,46 +37,46 @@ public class ReplyService {
     public ReplyResultDto Reply_write(ReplyRequestDto dto)
     {
         logger.info("[Reply_write] 댓글 저장 로직 동작. user:{},post:{}, comment:{}",dto.getId(),dto.getPostId(),dto.getComment());
-        Reply check_reply = replyRepository.findByPost_PostIdAndUser_Id(dto.getPostId(), dto.getId()).orElse(null);
-        ReplyResultDto reply_result_dto = new ReplyResultDto();
+        Reply checkReply = replyRepository.findByPost_PostIdAndUser_Id(dto.getPostId(), dto.getId()).orElse(null);
+        ReplyResultDto replyResultDto = new ReplyResultDto();
 
-        if(check_reply == null)
+        if(checkReply == null)
         {
-            Reply new_reply = new Reply(dto);
+            Reply newReply = new Reply(dto);
             logger.info("[Reply_write] 새로운 댓글 작성 로직 동작.");
             User user = userRepository.findById(dto.getId()).orElse(null);
             Post post = postRepository.findById(dto.getPostId()).orElse(null);
 
-            new_reply.setUser(user);
-            new_reply.setPost(post);
+            newReply.setUser(user);
+            newReply.setPost(post);
 
-            post.getReplies().add(new_reply);
-            replyRepository.save(new_reply);
-            setSuccessResult(reply_result_dto);
-            reply_result_dto.setCode(1);
+            post.getReplies().add(newReply);
+            replyRepository.save(newReply);
+            setSuccessResult(replyResultDto);
+            replyResultDto.setCode(1);
         }else{
             logger.info("[Reply_write] 댓글 수정 로직 동작.");
-            check_reply.setComment(dto.getComment());
+            checkReply.setComment(dto.getComment());
 
             replyRepository.flush();
-            setSuccessResult(reply_result_dto);
-            reply_result_dto.setCode(2);
+            setSuccessResult(replyResultDto);
+            replyResultDto.setCode(2);
         }
 
-        return reply_result_dto;
+        return replyResultDto;
     }
 
     @Transactional
-    public ReplyDeleteResultDto reply_delete(Long PostId, Long UserId, Long ReplyId)
+    public ReplyDeleteResultDto replyDelete(Long postId, Long userId, Long replyId)
     {
         ReplyDeleteResultDto replyDeleteResultDto = new ReplyDeleteResultDto();
-        replyDeleteResultDto.setUserId(UserId);
-        replyDeleteResultDto.setReplyId(ReplyId);
+        replyDeleteResultDto.setUserId(userId);
+        replyDeleteResultDto.setReplyId(replyId);
 
-        logger.info("[reply_delete] 댓글 삭제 로직 동작. postId:{}, userId:{}",PostId,UserId);
-        Reply reply = replyRepository.findById(ReplyId).orElse(null);
+        logger.info("[reply_delete] 댓글 삭제 로직 동작. postId:{}, userId:{}",postId,userId);
+        Reply reply = replyRepository.findById(replyId).orElse(null);
 
-        if(!UserId.equals(reply.getUser().getId()))
+        if(!userId.equals(reply.getUser().getId()))
         {
             logger.info("[reply_delete] 사용자가 삭제할수 없는 댓글입니다");
             setFailResult(replyDeleteResultDto);
@@ -84,7 +84,7 @@ public class ReplyService {
             return replyDeleteResultDto;
         }
         else {
-            replyRepository.deleteByPost_PostIdAndUser_Id(PostId,UserId);
+            replyRepository.deleteByPost_PostIdAndUser_Id(postId,userId);
             setSuccessResult(replyDeleteResultDto);
         }
         return replyDeleteResultDto;

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import togethers.togethers.Enum.SocialName;
 import togethers.togethers.config.CommonResponse;
 import togethers.togethers.config.JwtTokenProvider;
 import togethers.togethers.dto.login.SignInRequestDto;
@@ -70,6 +71,7 @@ public class SignServiceImpl implements SignService {
                     .email(tempEmail)
                     .birth(signUpRequestDto.getBirth())
                     .phoneNum(signUpRequestDto.getPhoneNum())
+                    .socialName(SocialName.NOTHING)
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
         }else{
@@ -82,6 +84,7 @@ public class SignServiceImpl implements SignService {
                     .birth(signUpRequestDto.getBirth())
                     .phoneNum(signUpRequestDto.getPhoneNum())
                     .roles(Collections.singletonList("ROLE_USER"))
+                    .socialName(SocialName.NOTHING)
                     .build();
         }
 

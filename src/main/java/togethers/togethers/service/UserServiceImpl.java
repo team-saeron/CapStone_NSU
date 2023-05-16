@@ -59,9 +59,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDetail findUserDetailByUserDetailId(Long UserDetailId)
+    public UserDetail findUserDetailByUserDetailId(Long userDetailId)
     {
-        return userDetailRepository.findByUserDetailId(UserDetailId).orElse(null);
+        return userDetailRepository.findByUserDetailId(userDetailId).orElse(null);
     }
 
     @Override
@@ -73,18 +73,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findPostByPostId(Long PostId)
+    public User findPostByPostId(Long postId)
     {
-        return userRepository.findByPost_PostId(PostId).orElse(null);
+        return userRepository.findByPost_PostId(postId).orElse(null);
     }
 
 
     @Override
     @Transactional(readOnly = false)
-    public void saveIntro(String id, UserDetailSaveDto userDetailSaveDto) {
+    public void saveIntro(String uid, UserDetailSaveDto userDetailSaveDto) {
 
-        log.info("[saveIntro] 유저 세부사항 저장 Service 로직 동작. userid :{}",id);
-        User user = userRepository.findByUid(id).orElse(null);
+        log.info("[saveIntro] 유저 세부사항 저장 Service 로직 동작. userid :{}",uid);
+        User user = userRepository.findByUid(uid).orElse(null);
 
         UserDetail userDetail = new UserDetail(userDetailSaveDto);
         userDetail.setUser(user);
@@ -98,11 +98,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = false)
-    public void editIntro(Long user_detail_id, UserDetailSaveDto user_detail_save_dto) {
-        UserDetail userDetail = userDetailRepository.findByUserDetailId(user_detail_id).orElse(null);
-        UserDetail temp_detail = new UserDetail(user_detail_save_dto);
+    public void editIntro(Long userDetailId, UserDetailSaveDto userDetailSaveDto) {
+        UserDetail userDetail = userDetailRepository.findByUserDetailId(userDetailId).orElse(null);
+        UserDetail tempDetail = new UserDetail(userDetailSaveDto);
 
-        userDetail = temp_detail;
+        userDetail = tempDetail;
         userDetailRepository.flush();
     }
 
@@ -127,9 +127,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User findUserByUserDetailId(Long user_detail_id)
+    public User findUserByUserDetailId(Long userDetailId)
     {
-        return userRepository.findByUserDetail_UserDetailId(user_detail_id).orElse(null);
+        return userRepository.findByUserDetail_UserDetailId(userDetailId).orElse(null);
     }
 
     @Override
@@ -203,22 +203,23 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public List<Post> matching(String userId) {
-        User user = userRepository.findByUid(userId).orElse(null);
+    public List<Post> matching(String uid) {
+        log.info("[matching] 매칭 알고리즘 시작. userID:{}",uid);
+        User user = userRepository.findByUid(uid).orElse(null);
         UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
-        List<UserDetail> same_gender_list = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
+        List<UserDetail> sameGenderList = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
 
-        List<UserDetail> same_mbti_list = new ArrayList<>();
+        List<UserDetail> sameMbtiList = new ArrayList<>();
         Mbti mbti = mbtiRepository.findByMyMbti(ud.getMbti()).orElse(null);
 
 
 
-        for (UserDetail i : same_gender_list)
+        for (UserDetail i : sameGenderList)
         {
             log.info(i.getMbti());
             if (i.getMbti().equals(mbti.getFirstMbti()) || i.getMbti().equals(mbti.getSecondMbti()) || i.getMbti().equals(mbti.getThirdMbti()) || i.getMbti().equals(mbti.getFourthMbti()))
             {
-                same_mbti_list.add(i);
+                sameMbtiList.add(i);
             }
             else
             {
@@ -226,41 +227,41 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        List<Post> recommend_post = new ArrayList<>();
-        for (UserDetail x : same_mbti_list) {
+        List<Post> recommendPost = new ArrayList<>();
+        for (UserDetail x : sameMbtiList) {
             User temp_user = userRepository.findByUserDetail_UserDetailId(x.getUserDetailId()).orElse(null);
             if(temp_user == null ||temp_user.getPost()==null)
             {
                 continue;
             }else{
                 Post post = postRepository.findBypostId(temp_user.getPost().getPostId()).orElse(null);
-                recommend_post.add(post);
+                recommendPost.add(post);
             }
         }
 
-        if (recommend_post.size() < 4)
+        if (recommendPost.size() < 4)
         {
             log.info("[matching] recommend_post의 갯수가 4개이하여서 추가 등록 로직 동작");
-            for (UserDetail userDetail : same_gender_list) {
-                User same_gender_user = userRepository.findByUserDetail_UserDetailId(userDetail.getUserDetailId()).orElse(null);
-                log.info("[matching] same_gender_user id :{}",same_gender_user);
+            for (UserDetail userDetail : sameGenderList) {
+                User sameGenderUser = userRepository.findByUserDetail_UserDetailId(userDetail.getUserDetailId()).orElse(null);
+                log.info("[matching] same_gender_user id :{}",sameGenderUser);
 
-                if(same_gender_user == null || same_gender_user.getPost() == null)
+                if(sameGenderUser == null || sameGenderUser.getPost() == null)
                 {
                     continue;
                 }else {
-                    Post post = postRepository.findBypostId(same_gender_user.getPost().getPostId()).orElse(null);
-                    recommend_post.add(post);
+                    Post post = postRepository.findBypostId(sameGenderUser.getPost().getPostId()).orElse(null);
+                    recommendPost.add(post);
                 }
-                if (recommend_post.size() == 4)
+                if (recommendPost.size() == 4)
                 {
                     break;
                 }
             }
         }
 
-        log.info("[matching] recomment_post 게시물 갯수 :{}",recommend_post.size());
-        return recommend_post;
+        log.info("[matching] recomment_post 게시물 갯수 :{}",recommendPost.size());
+        return recommendPost;
     }
 
 }

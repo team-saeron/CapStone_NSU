@@ -32,10 +32,10 @@ public class ReplyController {
 
 
     @PostMapping(value = "/post/detailPost/reply")
-    public String replyWrite(HttpServletRequest request,RedirectAttributes attr)
+    public String replyWrite(HttpServletRequest req,RedirectAttributes attr)
     {
-        String postId = request.getParameter("p_id");
-        long p_id = Long.parseLong(postId);
+        String postId = req.getParameter("p_id");
+        long pid = Long.parseLong(postId);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal == "anonymousUser"){
@@ -43,12 +43,12 @@ public class ReplyController {
         }
         else{
             User user = (User)principal;
-            logger.info("[replyWrite]  게시물 댓글 작성 로직 동작 postId:{}, userId:{} comment: {}",p_id,user.getUid(),request.getParameter("comment"));
+            logger.info("[replyWrite]  게시물 댓글 작성 로직 동작 postId:{}, userId:{} comment: {}",pid,user.getUid(),req.getParameter("comment"));
 
             ReplyRequestDto dto = ReplyRequestDto.builder()
-                    .postId(p_id)
+                    .postId(pid)
                     .id(user.getId())
-                    .comment(request.getParameter("comment"))
+                    .comment(req.getParameter("comment"))
                     .build();
             ReplyResultDto replyResultDto = replyService.Reply_write(dto);
 
@@ -60,6 +60,6 @@ public class ReplyController {
 
             }
         }
-        return "redirect:/post/detailPost/"+p_id;
+        return "redirect:/post/detailPost/"+pid;
     }
 }

@@ -2,10 +2,6 @@ package togethers.togethers.dto.post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import togethers.togethers.entity.Reply;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Setter
@@ -21,9 +17,9 @@ public class DetailPostDto {
     private String title;
     private String context;
     private String area;
-    private Integer roomPay_type;
+    private Integer roomPayType;
 
-    private String mounthly;
+    private String monthly;
     private String lease;
 
 

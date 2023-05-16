@@ -112,7 +112,7 @@ public class UserController {
     }
 
     @GetMapping("/member/checkIntroduction")
-    public String checkIntroduction(@RequestParam("userDetailId")Long userDetailId,@RequestParam("postId")Long post_id ,Model model, RedirectAttributes attr)
+    public String checkIntroduction(@RequestParam("userDetailId")Long userDetailId,@RequestParam("postId")Long postId ,Model model, RedirectAttributes attr)
     {
         log.info("[checkIntroduction] 다른 유저의 세부사항 정보 확인. 조회하고자 하는 Id : {}",userDetailId);
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -120,7 +120,7 @@ public class UserController {
         {
             log.info("[checkIntroduction] 사용자가 로그인하지 않아 다른 사람의 자기소개 볼수 없음");
             attr.addFlashAttribute("no_login","로그인 이후 다른 사용자의 자기소개글을 볼 수 있습니다");
-            return "redirect:/post/detailPost/"+post_id;
+            return "redirect:/post/detailPost/"+postId;
         }
         else{
             User reply_user = userService.findUserByUserDetailId(userDetailId);
@@ -136,8 +136,8 @@ public class UserController {
                     .mbti(reply_user_detail.getMbti())
                     .pet(reply_user_detail.getPet())
                     .smoking(reply_user_detail.getSmoking())
-                    .life_cycle(reply_user_detail.getLife_cycle())
-                    .wish_roommate(reply_user_detail.getWish_roommate())
+                    .lifeCycle(reply_user_detail.getLife_cycle())
+                    .wishRoommate(reply_user_detail.getWish_roommate())
                     .build();
             model.addAttribute("dto",checkIntroductionDto);
             return "member/checkIntroduction";
@@ -166,9 +166,9 @@ public class UserController {
 
 
     @PostMapping("/findId/phone")
-    public String findIdByPhoneNum(HttpServletRequest request, RedirectAttributes attr){
-        log.info("[findIdByPhoneNum] 핸드폰 번호를 이용한 아이디 찾기 POST 매핑 동작 name : {}, phoneNum : {}",request.getParameter("name"),request.getParameter("phoneNum"));
-        FindIdPhoneDto findIdPhoneDto = new FindIdPhoneDto(request.getParameter("name"),request.getParameter("phoneNum"));
+    public String findIdByPhoneNum(HttpServletRequest req, RedirectAttributes attr){
+        log.info("[findIdByPhoneNum] 핸드폰 번호를 이용한 아이디 찾기 POST 매핑 동작 name : {}, phoneNum : {}",req.getParameter("name"),req.getParameter("phoneNum"));
+        FindIdPhoneDto findIdPhoneDto = new FindIdPhoneDto(req.getParameter("name"),req.getParameter("phoneNum"));
         User user = userService.findUserByIdAndPhoneNum(findIdPhoneDto);
         if(user == null){
             attr.addFlashAttribute("NotFindUser","일치 하는 정보가 없습니다");
@@ -192,10 +192,10 @@ public class UserController {
     }
 
     @PostMapping("/findId/mail")
-    public String findIdByEmail(HttpServletRequest request, RedirectAttributes attr)
+    public String findIdByEmail(HttpServletRequest req, RedirectAttributes attr)
     {
-        log.info("[findIdByEmail] 이메일로 아이디 찾기 POST controller 동작 name: {} , email : {}",request.getParameter("name"),request.getParameter("email"));
-        FindIdEmailDto findIdEmailDto = new FindIdEmailDto(request.getParameter("name"),request.getParameter("email"));
+        log.info("[findIdByEmail] 이메일로 아이디 찾기 POST controller 동작 name: {} , email : {}",req.getParameter("name"),req.getParameter("email"));
+        FindIdEmailDto findIdEmailDto = new FindIdEmailDto(req.getParameter("name"),req.getParameter("email"));
         User user = userService.findUserByEmail(findIdEmailDto);
         if(user == null)
         {
@@ -218,15 +218,15 @@ public class UserController {
     }
 
     @PostMapping("/findPassword")
-    public String sendEmailPw(HttpServletRequest request, RedirectAttributes attr){
+    public String sendEmailPw(HttpServletRequest req, RedirectAttributes attr){
         log.info("[sendEmailPw] 비밀번호 찾기 POST controlloer 동작. name :{}, email :{}, id: {}"
-                ,request.getParameter("name")
-                ,request.getParameter("email"),
-                request.getParameter("id"));
+                ,req.getParameter("name")
+                ,req.getParameter("email"),
+                req.getParameter("id"));
 
-        FindPasswordDto findPasswordDto = new FindPasswordDto(request.getParameter("name")
-                ,request.getParameter("email"),
-                request.getParameter("id"));
+        FindPasswordDto findPasswordDto = new FindPasswordDto(req.getParameter("name")
+                ,req.getParameter("email"),
+                req.getParameter("id"));
 
         MailDto mailDto = userService.sendEmail(findPasswordDto);
         if(mailDto == null)

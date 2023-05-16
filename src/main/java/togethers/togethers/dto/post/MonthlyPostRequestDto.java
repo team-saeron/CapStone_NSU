@@ -12,6 +12,6 @@ public class MonthlyPostRequestDto {
     private String areaName;
     private String monthly;
     private String deposit;
-    private String Management_fee;
+    private String managementFee;
 
 }

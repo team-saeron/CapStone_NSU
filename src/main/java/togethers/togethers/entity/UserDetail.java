@@ -69,12 +69,12 @@ public class UserDetail {
     public void updateUserDetail(UserDetailUpdateDto userDetailUpdateDto){
         this.regions = userDetailUpdateDto.getRegions();
         this.mbti = userDetailUpdateDto.getMbti();
-        this.wish_roommate = userDetailUpdateDto.getWish_roommate();
-        this.monthly_fee = userDetailUpdateDto.getMonthly_fee();
-        this.lease_fee=userDetailUpdateDto.getLease_fee();
+        this.wish_roommate = userDetailUpdateDto.getWishRoommate();
+        this.monthly_fee = userDetailUpdateDto.getMonthlyFee();
+        this.lease_fee=userDetailUpdateDto.getLeaseFee();
         this.pet=userDetailUpdateDto.getPet();
         this.smoking = userDetailUpdateDto.getSmoking();
-        this.life_cycle = userDetailUpdateDto.getLife_cycle();
+        this.life_cycle = userDetailUpdateDto.getLifeCycle();
     }
 
 

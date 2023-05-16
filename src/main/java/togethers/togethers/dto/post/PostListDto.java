@@ -9,7 +9,7 @@ import togethers.togethers.entity.Post;
 @Builder
 public class PostListDto {
 
-    Page<Post> PostList;
+    Page<Post> postList;
 
 
 

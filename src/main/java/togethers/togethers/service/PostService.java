@@ -47,22 +47,22 @@ public class PostService {
     private final FavoriteRepository likeRepository;
 
     @Transactional
-    public Post findPost(Long post_id)
+    public Post findPost(Long postId)
     {
-        return postRepository.findById(post_id).orElse(null);
+        return postRepository.findById(postId).orElse(null);
     }
 
     @Transactional
-    public List<Reply>findReply(Long PostId)
+    public List<Reply>findReply(Long postId)
     {
-        List<Reply> replies = replyRepository.findAllByPost_PostId(PostId);
+        List<Reply> replies = replyRepository.findAllByPost_PostId(postId);
         return replies;
     }
 
     @Transactional
-    public List<RoomPicture> findPhoto(Long PostId)
+    public List<RoomPicture> findPhoto(Long postId)
     {
-        List<RoomPicture> images = roompictureRepository.findAllByPost_PostId(PostId);
+        List<RoomPicture> images = roompictureRepository.findAllByPost_PostId(postId);
         logger.info("[findPhoto] 이미지 데이터 베이스 조회 동작. 이미지 갯수 : {}]",images.size());
         return images;
     }
@@ -86,19 +86,19 @@ public class PostService {
     {
         logger.info("[RecentlyPost] 최근 게시물 조회 로직 Service 동작.");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String DtoDate = new String();
+        String dtoDate = new String();
         List<RecentlyPostDto>recentlyPostDto = new ArrayList<>();
 
         List<Post> postList = postRepository.findTop5ByOrderByPublishDateDesc();
 
         for (Post post : postList) {
-            DtoDate = simpleDateFormat.format(post.getPublishDate());
+            dtoDate = simpleDateFormat.format(post.getPublishDate());
 
             RecentlyPostDto build = RecentlyPostDto
                     .builder()
                     .postId(post.getPostId())
                     .title(post.getTitle())
-                    .date(DtoDate)
+                    .date(dtoDate)
                     .build();
 
             recentlyPostDto.add(build);
@@ -108,11 +108,11 @@ public class PostService {
     }
 
     @Transactional
-    public Long MonthlyPostWrite(MonthlyPostRequestDto dto, List<MultipartFile> files, String Uid) throws Exception
+    public Long MonthlyPostWrite(MonthlyPostRequestDto dto, List<MultipartFile> files, String uid) throws Exception
     {
-        logger.info("[MonthlyPostWrite] 월세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {} 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
+        logger.info("[MonthlyPostWrite] 월세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {} 이미지 갯수 : {}",uid,dto.getTitle(),files.size());
 
-        User user = userRepository.findByUid(Uid).orElse(null);
+        User user = userRepository.findByUid(uid).orElse(null);
 
         Post post = new Post(dto);
         post.setUser(user);
@@ -122,17 +122,17 @@ public class PostService {
         userRepository.flush();
 
         for (MultipartFile file : files) {
-            photo_save(post.getPostId(),file);
+            photoSave(post.getPostId(),file);
         }
         return post.getPostId();
 
     }
 
     @Transactional
-    public Long LeasePostWrite(LeasePostRequestDto dto, List<MultipartFile> files, String Uid) throws Exception
+    public Long LeasePostWrite(LeasePostRequestDto dto, List<MultipartFile> files, String uid) throws Exception
     {
-        logger.info("[MonthlyPostWrite] 전세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}, 이미지 갯수 : {}",Uid,dto.getTitle(),files.size());
-        User user = userRepository.findByUid(Uid).orElse(null);
+        logger.info("[MonthlyPostWrite] 전세 게시물 작성 Service 로직 동작 userId:{} 게시물 제목: {}, 이미지 갯수 : {}",uid,dto.getTitle(),files.size());
+        User user = userRepository.findByUid(uid).orElse(null);
 
         Post post = new Post(dto);
         post.setUser(user);
@@ -142,20 +142,20 @@ public class PostService {
         userRepository.flush();
 
         for (MultipartFile file : files) {
-            photo_save(post.getPostId(),file);
+            photoSave(post.getPostId(),file);
         }
         return post.getPostId();
     }
 
     @Transactional
-    public PostUpResultDto post_edit(Long post_id, String Uid , PostEditRequestDto postEditRequestDto)
+    public PostUpResultDto postEdit(Long postId, String uid , PostEditRequestDto postEditRequestDto)
     {
-        logger.info("[post_edit] 게시물 수정 로직 동작 post_id:{}, Uid:{} ",post_id,Uid);
+        logger.info("[post_edit] 게시물 수정 로직 동작 post_id:{}, Uid:{} ",postId,uid);
         PostUpResultDto postUpResultDto = new PostUpResultDto();
 
-        Post post = postRepository.findById(post_id).orElse(null);
-        User user = userRepository.findByUid(Uid).orElse(null);
-        Long tempPost_id = post.getPostId();
+        Post post = postRepository.findById(postId).orElse(null);
+        User user = userRepository.findByUid(uid).orElse(null);
+        Long tempPostId = post.getPostId();
         if(!user.getPost().getPostId().equals(post.getPostId()))
         {
             setFailResult(postUpResultDto);
@@ -167,7 +167,7 @@ public class PostService {
 
         postRepository.flush();
 
-        if(post.getPostId().equals(tempPost_id)){
+        if(post.getPostId().equals(tempPostId)){
 
             postUpResultDto.setContext(postEditRequestDto.getContext());
             postUpResultDto.setTitle(postEditRequestDto.getTitle());
@@ -181,15 +181,15 @@ public class PostService {
 
 
     @Transactional
-    public PostDeleteResultDto post_delete(Long PostId,String Uid)
+    public PostDeleteResultDto postDelete(Long postId, String uid)
     {
-        logger.info("[post_delete] 게시물 삭제 로직 동작. postId:{} userId:{}",PostId,Uid);
-        User user = userRepository.findByUid(Uid).orElse(null);
+        logger.info("[post_delete] 게시물 삭제 로직 동작. postId:{} userId:{}",postId,uid);
+        User user = userRepository.findByUid(uid).orElse(null);
         PostDeleteResultDto postDeleteResultDto = new PostDeleteResultDto();
-        postDeleteResultDto.setPostId(PostId);
+        postDeleteResultDto.setPostId(postId);
 
 
-        if(user.getPost()==null||user.getPost().getPostId()!=PostId)
+        if(user.getPost()==null||user.getPost().getPostId()!=postId)
         {
             logger.info("[post_delete] 사용자가 게시물이 없거나 사용자가 삭제할수 없는 게시물.");
             setFailResult(postDeleteResultDto);
@@ -198,7 +198,7 @@ public class PostService {
             return postDeleteResultDto;
         }
 
-        postRepository.deleteBypostId(PostId);
+        postRepository.deleteBypostId(postId);
 
         user.setPost(null);
         userRepository.flush();
@@ -215,7 +215,7 @@ public class PostService {
 
 
     @Transactional
-    public DetailPostDto detail_post(Post post)
+    public DetailPostDto detailPost(Post post)
     {
 
         User user = post.getUser();
@@ -224,7 +224,7 @@ public class PostService {
         DetailPostDto detailPostDto = DetailPostDto.builder()
                 .title(post.getTitle())
                 .context(post.getContext())
-                .mounthly(post.getMonthly())
+                .monthly(post.getMonthly())
                 .lease(post.getDeposit())
                 .userId(user.getId())
                 .area(post.getArea())
@@ -234,7 +234,7 @@ public class PostService {
     }
 
     @Transactional
-    public Page<Post> post_postList(Pageable pageable)
+    public Page<Post> postPostList(Pageable pageable)
     {
         int page = (pageable.getPageNumber()==0)?0:(pageable.getPageNumber()-1);
 
@@ -246,12 +246,12 @@ public class PostService {
 
 
     @Transactional
-    public Long photo_save(Long post_id, MultipartFile file)throws Exception //이미지 저장로직
+    public Long photoSave(Long postId, MultipartFile file)throws Exception //이미지 저장로직
     {
-        logger.info("[Photo_save] 이미지 저장로직 동작 post_id:{}, 사진 제목:{}",post_id,file.getOriginalFilename());
+        logger.info("[Photo_save] 이미지 저장로직 동작 post_id:{}, 사진 제목:{}",postId,file.getOriginalFilename());
 
 
-        Post post = postRepository.findById(post_id).orElse(null);
+        Post post = postRepository.findById(postId).orElse(null);
 
         RoomPicture roomPicture = new RoomPicture();
         String projectPath =  System.getProperty("user.dir")+"/src/main/resources/static/files";
@@ -277,7 +277,7 @@ public class PostService {
     }
 
     @Transactional
-    public Page<Post>SearchPost(String keyword,Pageable pageable)
+    public Page<Post> searchPost(String keyword, Pageable pageable)
     {
         logger.info("[SearchPost] 게시물 검색 Service 로직 동작. keyword: {}",keyword);
         int page = (pageable.getPageNumber()==0)?0:(pageable.getPageNumber()-1);
@@ -287,7 +287,7 @@ public class PostService {
     }
 
     @Transactional
-    public Page<Post>SearchPostUsingCategory(String areaName,Pageable pageable)
+    public Page<Post> searchPostUsingCategory(String areaName, Pageable pageable)
     {
         logger.info("[SearchPostUsingCategory] 카테고리에서 클릭한 지역이름을 이용해 게시물 조회 Service로직 동작 지역 이름: {}",areaName);
         int page = (pageable.getPageNumber()==0)?0:(pageable.getPageNumber()-1);
@@ -299,14 +299,14 @@ public class PostService {
 
 
     @Transactional
-    public boolean saveLike(Long userId, Long PostId){
+    public boolean saveLike(Long userId, Long postId){
 
-        logger.info("[saveLike] 게시물 좋아요 Service 로직 동작. 유저 Id:{}, 게시물 pk:{}",userId, PostId);
+        logger.info("[saveLike] 게시물 좋아요 Service 로직 동작. 유저 Id:{}, 게시물 pk:{}",userId, postId);
         boolean check = true;
 
         User user = userRepository.findById(userId).orElse(null);
 
-        Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(PostId,user.getId()).orElse(null);
+        Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(postId,user.getId()).orElse(null);
 
         if(checkFavorite != null)
         {
@@ -314,7 +314,7 @@ public class PostService {
             likeRepository.delete(checkFavorite);
             check = false;
         }else{
-            Post post = postRepository.findById(PostId).orElse(null);
+            Post post = postRepository.findById(postId).orElse(null);
             Favorite favorite = new Favorite();
             favorite.setPost(post);
             favorite.setUser(user);

@@ -3,7 +3,6 @@ package togethers.togethers.social;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.mail.imap.AppendUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +43,22 @@ public class SocialService {
     private String key;
 
     @Value("${spring.oauth.kakao.client-id}")
-    private String kakao_client_id;
+    private String kakaoClientId;
 
     @Value("${spring.oauth.naver.secret}")
-    private String naver_secret;
+    private String naverSecret;
 
     @Value("${spring.oauth.naver.client-id}")
-    private String naver_client_id;
+    private String naverClientId;
+
+    @Value("${spring.oauth.google.client-id}")
+    private String googleClientId;
+
+    @Value("${spring.oauth.google.client-secret}")
+    private String googleClientSecret;
+
+
+
 
 
 
@@ -79,7 +87,7 @@ public class SocialService {
 
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", kakao_client_id);
+        params.add("client_id", kakaoClientId);
         params.add("redirect_uri", "http://localhost:8081/kakao_login");
         params.add("code", code);
 
@@ -142,19 +150,19 @@ public class SocialService {
 
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", naver_client_id);
-        params.add("client_secret", naver_secret);
+        params.add("client_id", naverClientId);
+        params.add("client_secret", naverSecret);
         params.add("code", code);
         params.add("state", state);
 
-        HttpEntity<MultiValueMap<String, String>> naver_token_request =
+        HttpEntity<MultiValueMap<String, String>> naverTokenRequest =
                 new HttpEntity<>(params,headers);
 
 
         ResponseEntity<String> response = rt.exchange(
                 "https://nid.naver.com/oauth2.0/token",
                 HttpMethod.POST,
-                naver_token_request,
+                naverTokenRequest,
                 String.class
         );
 
@@ -172,14 +180,14 @@ public class SocialService {
         HttpHeaders headers2 = new HttpHeaders();
         headers2.add("Authorization","Bearer "+oAuthToken.getAccess_token());
 
-        HttpEntity<MultiValueMap<String, String>> naver_profile_request =
+        HttpEntity<MultiValueMap<String, String>> naverProfileRequest =
                 new HttpEntity<>(headers2);
 
 
         ResponseEntity<String> naver_profile_response = rt.exchange(
                 "https://openapi.naver.com/v1/nid/me",
                 HttpMethod.POST,
-                naver_profile_request,
+                naverProfileRequest,
                 String.class
         );
         logger.info("네이버 프로필 JSON : {}",naver_profile_response);
@@ -195,6 +203,136 @@ public class SocialService {
         }
 
         return naverProfile;
+    }
+
+
+    /** 구글로 부터 사용자 계정 정보 얻는 요청**/
+    public GoogleProfile getGoogleProfile(String  code)
+    {
+        logger.info("[getGoogleProfile] 구글 서버로부터 네이버 계정 정보 얻는 로직 시작.");
+        RestTemplate rt = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", googleClientId);
+        params.add("client_secret", googleClientSecret);
+        params.add("code", code);
+        params.add("redirect_uri", "http://localhost:8081/google_callback");
+
+        HttpEntity<MultiValueMap<String, String>> googleTokenRequest =
+                new HttpEntity<>(params,headers);
+
+
+        ResponseEntity<String> response = rt.exchange(
+                "https://oauth2.googleapis.com/token",
+                HttpMethod.POST,
+                googleTokenRequest,
+                String.class
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        GoogleOAuthToken oAuthToken = null;
+        try {
+            oAuthToken = objectMapper.readValue(response.getBody(), GoogleOAuthToken.class);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+//        https://www.googleapis.com/auth/userinfo.profile
+
+        HttpHeaders header2 = new HttpHeaders();
+        header2.add("Authorization", "Bearer "+oAuthToken.getAccess_token());
+
+        HttpEntity<MultiValueMap<String,String>>googleProfileRequest = new HttpEntity<>(header2);
+
+        ResponseEntity<String>googleProfileResponse = rt.exchange(
+                "https://www.googleapis.com/oauth2/v2/userinfo",
+                HttpMethod.GET,
+                googleProfileRequest,
+                String.class
+        );
+
+        logger.info("[google] 구글 프로필 response :{}",googleProfileResponse);
+        GoogleProfile googleProfile = null;
+
+        try{
+            googleProfile = objectMapper.readValue(googleProfileResponse.getBody(),GoogleProfile.class);
+        }catch (JsonMappingException e)
+        {
+            e.printStackTrace();
+        }catch (JsonProcessingException e)
+        {
+            e.printStackTrace();
+        }
+
+        return googleProfile;
+    }
+
+    public GoogleProfile getGoogleLoginProfile(String  code)
+    {
+        logger.info("[getGoogleProfile] 구글 서버로부터 네이버 계정 정보 얻는 로직 시작.");
+        RestTemplate rt = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", googleClientId);
+        params.add("client_secret", googleClientSecret);
+        params.add("code", code);
+        params.add("redirect_uri", "http://localhost:8081/google_login");
+
+        HttpEntity<MultiValueMap<String, String>> googleTokenRequest =
+                new HttpEntity<>(params,headers);
+
+
+        ResponseEntity<String> response = rt.exchange(
+                "https://oauth2.googleapis.com/token",
+                HttpMethod.POST,
+                googleTokenRequest,
+                String.class
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        GoogleOAuthToken oAuthToken = null;
+        try {
+            oAuthToken = objectMapper.readValue(response.getBody(), GoogleOAuthToken.class);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+
+
+        HttpHeaders header2 = new HttpHeaders();
+        header2.add("Authorization", "Bearer "+oAuthToken.getAccess_token());
+
+        HttpEntity<MultiValueMap<String,String>>googleProfileRequest = new HttpEntity<>(header2);
+
+        ResponseEntity<String>googleProfileResponse = rt.exchange(
+                "https://www.googleapis.com/oauth2/v2/userinfo",
+                HttpMethod.GET,
+                googleProfileRequest,
+                String.class
+        );
+
+        logger.info("[google] 구글 프로필 response :{}",googleProfileResponse);
+        GoogleProfile googleProfile = null;
+
+        try{
+            googleProfile = objectMapper.readValue(googleProfileResponse.getBody(),GoogleProfile.class);
+        }catch (JsonMappingException e)
+        {
+            e.printStackTrace();
+        }catch (JsonProcessingException e)
+        {
+            e.printStackTrace();
+        }
+
+        return googleProfile;
     }
 
     /** 소셜 계정 로그인 로직 **/
@@ -233,7 +371,7 @@ public class SocialService {
             setFailResult(signUpResultDto);
             return signUpResultDto;
         } else {
-            User kakao_user = User.builder()
+            User kakaoUser = User.builder()
                     .name(kakaoProfile.getKakao_account().getProfile().getNickname())
                     .nickname(kakaoProfile.getKakao_account().getProfile().getNickname())
                     .email(kakaoProfile.getKakao_account().getEmail())
@@ -242,7 +380,7 @@ public class SocialService {
                     .password(passwordEncoder.encode(key))
                     .socialName(SocialName.KAKAO)
                     .build();
-            userRepository.save(kakao_user);
+            userRepository.save(kakaoUser);
             setSuccessResult(signUpResultDto);
             return signUpResultDto;
         }
@@ -252,7 +390,7 @@ public class SocialService {
     @Transactional
     public SignUpResultDto NaverSignUp(NaverProfile naverProfile)
     {
-        logger.info("[NaverSignUp] 네이버 로그인 Service 로직 동작 사용자 이메일 :{}",naverProfile.getResponse().getEmail());
+        logger.info("[NaverSignUp] 네이버 계정으로 회원가입 Service 로직 동작 사용자 이메일 :{}",naverProfile.getResponse().getEmail());
         User user = userRepository.findByEmail(naverProfile.getResponse().getEmail()).orElse(null);
         SignUpResultDto signUpResultDto = new SignUpResultDto();
         if(user != null)
@@ -261,7 +399,7 @@ public class SocialService {
             setFailResult(signUpResultDto);
             return signUpResultDto;
         }else{
-            User naver_user = User.builder()
+            User naverUser = User.builder()
                     .uid(naverProfile.getResponse().getEmail())
                     .name(naverProfile.getResponse().getName())
                     .nickname(naverProfile.getResponse().getNickname())
@@ -273,12 +411,42 @@ public class SocialService {
                     .build();
             String str = naverProfile.getResponse().getBirthyear()+"-"+naverProfile.getResponse().getBirthday();
             Date birth = Date.valueOf(str);
-            naver_user.setBirth(birth);
+            naverUser.setBirth(birth);
 
-            userRepository.save(naver_user);
+            userRepository.save(naverUser);
             setSuccessResult(signUpResultDto);
             return signUpResultDto;
         }
+    }
+
+    /** 구글 계정으로 회원가입 **/
+    public SignUpResultDto GoogleSignUp(GoogleProfile googleProfile)
+    {
+        logger.info("[GoogleSignUp] 구글 계정으로 회원가입 로직 동작. 사용자 이메일 :{}",googleProfile.getEmail());
+        User user = userRepository.findByEmail(googleProfile.getEmail()).orElse(null);
+        SignUpResultDto signUpResultDto = new SignUpResultDto();
+        if(user != null)
+        {
+            logger.info("[NaverSignUp] {}은 이미 존재하는 이메일. 회원가입 불가",googleProfile.getEmail());
+            setFailResult(signUpResultDto);
+            return signUpResultDto;
+        }else{
+            User googleUser = User.builder()
+                    .uid(googleProfile.getEmail())
+                    .name(googleProfile.getName())
+                    .nickname(googleProfile.getName())
+                    .email(googleProfile.getEmail())
+                    .phoneNum(" ")
+                    .roles(Collections.singletonList("ROLE_USER"))
+                    .password(passwordEncoder.encode(key))
+                    .socialName(SocialName.GOOGLE)
+                    .birth(Date.valueOf("2023-01-01"))
+                    .build();
+            userRepository.save(googleUser);
+            setSuccessResult(signUpResultDto);
+        }
+
+        return signUpResultDto;
     }
 
 

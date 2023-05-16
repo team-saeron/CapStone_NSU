@@ -88,14 +88,14 @@ public class PostController {
     }
 
     @PostMapping(value = "/writeMonth")
-    public String postWriteMouth(MonthlyPostRequestDto dto, MultipartHttpServletRequest request) throws Exception
+    public String postWriteMouth(MonthlyPostRequestDto dto, MultipartHttpServletRequest req) throws Exception
     {
         logger.info("[postWriteMouth] POST 월세타입의 게시물 사진 업로드 동작");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
-        List<MultipartFile> files = request.getFiles("btnAtt");
+        List<MultipartFile> files = req.getFiles("btnAtt");
 
         Long postId = postService.MonthlyPostWrite(dto, files, user.getUid());
 
@@ -130,13 +130,13 @@ public class PostController {
     } // 전세 타입의 post
 
     @PostMapping("/writeBeforePay")
-    public String writeBeforePay(LeasePostRequestDto dto,MultipartHttpServletRequest request) throws Exception
+    public String writeBeforePay(LeasePostRequestDto dto,MultipartHttpServletRequest req) throws Exception
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
 
-        List<MultipartFile> files = request.getFiles("btnAtt");
+        List<MultipartFile> files = req.getFiles("btnAtt");
         logger.info("[postWriteMouth] POST 게시물 전세 작성 Controller 동작.");
 
         Long postId = postService.LeasePostWrite(dto, files, user.getUid());
@@ -158,7 +158,7 @@ public class PostController {
         }
 
 
-        Page<Post>postList = postService.post_postList(pageable);
+        Page<Post>postList = postService.postPostList(pageable);
 
         model.addAttribute("postList",postList);
         model.addAttribute("category",AreaEnum.values());
@@ -171,9 +171,9 @@ public class PostController {
     }
 
     @GetMapping(value = "/post/detailPost/{postId}")
-    public String post_detailPost(@PathVariable("postId")Long PostId, Model model, RedirectAttributes attr)
+    public String post_detailPost(@PathVariable("postId")Long postId, Model model, RedirectAttributes attr)
     {
-        if (PostId == 0)
+        if (postId == 0)
         {
             attr.addFlashAttribute("no_post","작성하신 게시물이 없습니다");
             return "redirect:/";
@@ -183,39 +183,39 @@ public class PostController {
         Object principal = authentication.getPrincipal();
 
         boolean check;
-        String user_nickname = new String();
+        String userNickname = new String();
 
         if(principal =="anonymousUser"){
-            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 하지 않음 postId :{}",PostId);
+            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 하지 않음 postId :{}",postId);
             check = false;
-            user_nickname = "";
-            model.addAttribute("user_nickname",user_nickname);
+            userNickname = "";
+            model.addAttribute("user_nickname",userNickname);
             model.addAttribute("check",check);
             model.addAttribute("login_inform",false);
 
         }else {
             User user = (User)principal;
-            user_nickname = user.getNickname();
-            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",PostId,user_nickname);
-            check = postService.checkFavorite(PostId, user.getId());
-            model.addAttribute("user_nickname",user_nickname);
+            userNickname = user.getNickname();
+            logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",postId,userNickname);
+            check = postService.checkFavorite(postId, user.getId());
+            model.addAttribute("user_nickname",userNickname);
             model.addAttribute("check",check);
             model.addAttribute("login_inform",true);
 
         }
 
 
-        Post post = postService.findPost(PostId);
-        List<RoomPicture> images = postService.findPhoto(PostId);
-        List<Reply> replies = postService.findReply(PostId);
-        DetailPostDto detailPostDto = postService.detail_post(post);
-        User writer = userService.findPostByPostId(PostId);
+        Post post = postService.findPost(postId);
+        List<RoomPicture> images = postService.findPhoto(postId);
+        List<Reply> replies = postService.findReply(postId);
+        DetailPostDto detailPostDto = postService.detailPost(post);
+        User writer = userService.findPostByPostId(postId);
 
 
 
         model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
-        model.addAttribute("postId",PostId);
+        model.addAttribute("postId",postId);
         model.addAttribute("category",AreaEnum.values());
         model.addAttribute("images",images);
         model.addAttribute("writer",writer);
@@ -230,7 +230,7 @@ public class PostController {
     public String SearchPost(@PageableDefault Pageable pageable, Model model, PostSearchDto dto){
 
         logger.info("[SearchPost] 게시물 검색 Controller 동작. keyword : {}",dto.getKeyword());
-        Page<Post> posts = postService.SearchPost(dto.getKeyword(), pageable);
+        Page<Post> posts = postService.searchPost(dto.getKeyword(), pageable);
 
         logger.info("[SearchPost] 게시물 검색 결과 갯수: {}",posts.getTotalElements());
 
@@ -278,7 +278,7 @@ public class PostController {
         logger.info("[findArea] Service 에서 사용자가 클릭한 지역게시물 Enum에서 조회. 결과: {}",areaName);
 
 
-        Page<Post> posts = postService.SearchPostUsingCategory(areaName, pageable);
+        Page<Post> posts = postService.searchPostUsingCategory(areaName, pageable);
         logger.info("[SearchPostUsingCategory] 카테고리 클릭후 해당지역 조회 게시물 결과. 지역이름:{} 게시물 갯수:{}",areaName,posts.getTotalElements());
 
 

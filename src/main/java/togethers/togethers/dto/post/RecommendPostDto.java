@@ -9,7 +9,7 @@ public class RecommendPostDto {
 
     private Long postId;
 
-    private String filename;
+    private String fileName;
 
     private String subject;
 
@@ -20,7 +20,7 @@ public class RecommendPostDto {
     {
         this.postId = post.getPostId();
 
-        this.filename = post.getFileName();
+        this.fileName = post.getFileName();
 
         this.subject = post.getTitle();
 

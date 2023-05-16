@@ -12,7 +12,7 @@ public class PostEditRequestDto {
     private String title;
     private Boolean getType;
     private Boolean roomType;
-    private String mounthly;
+    private String monthly;
     private String lease;
     private String context;
 }
