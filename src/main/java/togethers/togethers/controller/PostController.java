@@ -182,24 +182,24 @@ public class PostController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
 
-        boolean check;
+        boolean likeCheck;
         String userNickname = new String();
 
         if(principal =="anonymousUser"){
             logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 하지 않음 postId :{}",postId);
-            check = false;
+            likeCheck = false;
             userNickname = "";
             model.addAttribute("user_nickname",userNickname);
-            model.addAttribute("check",check);
+            model.addAttribute("check",likeCheck);
             model.addAttribute("login_inform",false);
 
         }else {
             User user = (User)principal;
             userNickname = user.getNickname();
             logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",postId,userNickname);
-            check = postService.checkFavorite(postId, user.getId());
+            likeCheck = postService.checkFavorite(postId, user.getId());
             model.addAttribute("user_nickname",userNickname);
-            model.addAttribute("check",check);
+            model.addAttribute("check",likeCheck);
             model.addAttribute("login_inform",true);
 
         }
@@ -239,7 +239,7 @@ public class PostController {
 
     }
 
-    @GetMapping(value = "/detailPost/Like")
+    @GetMapping(value = "/post/detailPost/like")
     public String saveLike(@RequestParam("postId")Long postId,RedirectAttributes attr)
     {
 
@@ -256,7 +256,13 @@ public class PostController {
         }else{
             User user = (User)principal;
             logger.info("[saveLike] 게시물 좋아요 로직 동작. postId : {}, userId:{}",postId,user.getUid());
-            postService.saveLike(user.getId(), postId);
+            boolean likeResult = postService.saveLike(user.getId(), postId);
+            if(likeResult)
+            {
+                attr.addFlashAttribute("like_msg","좋아요가 등록되었습니다");
+            }else {
+                attr.addFlashAttribute("like_msg","좋아요가 취소되었습니다");
+            }
         }
         return "redirect:/post/detailPost/"+postId;
 

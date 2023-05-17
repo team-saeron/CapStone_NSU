@@ -224,6 +224,7 @@ public class PostService {
 
         logger.info("[detail_post] 게시물 세부사항 서비스 로직 동작 PostId:{},user Uid:{}",post.getPostId(),user.getUid());
         DetailPostDto detailPostDto = DetailPostDto.builder()
+                .postId(post.getPostId())
                 .title(post.getTitle())
                 .context(post.getContext())
                 .monthly(post.getMonthly())

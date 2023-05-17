@@ -1,3 +1,5 @@
+
+
 .post_img{
 background-color:white;
     width:  850px;
@@ -206,7 +208,7 @@ list {
 text-align: -webkit-match-parent;
 }
 .content_description{
-margin-left:-750px;
+margin-left:-600px;
 }
 .content_name{
  border-bottom:1px solid #f5f5f5;
@@ -228,7 +230,7 @@ border-radius:5%;
 border:1px solid #e6e6e6;
 width:350px;
 position:absolute;
-left:635px;
+left:600px;
 top:5px;
 height:300px;
 }
@@ -277,6 +279,34 @@ margin-left:28px;
 .pattern{
 margin-left:46px;
 }
-.Like{
+.like_btn{
+display:flex;
+justify-content:center;
+position:relative;
 
+}
+.Like{
+position:absolute;
+bottom:11px;
+}
+.btn_like{
+margin-top:25px;
+height:50px;
+width:80px;
+background-color:white;
+display:flex;
+border:0px solid gray;
+}
+.cont_tit{
+font-size:30px;
+margin-left:160px;
+margin-top:30px;
+}
+.cont{
+font-size:20px;
+margin-left:165px;
+}
+.content_detail{
+display:inline-block;
+width:980px;
 }
