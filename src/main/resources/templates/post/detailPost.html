@@ -44,9 +44,11 @@
 
       <div class="PersonalInfo">
         <div class="Personal">
-          <i class="fa-solid fa-user fa fa-4x PersonalIcon"></i>
           <addr title="매칭률"><i class="fa-solid fa-fire fa-4x match "></i></addr>
           <span class="percent">80%</span>
+          <div class="like_btn">
+            <a><button class="btn_like"><i class="fa-solid fa-heart fa-2x Like"></i></button></a>
+          </div>
         </div>
         <span class="WriterId"th:text="${post.Uid}"></span>
         <span>님의 정보</span>
@@ -68,9 +70,7 @@
 
 
       </div>
-      <div class="like_btn">
-      <button class="btn_like"><i class="fa-solid fa-heart fa-2x Like"></i></button>
-      </div>
+
       <!-- 댓글 html-->
       <div class="comment">
 
