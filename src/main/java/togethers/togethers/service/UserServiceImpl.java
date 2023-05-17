@@ -204,20 +204,21 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public List<Post> matching(String uid) {
-        log.info("[matching] 매칭 알고리즘 시작. userID:{}",uid);
         User user = userRepository.findByUid(uid).orElse(null);
         UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
         List<UserDetail> sameGenderList = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
 
         List<UserDetail> sameMbtiList = new ArrayList<>();
-        Mbti mbti = mbtiRepository.findByMyMbti(ud.getMbti()).orElse(null);
+        Mbti userMbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
+
+        log.info("[matching] 매칭 알고리즘 시작. userID:{}, userMbti :{}",uid,ud.getMbti());
 
 
 
         for (UserDetail i : sameGenderList)
         {
             log.info(i.getMbti());
-            if (i.getMbti().equals(mbti.getFirstMbti()) || i.getMbti().equals(mbti.getSecondMbti()) || i.getMbti().equals(mbti.getThirdMbti()) || i.getMbti().equals(mbti.getFourthMbti()))
+            if (i.getMbti().equals(userMbti.getFirstMbti()) || i.getMbti().equals(userMbti.getSecondMbti()) || i.getMbti().equals(userMbti.getThirdMbti()) || i.getMbti().equals(userMbti.getFourthMbti()))
             {
                 sameMbtiList.add(i);
             }
@@ -246,11 +247,12 @@ public class UserServiceImpl implements UserService {
                 User sameGenderUser = userRepository.findByUserDetail_UserDetailId(userDetail.getUserDetailId()).orElse(null);
                 log.info("[matching] same_gender_user id :{}",sameGenderUser);
 
-                if(sameGenderUser == null || sameGenderUser.getPost() == null)
+                if(sameGenderUser == null || sameGenderUser.getPost() == null || user.getId() == sameGenderUser.getId())
                 {
                     continue;
                 }else {
                     Post post = postRepository.findBypostId(sameGenderUser.getPost().getPostId()).orElse(null);
+                    log.info("[matching] 추천 게시물에 추가할 게시물 ok : {}",post.getPostId());
                     recommendPost.add(post);
                 }
                 if (recommendPost.size() == 4)

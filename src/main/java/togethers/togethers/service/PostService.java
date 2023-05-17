@@ -258,7 +258,7 @@ public class PostService {
         Post post = postRepository.findById(postId).orElse(null);
 
         RoomPicture roomPicture = new RoomPicture();
-        String projectPath =  System.getProperty("user.dir")+"/src/main/resources/static/files";
+        String projectPath =  System.getProperty("user.dir")+"/src/main/resources/static/images";
         //window는 경로를 //src//main//이렇게 슬래쉬 2개 필요.
 
         UUID uuid = UUID.randomUUID();
@@ -270,7 +270,7 @@ public class PostService {
 
         roomPicture.setFilename(fileName);
 
-        roomPicture.setFilepath("/files/" + fileName);
+        roomPicture.setFilepath("/images/" + fileName);
         post.setFileName(fileName);
         roomPicture.setPost(post);
 

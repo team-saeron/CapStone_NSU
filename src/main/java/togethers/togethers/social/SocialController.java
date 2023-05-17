@@ -28,7 +28,7 @@ public class SocialController {
     {
         logger.info("[KakaoJoin] Kakao 계정으로 회원가입 컨트롤러 동작.");
 
-        KakaoProfile kakaoProfile = socialService.getKakaoProfile(code);
+        KakaoProfile kakaoProfile = socialService.getJoinKakaoProfile(code);
 
         SignUpResultDto signUpResultDto = socialService.KakaoSignUp(kakaoProfile);
         if (signUpResultDto.getCode()==-1)
@@ -46,7 +46,7 @@ public class SocialController {
     public String KakaoLogin(String code, RedirectAttributes attr, HttpServletResponse res)
     {
         logger.info("[KakaoLogin] 카카오 로그인 컨트롤러 동작.");
-        KakaoProfile kakaoProfile = socialService.getKakaoProfile(code);
+        KakaoProfile kakaoProfile = socialService.getLoginKakaoProfile(code);
 
         SocialLoginDto socialLoginDto = SocialLoginDto.builder()
                 .email(kakaoProfile.getKakao_account().getEmail())

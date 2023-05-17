@@ -16,7 +16,7 @@ public class Mbti {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    String myMbti;
+    String mbti;
 
     String firstMbti;
 

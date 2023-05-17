@@ -49,19 +49,27 @@ public class HomeController {
             if(user.getUserDetail() == null)
             {
                 logger.info("userDetail is null!!!");
-                model.addAttribute("userdetail_id" , 0);
+                model.addAttribute("userDetail" , false);
                 model.addAttribute("no_userdetail","나를 소개하는 글을 작성해 주세요!");
             }
             else if(user.getUserDetail() != null)
             {
+                model.addAttribute("userDetail" , true);
+                List<RecommendPostDto>recommendPostDto = new ArrayList<>();
                 List<Post>matching = userService.matching(user.getUid());
-                List<RecommendPostDto> recommendPostDto = new ArrayList<>();
-                for (Post post : matching)
+                if (matching.size()>=4)
                 {
-                    recommendPostDto.add(new RecommendPostDto(post));
+                    for (Post post : matching)
+                    {
+                        logger.info("[homeController] 홈 컨트롤러에서 recommendDto에 matching 게시물 저장 시도.");
+                        recommendPostDto.add(new RecommendPostDto(post));
+                    }
+                    model.addAttribute("recommendSize" , true);
+                    model.addAttribute("recommendPostDto",recommendPostDto);
+                }else {
+                    model.addAttribute("recommendSize" , false);
+
                 }
-                model.addAttribute("userdetail_id" , 1);
-                model.addAttribute("recommendPostDto",recommendPostDto);
 
                 logger.info("추천 게시물 갯수 : {} ",recommendPostDto.size());
 

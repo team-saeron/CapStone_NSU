@@ -87,14 +87,6 @@ public class Post {
     private Integer RoomPay_type;
     private String area;
 
-//    @OneToMany(mappedBy = "post",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},
-//            orphanRemoval = true)
-//    List<RoomPicture>images = new ArrayList<>();
-
-//    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
-//    RoomPicture photo;
-
-    //post가 filename을 알고있는 상태라면? --> post.filename으로 출력?
 
     private String fileName;
 

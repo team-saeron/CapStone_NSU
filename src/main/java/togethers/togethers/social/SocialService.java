@@ -77,8 +77,71 @@ public class SocialService {
     }
 
 
-    /**카카오로부터 카카오 계정 정보 얻는 로직.**/
-    public KakaoProfile getKakaoProfile(String code)
+    /**카카오로부터 회원가입할때 카카오 계정 정보 얻는 로직.**/
+    public KakaoProfile getJoinKakaoProfile(String code)
+    {
+        logger.info("[getKakaoProfile] 카카오 서버로 부터 카카오 계정 정보 얻는 로직 수행");
+        RestTemplate rt = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", kakaoClientId);
+        params.add("redirect_uri", "http://localhost:8081/kakao_callback");
+        params.add("code", code);
+
+        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
+                new HttpEntity<>(params, headers);
+
+        ResponseEntity<String> response = rt.exchange(
+                "https://kauth.kakao.com/oauth/token",
+                HttpMethod.POST,
+                kakaoTokenRequest,
+                String.class
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoOAuthToken oAuthToken = null;
+        try {
+            oAuthToken = objectMapper.readValue(response.getBody(), KakaoOAuthToken.class);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        logger.info("[kakaoCallback] code : {}, KakaoToken", code, oAuthToken);
+
+
+        /**카카오 서버로 부터받은 Token을 이용해 사용자 정보 요청하기**/
+        RestTemplate rt2 = new RestTemplate();
+        HttpHeaders headers2 = new HttpHeaders();
+        headers2.add("Authorization", "Bearer " + oAuthToken.getAccess_token());
+        headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest =
+                new HttpEntity<>(headers2);
+
+        ResponseEntity<String> response2 = rt2.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.POST,
+                kakaoProfileRequest,
+                String.class
+        );
+
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        KakaoProfile kakaoProfile = null;
+        try {
+            kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return kakaoProfile;
+    }
+
+    public KakaoProfile getLoginKakaoProfile(String code)
     {
         logger.info("[getKakaoProfile] 카카오 서버로 부터 카카오 계정 정보 얻는 로직 수행");
         RestTemplate rt = new RestTemplate();

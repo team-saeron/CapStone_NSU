@@ -14,7 +14,7 @@
     <div class="slider"> <!--이미지를 담고 있는 div-->
 
       <div class="slider__item" th:each="image : ${images}">
-        <img class="post_img" th:src="@{/files/}+${image.filename}">
+        <img class="post_img" th:src="@{/images/}+${image.filename}">
       </div>
     </div>
     <!--방과 사람 정보-->

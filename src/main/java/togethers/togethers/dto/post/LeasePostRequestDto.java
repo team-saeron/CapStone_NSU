@@ -2,8 +2,11 @@ package togethers.togethers.dto.post;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class LeasePostRequestDto {
 
     private String title;

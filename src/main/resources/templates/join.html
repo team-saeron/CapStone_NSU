@@ -95,7 +95,7 @@
             </div>
             <div class="join_sns">
                 <ul class="list-group">
-                    <li class="list-group-item"><a class="login_sns_icon"  th:href="@{https://kauth.kakao.com/oauth/authorize(client_id = ${kakao_client_id}, redirect_uri='http://loaclhost:8081/kakao_callback', response_type = 'code')}"><i class="fa-solid fa-comment"></i> 카카오 계정으로 가입하기</a></li>
+                    <li class="list-group-item"><a class="login_sns_icon"  th:href="@{https://kauth.kakao.com/oauth/authorize(client_id = ${kakao_client_id}, redirect_uri = 'http://localhost:8081/kakao_callback' , response_type = 'code')}"><i class="fa-solid fa-comment"></i> 카카오 계정으로 가입하기</a></li>
                     <li class="list-group-item"><a class="login_sns_icon"  th:href="@{https://nid.naver.com/oauth2.0/authorize(response_type = 'code', client_id = ${naver_client_id}, redirect_uri = 'http://localhost:8081/naver_callback')}"><i class="fa-solid fa-n"></i> 네이버 계정으로 가입하기</a></li>
                     <li class="list-group-item"><a class="login_sns_icon"  th:href="@{https://accounts.google.com/o/oauth2/v2/auth(response_type = 'code', client_id = ${google_client_id}, redirect_uri = 'http://localhost:8081/google_callback', scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')}"><i class="fa-brands fa-google"></i> 구글 계정으로 가입하기</a></li>
                 </ul>
