@@ -88,7 +88,7 @@ public class SocialService {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", kakaoClientId);
-        params.add("redirect_uri", "http://localhost:8081/kakao_callback");
+        params.add("redirect_uri", "http://localhost:4000/kakao_callback");
         params.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
@@ -151,7 +151,7 @@ public class SocialService {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", kakaoClientId);
-        params.add("redirect_uri", "http://localhost:8081/kakao_login");
+        params.add("redirect_uri", "http://localhost:4000/kakao_login");
         params.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
@@ -281,7 +281,7 @@ public class SocialService {
         params.add("client_id", googleClientId);
         params.add("client_secret", googleClientSecret);
         params.add("code", code);
-        params.add("redirect_uri", "http://localhost:8081/google_callback");
+        params.add("redirect_uri", "http://localhost:4000/google_callback");
 
         HttpEntity<MultiValueMap<String, String>> googleTokenRequest =
                 new HttpEntity<>(params,headers);
@@ -345,7 +345,7 @@ public class SocialService {
         params.add("client_id", googleClientId);
         params.add("client_secret", googleClientSecret);
         params.add("code", code);
-        params.add("redirect_uri", "http://localhost:8081/google_login");
+        params.add("redirect_uri", "http://localhost:4000/google_login");
 
         HttpEntity<MultiValueMap<String, String>> googleTokenRequest =
                 new HttpEntity<>(params,headers);
