@@ -259,7 +259,8 @@ public class PostService {
 
         RoomPicture roomPicture = new RoomPicture();
         String projectPath =  System.getProperty("user.dir")+"/src/main/resources/static/images";
-        //window는 경로를 //src//main//이렇게 슬래쉬 2개 필요.
+//        winddow : String projectPath =  System.getProperty("user.dir")+"//src//main//resources//static//images";
+
 
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + file.getOriginalFilename();
@@ -271,6 +272,7 @@ public class PostService {
         roomPicture.setFilename(fileName);
 
         roomPicture.setFilepath("/images/" + fileName);
+//      window :  roomPicture.setFilepath("//images//" + fileName);
         post.setFileName(fileName);
         roomPicture.setPost(post);
 

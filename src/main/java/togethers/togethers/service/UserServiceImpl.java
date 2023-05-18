@@ -179,6 +179,8 @@ public class UserServiceImpl implements UserService {
         message.setTo(mailDto.getAddress());
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getMessage());
+
+        // 각자 구글계정으로 변경
         message.setFrom("wjdghrbs0504@gmail.com");
         message.setReplyTo("wjdghrbs0504@gmail.com");
         System.out.println("message"+message);
