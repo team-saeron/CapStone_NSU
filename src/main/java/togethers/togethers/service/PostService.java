@@ -266,7 +266,6 @@ public class PostService {
         String fileName = uuid + "_" + file.getOriginalFilename();
 
         File saveFile = new File(projectPath, fileName);
-
         file.transferTo(saveFile);
 
         roomPicture.setFilename(fileName);
