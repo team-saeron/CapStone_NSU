@@ -127,7 +127,8 @@ public class SocialController {
     @GetMapping(value = "/google_callback")
     public String GoogleSocialSignUp(String code, RedirectAttributes attr)
     {
-        logger.info("[GoogleSocialSignUp] 구글 계정으로 회원가입 컨트롤러 동작");
+
+        logger.info("[GoogleSocialSignUp] 구글 계정으로 회원가입 컨트롤러 동작 code : {}", code);
         GoogleProfile googleProfile = socialService.getGoogleProfile(code);
 
         SignUpResultDto signUpResultDto = socialService.GoogleSignUp(googleProfile);
@@ -146,6 +147,7 @@ public class SocialController {
     @GetMapping(value = "/google_login")
     public String GoogleLogin(String code,RedirectAttributes attr, HttpServletResponse res)
     {
+        logger.info("[GoogleSocialSignUp] 구글 계정으로 로그인 컨트롤러 동작 code : {}", code);
         GoogleProfile googleProfile = socialService.getGoogleLoginProfile(code);
         SocialLoginDto socialLoginDto = SocialLoginDto.builder()
                 .email(googleProfile.getEmail())

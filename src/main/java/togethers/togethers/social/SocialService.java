@@ -304,7 +304,6 @@ public class SocialService {
             e.printStackTrace();
         }
 
-//        https://www.googleapis.com/auth/userinfo.profile
 
         HttpHeaders header2 = new HttpHeaders();
         header2.add("Authorization", "Bearer "+oAuthToken.getAccess_token());
@@ -334,7 +333,7 @@ public class SocialService {
         return googleProfile;
     }
 
-    public GoogleProfile getGoogleLoginProfile(String  code)
+    public GoogleProfile getGoogleLoginProfile(String code)
     {
         logger.info("[getGoogleProfile] 구글 서버로부터 네이버 계정 정보 얻는 로직 시작.");
         RestTemplate rt = new RestTemplate();
@@ -351,12 +350,15 @@ public class SocialService {
                 new HttpEntity<>(params,headers);
 
 
+
         ResponseEntity<String> response = rt.exchange(
                 "https://oauth2.googleapis.com/token",
                 HttpMethod.POST,
                 googleTokenRequest,
                 String.class
         );
+
+        logger.info("[getGoogleProfile] code로 인증을 받은뒤 응답받은 token 값 : {}",response);
 
         ObjectMapper objectMapper = new ObjectMapper();
         GoogleOAuthToken oAuthToken = null;

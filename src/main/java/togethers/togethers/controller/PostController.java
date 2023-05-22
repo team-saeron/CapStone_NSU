@@ -195,7 +195,7 @@ public class PostController {
             likeCheck = false;
             userNickname = "";
             model.addAttribute("user_nickname",userNickname);
-            model.addAttribute("check",likeCheck);
+            model.addAttribute("likeCheck",likeCheck);
             model.addAttribute("login_inform",false);
 
         }else {
@@ -204,7 +204,7 @@ public class PostController {
             logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",postId,userNickname);
             likeCheck = postService.checkFavorite(postId, user.getId());
             model.addAttribute("user_nickname",userNickname);
-            model.addAttribute("check",likeCheck);
+            model.addAttribute("likeCheck",likeCheck);
             model.addAttribute("login_inform",true);
 
         }
