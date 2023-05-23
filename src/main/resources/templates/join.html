@@ -65,10 +65,10 @@
         </div>
             <h5>비밀번호</h5>
         <div class="join__column" id="join_passward">
-            <input autocomplete="false" type="password" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2"class="form-control key" required />
+            <input autocomplete="false" type="password" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2"class="form-control key"  minlength="4" maxlength="10" required />
             <div class="keyShow">비밀번호 표시</div>
 
-            <input autocomplete="false" type="password" placeholder="비밀번호" th:field="*{password}" aria-label="passward" aria-describedby="button-addon2"class="form-control key" required />
+            <input autocomplete="false" type="password" placeholder="비밀번호" th:field="*{password}" aria-label="passward" aria-describedby="button-addon2"class="form-control key" minlength="4" maxlength="10" required />
         </div>
         <div class="join__column" id="join_birth">
             <h5>생년월일</h5>
@@ -127,6 +127,7 @@
 
 
     </script>
+
 </th:block>
 
 </body>
