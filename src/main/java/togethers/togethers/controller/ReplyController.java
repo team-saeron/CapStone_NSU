@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import togethers.togethers.service.ReplyService;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@RequiredArgsConstructor
 public class ReplyController {
 
     Logger logger = LoggerFactory.getLogger(PostController.class);
@@ -23,12 +25,6 @@ public class ReplyController {
     private final ReplyService replyService;
 
 
-    @Autowired
-    public ReplyController(PostService postService, ReplyService replyService)
-    {
-        this.postService = postService;
-        this.replyService = replyService;
-    }
 
 
     @PostMapping(value = "/post/detailPost/reply")

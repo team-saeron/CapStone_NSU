@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
     private final PostService postService;
     private final UserService userService;
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
-
-    @Autowired
-    public HomeController(PostService postService,UserService userService) {
-        this.postService = postService;
-        this.userService = userService;
-    }
 
 
     @GetMapping(value = "/")
@@ -100,6 +96,9 @@ public class HomeController {
         return "home";
     }
 
-
+    @GetMapping(value="/kakaoMap")
+    public String map(){
+        return "kakaoMap";
+    }
 
 }

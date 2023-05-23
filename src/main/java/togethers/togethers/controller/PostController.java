@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,7 @@ import togethers.togethers.dto.post.DetailPostDto;
 import togethers.togethers.dto.post.LeasePostRequestDto;
 import togethers.togethers.dto.post.MonthlyPostRequestDto;
 import togethers.togethers.dto.post.PostSearchDto;
-import togethers.togethers.entity.Post;
-import togethers.togethers.entity.Reply;
-import togethers.togethers.entity.RoomPicture;
-import togethers.togethers.entity.User;
+import togethers.togethers.entity.*;
 import togethers.togethers.service.PostService;
 import togethers.togethers.service.UserService;
 
@@ -34,6 +32,7 @@ import java.util.List;
 
 
 @Controller
+@RequiredArgsConstructor
 public class PostController {
 
 
@@ -42,12 +41,6 @@ public class PostController {
     private final UserService userService;
     private AreaEnum[] area = AreaEnum.values();
 
-    @Autowired
-    public PostController(PostService postService, UserService userService)
-    {
-        this.postService = postService;
-        this.userService = userService;
-    }
     Logger logger = LoggerFactory.getLogger(PostController.class);
 
 
@@ -206,7 +199,7 @@ public class PostController {
 
 
         Post post = postService.findPost(postId);
-        List<RoomPicture> images = postService.findPhoto(postId);
+        List<AwsFileUrl> awsFileUrls = postService.findAwsUrl(postId);
         List<Reply> replies = postService.findReply(postId);
         DetailPostDto detailPostDto = postService.detailPost(post);
         User writer = userService.findPostByPostId(postId);
@@ -217,7 +210,7 @@ public class PostController {
         model.addAttribute("replies",replies);
         model.addAttribute("postId",postId);
         model.addAttribute("category",AreaEnum.values());
-        model.addAttribute("images",images);
+        model.addAttribute("images",awsFileUrls);
         model.addAttribute("writer",writer);
 
         return "post/detailPost";

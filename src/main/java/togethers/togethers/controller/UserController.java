@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,18 +25,14 @@ import javax.validation.Valid;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class UserController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
-    private final SignService signService;
 
-    @Autowired
-    public UserController(UserService userService, SignService signService){
-        this.userService=userService;
-        this.signService = signService;
-    }
+
 
     /************************ 마이 페이지 관련 GET, POST 매핑********************/
     @GetMapping(value = "/member/mypage")

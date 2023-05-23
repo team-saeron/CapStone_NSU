@@ -43,8 +43,6 @@
             <div class="join__column" id="join_id">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" th:field="*{id}" id="id" name="id" oninput="checkId()" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2" required>
-                    <span class = "id_ok"> 사용 가능한 아이디 입니다.</span>
-                    <span class = "id_already">이미 존재하는 아이디 입니다.</span>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
                     </div>
@@ -53,10 +51,10 @@
             </div>
             <h5>비밀번호</h5>
             <div class="join__column" id="join_passward">
-                <input type="password" class="form-control" th:field="*{password}" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2" required>
-                <i class="fas fa-eye"></i>
-                <input type="password" class="form-control" placeholder="비밀번호 확인" aria-label="check_passward" aria-describedby="button-addon2" required>
-                <i class="fas fa-eye" id="show-password"></i>
+                <input autocomplete="false" type="password" placeholder="비밀번호" aria-label="passward" aria-describedby="button-addon2"class="form-control key"  minlength="6" maxlength="15" required />
+                <div class="keyShow">비밀번호 표시</div>
+
+                <input autocomplete="false" type="password" placeholder="비밀번호" th:field="*{password}" aria-label="passward" aria-describedby="button-addon2"class="form-control key" minlength="6" maxlength="15" required />
             </div>
             <div class="join__column" id="join_birth">
                 <h5>생년월일</h5>

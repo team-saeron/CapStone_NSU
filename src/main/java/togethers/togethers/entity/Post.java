@@ -64,6 +64,9 @@ public class Post {
     @OneToOne(mappedBy = "post",fetch = FetchType.LAZY) // user로 mappedBy로 바꾸기
     private User user;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<AwsFileUrl>awsFileUrls = new ArrayList<>();
+
 
 
     private String title;
@@ -73,7 +76,6 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String context;
 
-    //    @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
 
 
