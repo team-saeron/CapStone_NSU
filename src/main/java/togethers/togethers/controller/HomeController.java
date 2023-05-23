@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.dto.post.RecentlyPostDto;
@@ -21,17 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
     private final PostService postService;
     private final UserService userService;
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
-
-    @Autowired
-    public HomeController(PostService postService,UserService userService) {
-        this.postService = postService;
-        this.userService = userService;
-    }
 
 
     @GetMapping(value = "/")
@@ -105,7 +100,5 @@ public class HomeController {
     public String map(){
         return "kakaoMap";
     }
-
-
 
 }

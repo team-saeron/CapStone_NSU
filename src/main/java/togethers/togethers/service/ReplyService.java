@@ -1,6 +1,7 @@
 package togethers.togethers.service;
 
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class ReplyService {
     private final Logger logger = LoggerFactory.getLogger(PostService.class);
 
@@ -33,13 +35,7 @@ public class ReplyService {
 
     private final NotificationRepository notificationRepository;
 
-    @Autowired
-    public ReplyService(ReplyRepository repository, UserRepository userRepository, PostRepository postRepository,NotificationRepository notificationRepository) {
-        this.replyRepository = repository;
-        this.userRepository = userRepository;
-        this.postRepository = postRepository;
-        this.notificationRepository = notificationRepository;
-    }
+
 
     @Transactional(readOnly = false)
     public ReplyResultDto Reply_write(ReplyRequestDto dto)

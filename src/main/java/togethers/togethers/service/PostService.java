@@ -31,27 +31,18 @@ import java.util.UUID;
 public class PostService {
 
     private final Logger logger = LoggerFactory.getLogger(PostService.class);
-
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
     private final PostRepository postRepository;
-    @Autowired
     private final RoompictureRepository roompictureRepository;
 
-    @Autowired
     private final ReplyRepository replyRepository;
 
-    @Autowired
     private final FavoriteRepository likeRepository;
 
-    @Autowired
     private final NotificationRepository notificationRepository;
 
-    @Autowired
     private final AwsFileUrlRepository awsFileUrlRepository;
 
-    @Autowired
     private final AwsS3Service awsS3Service;
 
     @Transactional
@@ -136,9 +127,6 @@ public class PostService {
         user.setPost(post);
         userRepository.flush();
 
-//        for (MultipartFile file : files) {
-//            photoSave(post.getPostId(),file);
-//        }
         awsS3Service.upload(post.getPostId(), files);
         return post.getPostId();
 
@@ -157,10 +145,8 @@ public class PostService {
         user.setPost(post);
         userRepository.flush();
 
-//        for (MultipartFile file : files) {
-//            photoSave(post.getPostId(),file);
-//        }
         awsS3Service.upload(post.getPostId(), files);
+
         return post.getPostId();
     }
 
@@ -261,41 +247,6 @@ public class PostService {
         return postRepository.findAll(pageRequest);
     }
 
-
-
-
-    @Transactional
-    public Long photoSave(Long postId, MultipartFile file)throws Exception //이미지 저장로직
-    {
-        logger.info("[Photo_save] 이미지 저장로직 동작 post_id:{}, 사진 제목:{}",postId,file.getOriginalFilename());
-
-
-        Post post = postRepository.findById(postId).orElse(null);
-
-        RoomPicture roomPicture = new RoomPicture();
-        String projectPath =  System.getProperty("user.dir")+"/src/main/resources/static/images";
-//        winddow : String projectPath =  System.getProperty("user.dir")+"//src//main//resources//static//images";
-
-
-        UUID uuid = UUID.randomUUID();
-        String fileName = uuid + "_" + file.getOriginalFilename();
-
-        File saveFile = new File(projectPath, fileName);
-        file.transferTo(saveFile);
-
-        roomPicture.setFilename(fileName);
-
-        roomPicture.setFilepath("/images/" + fileName);
-//      window :  roomPicture.setFilepath("//images//" + fileName);
-        post.setFileName(fileName);
-        roomPicture.setPost(post);
-
-        postRepository.flush();
-        roompictureRepository.save(roomPicture);
-
-        return roomPicture.getId();
-    }
-
     @Transactional
     public Page<Post> searchPost(String keyword, Pageable pageable)
     {
@@ -315,7 +266,6 @@ public class PostService {
 
         return postRepository.findByAreaContaining(areaName,pageRequest);
     }
-
 
 
     @Transactional

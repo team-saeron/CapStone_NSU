@@ -22,6 +22,5 @@ public class AwsFileUrl {
     @JoinColumn(name = "post_id")
     private Post post;
 
-//    private String filename;
     private String filepath;
 }

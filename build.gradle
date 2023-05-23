@@ -47,7 +47,7 @@ dependencies {
 	implementation 'org.webjars:bootstrap:3.3.7'
 	implementation 'org.webjars:jquery:3.1.1-1'
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.5.RELEASE'
 
 }
 

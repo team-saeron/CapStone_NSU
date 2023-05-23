@@ -12,15 +12,13 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpStatus;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import togethers.togethers.Enum.Code;
 import togethers.togethers.entity.AwsFileUrl;
 import togethers.togethers.entity.Post;
-import togethers.togethers.entity.RoomPicture;
 import togethers.togethers.repository.AwsFileUrlRepository;
 import togethers.togethers.repository.PostRepository;
 
@@ -62,13 +60,9 @@ public class AwsS3Service  {
     }
 
     public void upload(Long postId, List<MultipartFile> multipartFile) {
-//        List<String> imgUrlList = new ArrayList<>();
+
         Post post = postRepository.findById(postId).orElse(null);
 
-        String projectPath =  System.getProperty("user.dir")+"/src/main/resources/static/images";
-//        winddow : String projectPath =  System.getProperty("user.dir")+"//src//main//resources//static//images";
-
-        // forEach 구문을 통해 multipartFile로 넘어온 파일들 하나씩 fileNameList에 추가
         for (MultipartFile file : multipartFile) {
             String fileName = createFileName(file.getOriginalFilename());
             ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -78,7 +72,6 @@ public class AwsS3Service  {
             try(InputStream inputStream = file.getInputStream()) {
                 s3Client.putObject(new PutObjectRequest(bucket+"/post/image", fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
-//                imgUrlList.add(s3Client.getUrl(bucket+"/post/image/"+postId, fileName).toString());
                 AwsFileUrl awsFileUrl = new AwsFileUrl(post, s3Client.getUrl(bucket + "/post/image",fileName).toString());
                 awsFileUrlRepository.save(awsFileUrl);
 
@@ -89,8 +82,7 @@ public class AwsS3Service  {
             }
 
         }
-//        post.setFileUrl(imgUrlList);
-//        return imgUrlList;
+
     }
 
     // 이미지파일명 중복 방지
@@ -100,11 +92,8 @@ public class AwsS3Service  {
     public void deleteFile(String fileName) {
         s3Client.deleteObject(new DeleteObjectRequest(bucket, fileName));
     }
-    // 파일 유효성 검사
     private String getFileExtension(String fileName) {
-//        if (fileName.length() == 0) {
-//            throw new PrivateException(Code.WRONG_INPUT_IMAGE);
-//        }
+
         ArrayList<String> fileValidate = new ArrayList<>();
         fileValidate.add(".jpg");
         fileValidate.add(".jpeg");
@@ -113,9 +102,7 @@ public class AwsS3Service  {
         fileValidate.add(".JPEG");
         fileValidate.add(".PNG");
         String idxFileName = fileName.substring(fileName.lastIndexOf("."));
-//        if (!fileValidate.contains(idxFileName)) {
-//            throw new PrivateException(Code.WRONG_IMAGE_FORMAT);
-//        }
+
         return fileName.substring(fileName.lastIndexOf("."));
     }
 

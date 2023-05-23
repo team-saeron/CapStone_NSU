@@ -33,6 +33,8 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
 #offcanvasNavbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }
+.dropdown-menu{
+
 
     </style>
 
@@ -70,6 +72,22 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
     <nav class="navbar">
 
       <ul class="nav justify-content-end" style="widthL500px; position:fixed; right:-10px;">
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="color:white;">
+            <i class="fa-solid fa-bell fa-lg" style="color:white;"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">평택붉은게님이 좋아요를 눌렀습니다.</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">댓글이 달렸습니다</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"></a></li>
+          </ul>
+        </li>
+
+
         <li class="nav-item">
           <a class="nav-link active" href="/member/mypage" style="color:white;">마이페이지</a>
         </li>
@@ -94,14 +112,6 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
           <a class="nav-link" th:href="@{/post/detailPost/{postId}(postId = ${postId})}"  style="color:white;" >내 게시물 보기</a>
         </li>
 
-
-
-
-
-
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-bell fa-lg" style="color:white;"></i></a>
-        </li>
       </ul>
       </h4>
 

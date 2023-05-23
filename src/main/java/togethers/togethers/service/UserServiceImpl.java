@@ -34,20 +34,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
     private final PostRepository postRepository;
-    @Autowired
     private final UserDetailRepository userDetailRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    @Autowired
-    private MbtiRepository mbtiRepository;
+    private final MbtiRepository mbtiRepository;
 
 
     @Override

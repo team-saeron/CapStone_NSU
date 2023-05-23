@@ -1,5 +1,6 @@
 package togethers.togethers.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import togethers.togethers.dto.post.LeasePostRequestDto;
 import togethers.togethers.dto.post.MonthlyPostRequestDto;
 import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.entity.*;
-import togethers.togethers.service.AwsS3Service;
 import togethers.togethers.service.PostService;
 import togethers.togethers.service.UserService;
 
@@ -32,23 +32,15 @@ import java.util.List;
 
 
 @Controller
+@RequiredArgsConstructor
 public class PostController {
 
 
 
     private final PostService postService;
-
-    private final AwsS3Service awsS3Service;
     private final UserService userService;
     private AreaEnum[] area = AreaEnum.values();
 
-    @Autowired
-    public PostController(PostService postService, UserService userService, AwsS3Service awsS3Service)
-    {
-        this.postService = postService;
-        this.userService = userService;
-        this.awsS3Service=awsS3Service;
-    }
     Logger logger = LoggerFactory.getLogger(PostController.class);
 
 
@@ -97,6 +89,7 @@ public class PostController {
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
         List<MultipartFile> files = req.getFiles("btnAtt");
+
         Long postId = postService.MonthlyPostWrite(dto, files, user.getUid());
 
         return "redirect:/";
@@ -206,12 +199,12 @@ public class PostController {
 
 
         Post post = postService.findPost(postId);
-//        List<String> awsImages = post.getFileUrl();
-//        List<RoomPicture> images = postService.findPhoto(postId);
         List<AwsFileUrl> awsFileUrls = postService.findAwsUrl(postId);
         List<Reply> replies = postService.findReply(postId);
         DetailPostDto detailPostDto = postService.detailPost(post);
         User writer = userService.findPostByPostId(postId);
+
+
 
         model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
