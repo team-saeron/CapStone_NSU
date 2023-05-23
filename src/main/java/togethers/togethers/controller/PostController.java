@@ -22,10 +22,7 @@ import togethers.togethers.dto.post.DetailPostDto;
 import togethers.togethers.dto.post.LeasePostRequestDto;
 import togethers.togethers.dto.post.MonthlyPostRequestDto;
 import togethers.togethers.dto.post.PostSearchDto;
-import togethers.togethers.entity.Post;
-import togethers.togethers.entity.Reply;
-import togethers.togethers.entity.RoomPicture;
-import togethers.togethers.entity.User;
+import togethers.togethers.entity.*;
 import togethers.togethers.service.AwsS3Service;
 import togethers.togethers.service.PostService;
 import togethers.togethers.service.UserService;
@@ -100,7 +97,6 @@ public class PostController {
         Object principal = authentication.getPrincipal();
         User user = (User)principal;
         List<MultipartFile> files = req.getFiles("btnAtt");
-        awsS3Service.upload(files);
         Long postId = postService.MonthlyPostWrite(dto, files, user.getUid());
 
         return "redirect:/";
@@ -141,7 +137,6 @@ public class PostController {
         User user = (User)principal;
 
         List<MultipartFile> files = req.getFiles("btnAtt");
-        awsS3Service.upload(files);
         logger.info("[postWriteMouth] POST 게시물 전세 작성 Controller 동작.");
 
         Long postId = postService.LeasePostWrite(dto, files, user.getUid());
@@ -211,18 +206,18 @@ public class PostController {
 
 
         Post post = postService.findPost(postId);
-        List<RoomPicture> images = postService.findPhoto(postId);
+//        List<String> awsImages = post.getFileUrl();
+//        List<RoomPicture> images = postService.findPhoto(postId);
+        List<AwsFileUrl> awsFileUrls = postService.findAwsUrl(postId);
         List<Reply> replies = postService.findReply(postId);
         DetailPostDto detailPostDto = postService.detailPost(post);
         User writer = userService.findPostByPostId(postId);
-
-
 
         model.addAttribute("post",detailPostDto);
         model.addAttribute("replies",replies);
         model.addAttribute("postId",postId);
         model.addAttribute("category",AreaEnum.values());
-        model.addAttribute("images",images);
+        model.addAttribute("images",awsFileUrls);
         model.addAttribute("writer",writer);
 
         return "post/detailPost";

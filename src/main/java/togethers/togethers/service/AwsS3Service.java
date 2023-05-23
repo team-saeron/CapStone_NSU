@@ -18,6 +18,11 @@ import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import togethers.togethers.entity.AwsFileUrl;
+import togethers.togethers.entity.Post;
+import togethers.togethers.entity.RoomPicture;
+import togethers.togethers.repository.AwsFileUrlRepository;
+import togethers.togethers.repository.PostRepository;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -32,6 +37,9 @@ public class AwsS3Service  {
 
     private final AmazonS3 s3Client;
 
+    private final PostRepository postRepository;
+
+    private final AwsFileUrlRepository awsFileUrlRepository;
     @Value("${cloud.aws.credentials.accessKey}")
     private String accessKey;
 
@@ -53,8 +61,12 @@ public class AwsS3Service  {
                 .build();
     }
 
-    public List<String> upload(List<MultipartFile> multipartFile) {
-        List<String> imgUrlList = new ArrayList<>();
+    public void upload(Long postId, List<MultipartFile> multipartFile) {
+//        List<String> imgUrlList = new ArrayList<>();
+        Post post = postRepository.findById(postId).orElse(null);
+
+        String projectPath =  System.getProperty("user.dir")+"/src/main/resources/static/images";
+//        winddow : String projectPath =  System.getProperty("user.dir")+"//src//main//resources//static//images";
 
         // forEach 구문을 통해 multipartFile로 넘어온 파일들 하나씩 fileNameList에 추가
         for (MultipartFile file : multipartFile) {
@@ -66,12 +78,19 @@ public class AwsS3Service  {
             try(InputStream inputStream = file.getInputStream()) {
                 s3Client.putObject(new PutObjectRequest(bucket+"/post/image", fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
-                imgUrlList.add(s3Client.getUrl(bucket+"/post/image", fileName).toString());
+//                imgUrlList.add(s3Client.getUrl(bucket+"/post/image/"+postId, fileName).toString());
+                AwsFileUrl awsFileUrl = new AwsFileUrl(post, s3Client.getUrl(bucket + "/post/image",fileName).toString());
+                awsFileUrlRepository.save(awsFileUrl);
+
+                post.getAwsFileUrls().add(awsFileUrl);
+                postRepository.flush();
             } catch(IOException e) {
                 throw new PrivateException(Code.IMAGE_UPLOAD_ERROR);
             }
+
         }
-        return imgUrlList;
+//        post.setFileUrl(imgUrlList);
+//        return imgUrlList;
     }
 
     // 이미지파일명 중복 방지

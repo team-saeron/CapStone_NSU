@@ -77,6 +77,7 @@ public class User implements UserDetails {
 
 
 
+
     @OneToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "userDetail_id")
     private UserDetail userDetail;

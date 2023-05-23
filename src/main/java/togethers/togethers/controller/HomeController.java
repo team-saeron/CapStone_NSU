@@ -100,6 +100,11 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping(value="/kakaoMap")
+    public String map(){
+        return "kakaoMap";
+    }
+
 
 
 }

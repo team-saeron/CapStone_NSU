@@ -48,6 +48,12 @@ public class PostService {
     @Autowired
     private final NotificationRepository notificationRepository;
 
+    @Autowired
+    private final AwsFileUrlRepository awsFileUrlRepository;
+
+    @Autowired
+    private final AwsS3Service awsS3Service;
+
     @Transactional
     public Post findPost(Long postId)
     {
@@ -67,6 +73,13 @@ public class PostService {
         List<RoomPicture> images = roompictureRepository.findAllByPost_PostId(postId);
         logger.info("[findPhoto] 이미지 데이터 베이스 조회 동작. 이미지 갯수 : {}]",images.size());
         return images;
+    }
+
+    @Transactional
+    public List<AwsFileUrl>findAwsUrl(Long postId)
+    {
+        List<AwsFileUrl> awsFileUrls = awsFileUrlRepository.findAllByPost_PostId(postId);
+        return awsFileUrls;
     }
 
 
@@ -123,9 +136,10 @@ public class PostService {
         user.setPost(post);
         userRepository.flush();
 
-        for (MultipartFile file : files) {
-            photoSave(post.getPostId(),file);
-        }
+//        for (MultipartFile file : files) {
+//            photoSave(post.getPostId(),file);
+//        }
+        awsS3Service.upload(post.getPostId(), files);
         return post.getPostId();
 
     }
@@ -143,9 +157,10 @@ public class PostService {
         user.setPost(post);
         userRepository.flush();
 
-        for (MultipartFile file : files) {
-            photoSave(post.getPostId(),file);
-        }
+//        for (MultipartFile file : files) {
+//            photoSave(post.getPostId(),file);
+//        }
+        awsS3Service.upload(post.getPostId(), files);
         return post.getPostId();
     }
 
