@@ -53,6 +53,7 @@ public class HomeController {
                 model.addAttribute("userDetail" , true);
                 List<RecommendPostDto>recommendPostDto = new ArrayList<>();
                 List<Post>matching = userService.matching(user.getUid());
+
                 if (matching.size()>=4)
                 {
                     for (Post post : matching)

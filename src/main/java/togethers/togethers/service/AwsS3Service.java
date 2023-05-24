@@ -63,6 +63,7 @@ public class AwsS3Service  {
 
         Post post = postRepository.findById(postId).orElse(null);
 
+
         for (MultipartFile file : multipartFile) {
             String fileName = createFileName(file.getOriginalFilename());
             ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -75,12 +76,15 @@ public class AwsS3Service  {
                 AwsFileUrl awsFileUrl = new AwsFileUrl(post, s3Client.getUrl(bucket + "/post/image",fileName).toString());
                 awsFileUrlRepository.save(awsFileUrl);
 
-                post.getAwsFileUrls().add(awsFileUrl);
-                postRepository.flush();
+                if(post.getFileName()==null)
+                {
+                    post.setFileName(s3Client.getUrl(bucket + "/post/image",fileName).toString());
+                    postRepository.flush();
+
+                }
             } catch(IOException e) {
                 throw new PrivateException(Code.IMAGE_UPLOAD_ERROR);
             }
-
         }
 
     }
