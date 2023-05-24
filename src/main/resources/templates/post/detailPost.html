@@ -122,14 +122,14 @@
 
           </ul>
         </div>
-      <div><div style="margin-left:110px; margin-top:20px;" class="map_wrap">
+      <div><div style="margin-left:160px; margin-top:20px;" class="map_wrap">
         <div id="map" style="; width:70%;height:100%;position:relative;overflow:hidden;"></div>
 
         <div id="menu_wrap" class="bg_white">
           <div class="option">
             <div>
               <form onsubmit="searchPlaces(); return false;">
-                <input type="text" value="검색" id="keyword" size="15">
+                <input type="text" th:value="${post.area}" id="keyword" size="15">
                 <button type="submit">검색하기</button>
               </form>
             </div>

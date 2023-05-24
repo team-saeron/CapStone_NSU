@@ -212,7 +212,6 @@ public class PostController {
         model.addAttribute("category",AreaEnum.values());
         model.addAttribute("images",awsFileUrls);
         model.addAttribute("writer",writer);
-
         return "post/detailPost";
     }
 
