@@ -28,13 +28,13 @@
                 <form th:action="@{/editPassword}" th:method= "post" th:object="${passwordupdatedto}">
                 <h4>비밀번호 수정</h4>
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control" th:field="*{originPassword}" placeholder="현재 비밀번호 입력하세요." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                        <input type="password" class="form-control" th:field="*{originPassword}" placeholder="현재 비밀번호 입력하세요." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control" placeholder="변경할 비밀번호" th:field="*{newPassword}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <input type="password" class="form-control" placeholder="변경할 비밀번호" th:field="*{newPassword}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control" placeholder="비밀번호 확인" th:field="*{newPasswordCheck}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <input type="password" class="form-control" placeholder="비밀번호 확인" th:field="*{newPasswordCheck}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                     </div>
                     <div class="btn-mypage">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">비밀번호 변경하기</button>
