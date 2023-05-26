@@ -227,6 +227,7 @@ public class PostController {
 
         logger.info("[SearchPost] 게시물 검색 결과 갯수: {}",posts.getTotalElements());
 
+
         model.addAttribute("postList",posts);
         return "post/searchList";
 

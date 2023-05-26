@@ -20,6 +20,7 @@ import togethers.togethers.service.PostService;
 import togethers.togethers.service.UserService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -56,7 +57,7 @@ public class HomeController {
             {
                 model.addAttribute("userDetail" , true);
                 List<RecommendPostDto>recommendPostDto = new ArrayList<>();
-                List<Post>matching = userService.matching(user.getUid());
+                HashSet<Post> matching = userService.matching(user.getUid());
 
                 if (matching.size()>=4)
                 {

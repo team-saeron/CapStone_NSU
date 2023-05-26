@@ -24,6 +24,7 @@ import togethers.togethers.repository.UserDetailRepository;
 import togethers.togethers.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -200,16 +201,15 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public List<Post> matching(String uid) {
+    public HashSet<Post> matching(String uid) {
         User user = userRepository.findByUid(uid).orElse(null);
         UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
         List<UserDetail> sameGenderList = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
-
         List<UserDetail> sameMbtiList = new ArrayList<>();
         Mbti userMbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
+        HashSet<Post>testRecommendPost = new HashSet<>();
 
         log.info("[matching] 매칭 알고리즘 시작. userID:{}, userMbti :{}",uid,ud.getMbti());
-
 
 
         for (UserDetail i : sameGenderList)
@@ -225,7 +225,6 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        List<Post> recommendPost = new ArrayList<>();
         for (UserDetail x : sameMbtiList) {
             User temp_user = userRepository.findByUserDetail_UserDetailId(x.getUserDetailId()).orElse(null);
             if(temp_user == null ||temp_user.getPost()==null)
@@ -233,11 +232,11 @@ public class UserServiceImpl implements UserService {
                 continue;
             }else{
                 Post post = postRepository.findBypostId(temp_user.getPost().getPostId()).orElse(null);
-                recommendPost.add(post);
+                testRecommendPost.add(post);
             }
         }
 
-        if (recommendPost.size() < 4)
+        while(testRecommendPost.size() < 4)
         {
             log.info("[matching] recommend_post의 갯수가 4개이하여서 추가 등록 로직 동작");
             for (UserDetail userDetail : sameGenderList) {
@@ -250,17 +249,11 @@ public class UserServiceImpl implements UserService {
                 }else {
                     Post post = postRepository.findBypostId(sameGenderUser.getPost().getPostId()).orElse(null);
                     log.info("[matching] 추천 게시물에 추가할 게시물 ok : {}",post.getPostId());
-                    recommendPost.add(post);
-                }
-                if (recommendPost.size() == 4)
-                {
-                    break;
+                    testRecommendPost.add(post);
                 }
             }
         }
-
-        log.info("[matching] recomment_post 게시물 갯수 :{}",recommendPost.size());
-        return recommendPost;
+        return testRecommendPost;
     }
 
 }

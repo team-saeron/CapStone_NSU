@@ -7,6 +7,7 @@ import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
 
+import java.util.HashSet;
 import java.util.List;
 
 public interface UserService {
@@ -37,6 +38,6 @@ public interface UserService {
 
     public boolean updatePassword(PasswordUpdatedDto passwordUpdatedDto);
 
-    public List<Post> matching(String userId);
+    public HashSet<Post> matching(String userId);
 
 }
