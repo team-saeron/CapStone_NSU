@@ -12,8 +12,10 @@ import togethers.togethers.Enum.AreaEnum;
 import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.dto.post.RecentlyPostDto;
 import togethers.togethers.dto.post.RecommendPostDto;
+import togethers.togethers.entity.Notification;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
+import togethers.togethers.service.NotificationService;
 import togethers.togethers.service.PostService;
 import togethers.togethers.service.UserService;
 
@@ -26,6 +28,8 @@ public class HomeController {
 
     private final PostService postService;
     private final UserService userService;
+
+    private final NotificationService notificationService;
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 
@@ -77,6 +81,8 @@ public class HomeController {
             {
                 model.addAttribute("postId",0);
             }else {
+                List<Notification> notification = notificationService.findNotification(user.getId());
+                model.addAttribute("alarm",notification);
                 model.addAttribute("postId",user.getPost().getPostId());
             }
 

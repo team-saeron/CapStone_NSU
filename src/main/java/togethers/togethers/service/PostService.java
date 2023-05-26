@@ -33,7 +33,6 @@ public class PostService {
     private final Logger logger = LoggerFactory.getLogger(PostService.class);
     private final UserRepository userRepository;
     private final PostRepository postRepository;
-    private final RoompictureRepository roompictureRepository;
 
     private final ReplyRepository replyRepository;
 
@@ -58,13 +57,7 @@ public class PostService {
         return replies;
     }
 
-    @Transactional
-    public List<RoomPicture> findPhoto(Long postId)
-    {
-        List<RoomPicture> images = roompictureRepository.findAllByPost_PostId(postId);
-        logger.info("[findPhoto] 이미지 데이터 베이스 조회 동작. 이미지 갯수 : {}]",images.size());
-        return images;
-    }
+
 
     @Transactional
     public List<AwsFileUrl>findAwsUrl(Long postId)
@@ -288,7 +281,7 @@ public class PostService {
             Post post = postRepository.findById(postId).orElse(null);
             Favorite favorite = new Favorite();
             favorite.setPost(post);
-            favorite.setUser(user);
+            favorite.setUser(postUser);
             favorite.setMyFavorite(true);
             likeRepository.save(favorite);
 
