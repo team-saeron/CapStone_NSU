@@ -207,7 +207,7 @@ public class UserServiceImpl implements UserService {
         List<UserDetail> sameGenderList = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
         List<UserDetail> sameMbtiList = new ArrayList<>();
         Mbti userMbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
-        HashSet<Post>testRecommendPost = new HashSet<>();
+        HashSet<Post>recommendPost = new HashSet<>();
 
         log.info("[matching] 매칭 알고리즘 시작. userID:{}, userMbti :{}",uid,ud.getMbti());
 
@@ -231,11 +231,11 @@ public class UserServiceImpl implements UserService {
                 continue;
             }else{
                 Post post = postRepository.findBypostId(temp_user.getPost().getPostId()).orElse(null);
-                testRecommendPost.add(post);
+                recommendPost.add(post);
             }
         }
 
-        while(testRecommendPost.size() < 4)
+        while(recommendPost.size() < 4)
         {
             log.info("[matching] recommend_post의 갯수가 4개이하여서 추가 등록 로직 동작");
             for (UserDetail userDetail : sameGenderList) {
@@ -248,11 +248,62 @@ public class UserServiceImpl implements UserService {
                 }else {
                     Post post = postRepository.findBypostId(sameGenderUser.getPost().getPostId()).orElse(null);
                     log.info("[matching] 추천 게시물에 추가할 게시물 ok : {}",post.getPostId());
-                    testRecommendPost.add(post);
+                    recommendPost.add(post);
                 }
             }
         }
-        return testRecommendPost;
+        return recommendPost;
     }
+
+    @Override
+    public int mathingPoint(Long userId, Long otherUserId)
+    {
+        int mathingScore = 0;
+        UserDetail userDetail = userRepository.findById(userId).orElse(null).getUserDetail();
+        UserDetail otherUserDetail = userRepository.findById(otherUserId).orElse(null).getUserDetail();
+
+        String myLifeCycle = userDetail.getLife_cycle();
+        String otherLifeCycle = otherUserDetail.getLife_cycle();
+
+        if(myLifeCycle.equals(otherLifeCycle))
+        {
+            mathingScore += 30;
+        }else
+        {
+            mathingScore += 15;
+        }
+
+        String mySmoking = userDetail.getSmoking();
+        String otherSmoking = otherUserDetail.getSmoking();
+
+        if(mySmoking.equals(otherSmoking))
+        {
+            mathingScore+=40;
+        }else if(mySmoking.equals("싫어요") && otherSmoking.equals("좋아요"))
+        {
+            mathingScore += 0;
+        }else {
+            mathingScore += 20;
+        }
+
+        String myPet = userDetail.getPet();
+        String otherPet = otherUserDetail.getPet();
+
+        if(myPet.equals(otherPet))
+        {
+            mathingScore+=30;
+        }else if(myPet.equals("싫어요") && otherPet.equals("좋아요"))
+        {
+            mathingScore += 0;
+        }else {
+            mathingScore += 15;
+        }
+
+        log.info("[mathingScore] {}의 유저와 {} 유저의 매칭 점수 결과 : {}",userId,otherUserId,mathingScore);
+
+        return mathingScore;
+    }
+
+
 
 }

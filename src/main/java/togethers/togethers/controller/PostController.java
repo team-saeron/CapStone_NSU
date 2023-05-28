@@ -175,6 +175,13 @@ public class PostController {
     @GetMapping(value = "/post/detailPost/{postId}")
     public String post_detailPost(@PathVariable("postId")Long postId, Model model, RedirectAttributes attr)
     {
+        User writer = userService.findPostByPostId(postId);
+        Post post = postService.findPost(postId);
+        List<AwsFileUrl> awsFileUrls = postService.findAwsUrl(postId);
+        List<Reply> replies = postService.findReply(postId);
+        DetailPostDto detailPostDto = postService.detailPost(post);
+
+
         if (postId == 0)
         {
             attr.addFlashAttribute("no_post","작성하신 게시물이 없습니다");
@@ -194,29 +201,25 @@ public class PostController {
             model.addAttribute("user_nickname",userNickname);
             model.addAttribute("likeCheck",likeCheck);
             model.addAttribute("login_inform",false);
+            model.addAttribute("mathingScore", 0);
 
         }else {
             User user = (User)principal;
             userNickname = user.getNickname();
             List<NotificationDto> notification = notificationService.findNotification(user.getId());
+            int mathingScore = userService.mathingPoint(user.getId(), writer.getId());
 
             logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",postId,userNickname);
+
             likeCheck = postService.checkFavorite(postId, user.getId());
             model.addAttribute("user_nickname",userNickname);
             model.addAttribute("likeCheck",likeCheck);
             model.addAttribute("login_inform",true);
             model.addAttribute("notification",notification);
+            model.addAttribute("mathingScore",mathingScore);
 
 
         }
-
-
-        Post post = postService.findPost(postId);
-        List<AwsFileUrl> awsFileUrls = postService.findAwsUrl(postId);
-        List<Reply> replies = postService.findReply(postId);
-        DetailPostDto detailPostDto = postService.detailPost(post);
-        User writer = userService.findPostByPostId(postId);
-
 
 
         model.addAttribute("post",detailPostDto);

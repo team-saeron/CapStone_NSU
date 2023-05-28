@@ -40,4 +40,6 @@ public interface UserService {
 
     public HashSet<Post> matching(String userId);
 
+    public int mathingPoint(Long userId, Long otherUserId);
+
 }

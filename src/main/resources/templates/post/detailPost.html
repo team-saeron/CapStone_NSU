@@ -46,7 +46,7 @@
       <div class="PersonalInfo">
         <div class="Personal">
           <addr title="매칭률"><i class="fa-solid fa-fire fa-4x match "></i></addr>
-          <span class="percent">80%</span>
+          <span class="percent" th:text="|${mathingScore}%|">80%</span>
           <div class="like_btn">
             <a th:href="@{/post/detailPost/like(postId = ${post.postId})}">
 
