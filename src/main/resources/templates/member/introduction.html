@@ -48,7 +48,7 @@
            <tr> <td class="detail_name"><h4>월세 예산(필수)</h4></td>
                 <div class="column">
                     <td>
-                        <input class="monthlyRent_value" type="range" th:field="*{monthly_fee}" step="10" min="40" max="200" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
+                        <input class="monthlyRent_value" type="range" th:field="*{monthly_fee}" step="10" min="0" max="100" oninput="document.getElementById('monthlyRent_value').innerHTML=this.value;">
                         <span id="monthlyRent_value">40</span>
                         </input>
                     </td>

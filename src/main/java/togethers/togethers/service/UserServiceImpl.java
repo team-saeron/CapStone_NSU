@@ -214,7 +214,6 @@ public class UserServiceImpl implements UserService {
 
         for (UserDetail i : sameGenderList)
         {
-            log.info(i.getMbti());
             if (i.getMbti().equals(userMbti.getFirstMbti()) || i.getMbti().equals(userMbti.getSecondMbti()) || i.getMbti().equals(userMbti.getThirdMbti()) || i.getMbti().equals(userMbti.getFourthMbti()))
             {
                 sameMbtiList.add(i);

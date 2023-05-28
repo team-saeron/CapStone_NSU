@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import togethers.togethers.Enum.AreaEnum;
+import togethers.togethers.dto.mypage.NotificationDto;
 import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.dto.post.RecentlyPostDto;
 import togethers.togethers.dto.post.RecommendPostDto;
@@ -82,8 +83,9 @@ public class HomeController {
             {
                 model.addAttribute("postId",0);
             }else {
-                List<Notification> notification = notificationService.findNotification(user.getId());
-                model.addAttribute("alarm",notification);
+
+                List<NotificationDto> notification = notificationService.findNotification(user.getId());
+                model.addAttribute("notification",notification);
                 model.addAttribute("postId",user.getPost().getPostId());
             }
 

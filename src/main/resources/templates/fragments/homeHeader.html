@@ -78,12 +78,9 @@ background-image: linear-gradient(to bottom, #bd3e89, #c96fa8, #d599c5, #e2c2dd,
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="color:white;">
             <i class="fa-solid fa-bell fa-lg" style="color:white;"></i>
           </a>
-          <ul class="dropdown-menu" th:each="alarm : ${alarm}">
-            <li><a class="dropdown-item" href="#" th:text="${alarm.message}">평택붉은게님이 좋아요를 눌렀습니다.</a></li>
+          <ul class="dropdown-menu" >
+            <li><a class="dropdown-item" th:href="@{/post/detailPost/{postId}(postId = ${postId})}"  th:each="alarm : ${notification}" th:text="${alarm.message}">평택붉은게님이 좋아요를 눌렀습니다.</a></li>
             <li><hr class="dropdown-divider"></li>
-<!--            <li><a class="dropdown-item" href="#">댓글이 달렸습니다</a></li>-->
-<!--            <li><hr class="dropdown-divider"></li>-->
-<!--            <li><a class="dropdown-item" href="#"></a></li>-->
           </ul>
         </li>
 

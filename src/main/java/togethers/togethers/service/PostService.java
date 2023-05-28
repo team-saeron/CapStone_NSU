@@ -3,7 +3,6 @@ package togethers.togethers.service;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +17,10 @@ import togethers.togethers.entity.*;
 import togethers.togethers.repository.*;
 //import togethers.togethers.repository.UserRepository;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -36,7 +33,7 @@ public class PostService {
 
     private final ReplyRepository replyRepository;
 
-    private final FavoriteRepository likeRepository;
+    private final FavoriteRepository favoriteRepository;
 
     private final NotificationRepository notificationRepository;
 
@@ -70,7 +67,9 @@ public class PostService {
 
     @Transactional
     public boolean checkFavorite(Long postId,Long userId) {
-        Favorite favorite = likeRepository.findByPost_PostIdAndUser_Id(postId, userId).orElse(null);
+        Favorite favorite = favoriteRepository.findByPost_PostIdAndUser_Id(postId, userId).orElse(null);
+        logger.info("[checkFavorite] 해당 게시물 좋아요 여부 확인 Service 동작 postId :{}, userId:{}",postId,userId);
+
         boolean check;
         if (favorite != null) {
             check = true;
@@ -270,20 +269,16 @@ public class PostService {
         User user = userRepository.findById(userId).orElse(null);
         User postUser = userRepository.findByPost_PostId(postId).orElse(null);
 
-        Favorite checkFavorite = likeRepository.findByPost_PostIdAndUser_Id(postId,user.getId()).orElse(null);
-
-        if(checkFavorite != null)
+        Favorite checkFavorite = favoriteRepository.findByPost_PostIdAndUser_Id(postId,user.getId()).orElse(null);
+        if(checkFavorite == null)
         {
-            logger.info("[saveLike] 게시물 좋아요 취소 로직 동작 좋아요의 게시물:{} 유저 pk:{}",checkFavorite.getPost().getPostId(),checkFavorite.getUser().getId());
-            likeRepository.delete(checkFavorite);
-            check = false;
-        }else{
+
             Post post = postRepository.findById(postId).orElse(null);
             Favorite favorite = new Favorite();
             favorite.setPost(post);
             favorite.setUser(postUser);
             favorite.setMyFavorite(true);
-            likeRepository.save(favorite);
+            favoriteRepository.save(favorite);
 
             /**게시물 작성자에게 알림**/
             Notification notification = Notification.builder()
@@ -293,6 +288,12 @@ public class PostService {
                     .created(LocalDateTime.now())
                     .build();
             notificationRepository.save(notification);
+
+        }else{
+            logger.info("[saveLike] 게시물 좋아요 취소 로직 동작 좋아요의 게시물:{} 유저 pk:{}",checkFavorite.getPost().getPostId(),checkFavorite.getUser().getId());
+            favoriteRepository.delete(checkFavorite);
+            favoriteRepository.flush();
+            check = false;
         }
         return check;
     }

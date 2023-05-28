@@ -63,10 +63,6 @@ margin-right:800px;}
                                         <ul class="navbar-nav justify-content-start flex-grow-3 pe-3" th:each="dto : ${category}">
                                             <li><a class="seoul" th:href="@{/post/searchList(areaId = ${dtoStat.index})}" th:text="${dto}">강남구</a></li>
                                         </ul>
-
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -85,12 +81,9 @@ margin-right:800px;}
                             <a class="nav-link dropdown-toggle" href="/alarm" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="color:white;">
                                 <i class="fa-solid fa-bell fa-lg" style="color:#bd3e89;"></i>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">평택붉은게님이 좋아요를 눌렀습니다.</a></li>
+                            <ul class="dropdown-menu" >
+                                <li><a class="dropdown-item" th:href="@{/post/detailPost/{postId}(postId = ${postId})}"  th:each="alarm : ${notification}" th:text="${alarm.message}">평택붉은게님이 좋아요를 눌렀습니다.</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">댓글이 달렸습니다</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#"></a></li>
                             </ul>
                         </li>
 

@@ -19,11 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import togethers.togethers.Enum.AreaEnum;
+import togethers.togethers.dto.mypage.NotificationDto;
 import togethers.togethers.dto.post.DetailPostDto;
 import togethers.togethers.dto.post.LeasePostRequestDto;
 import togethers.togethers.dto.post.MonthlyPostRequestDto;
 import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.entity.*;
+import togethers.togethers.service.NotificationService;
 import togethers.togethers.service.PostService;
 import togethers.togethers.service.UserService;
 
@@ -39,6 +41,8 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
+    private final NotificationService notificationService;
+
     private AreaEnum[] area = AreaEnum.values();
 
     Logger logger = LoggerFactory.getLogger(PostController.class);
@@ -147,7 +151,12 @@ public class PostController {
         if(principal == "anonymousUser"){
             model.addAttribute("login_inform",false);
         }else{
+            User user = (User)principal;
+
+            List<NotificationDto> notification = notificationService.findNotification(user.getId());
+            model.addAttribute("notification",notification);
             model.addAttribute("login_inform",true);
+
         }
 
 
@@ -189,11 +198,15 @@ public class PostController {
         }else {
             User user = (User)principal;
             userNickname = user.getNickname();
+            List<NotificationDto> notification = notificationService.findNotification(user.getId());
+
             logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",postId,userNickname);
             likeCheck = postService.checkFavorite(postId, user.getId());
             model.addAttribute("user_nickname",userNickname);
             model.addAttribute("likeCheck",likeCheck);
             model.addAttribute("login_inform",true);
+            model.addAttribute("notification",notification);
+
 
         }
 
@@ -227,7 +240,13 @@ public class PostController {
 
         logger.info("[SearchPost] 게시물 검색 결과 갯수: {}",posts.getTotalElements());
 
-
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal !="anonymousUser")
+        {
+            User user = (User)principal;
+            List<NotificationDto> notification = notificationService.findNotification(user.getId());
+            model.addAttribute("notification",notification);
+        }
         model.addAttribute("postList",posts);
         return "post/searchList";
 
@@ -249,7 +268,7 @@ public class PostController {
 
         }else{
             User user = (User)principal;
-            logger.info("[saveLike] 게시물 좋아요 로직 동작. postId : {}, userId:{}",postId,user.getUid());
+            logger.info("[saveLike] 게시물 좋아요 로직 동작. postId : {}, userId:{}",postId,user.getId());
             boolean likeResult = postService.saveLike(user.getId(), postId);
             if(likeResult)
             {
@@ -271,6 +290,15 @@ public class PostController {
              aid = Integer.parseInt(areaId);
         }
 
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal !="anonymousUser")
+        {
+            User user = (User)principal;
+            List<NotificationDto> notification = notificationService.findNotification(user.getId());
+            model.addAttribute("notification",notification);
+
+
+        }
         logger.info("[SearchPost]홈페이지에서 사용자가 카테고리 클릭후 해당 게시물 검색. areaID:{}",aid);
 
 
@@ -280,7 +308,6 @@ public class PostController {
 
         Page<Post> posts = postService.searchPostUsingCategory(areaName, pageable);
         logger.info("[SearchPostUsingCategory] 카테고리 클릭후 해당지역 조회 게시물 결과. 지역이름:{} 게시물 갯수:{}",areaName,posts.getTotalElements());
-
 
 
         model.addAttribute("AreaId",areaId);
