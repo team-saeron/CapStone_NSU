@@ -270,13 +270,16 @@ public class PostService {
         User postUser = userRepository.findByPost_PostId(postId).orElse(null);
 
         Favorite checkFavorite = favoriteRepository.findByPost_PostIdAndUser_Id(postId,user.getId()).orElse(null);
+        List<Favorite> all = favoriteRepository.findAllByUser_Id(user.getId());
+        System.out.println("마몽 : " + all.size());;
+
         if(checkFavorite == null)
         {
 
             Post post = postRepository.findById(postId).orElse(null);
             Favorite favorite = new Favorite();
             favorite.setPost(post);
-            favorite.setUser(postUser);
+            favorite.setUser(user);
             favorite.setMyFavorite(true);
             favoriteRepository.save(favorite);
 
