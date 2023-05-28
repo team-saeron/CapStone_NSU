@@ -104,9 +104,9 @@
 
       <!--다른 사람이 작성한 댓글 칸 -->
       <div class="other_comment">
-        <ul th:each="reply : ${replies}">
+        <ul>
           <legend><strong>댓글</strong></legend>
-          <li>
+          <li th:each="reply : ${replies}">
             <div class="other_inner_comment">
               <div class="other_id">
                 <a th:href="@{/member/checkIntroduction(userDetailId = ${reply.getUser().getUserDetail().getUserDetailId()},postId = ${postId})}">
