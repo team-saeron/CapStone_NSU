@@ -14,6 +14,7 @@ import togethers.togethers.config.JwtTokenProvider;
 import togethers.togethers.dto.login.*;
 import togethers.togethers.dto.mypage.UserDetailSaveDto;
 import togethers.togethers.dto.mypage.UserDetailUpdateDto;
+import togethers.togethers.dto.recommend.RecommendUserDto;
 import togethers.togethers.entity.Mbti;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
@@ -23,9 +24,7 @@ import togethers.togethers.repository.PostRepository;
 import togethers.togethers.repository.UserDetailRepository;
 import togethers.togethers.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -199,111 +198,4 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
-    @Override
-    @Transactional
-    public HashSet<Post> matching(String uid) {
-        User user = userRepository.findByUid(uid).orElse(null);
-        UserDetail ud = userDetailRepository.findById(user.getUserDetail().getUserDetailId()).orElse(null);
-        List<UserDetail> sameGenderList = userDetailRepository.findAllByGender(ud.getGender()); // 성별 필터
-        List<UserDetail> sameMbtiList = new ArrayList<>();
-        Mbti userMbti = mbtiRepository.findByMbti(ud.getMbti()).orElse(null);
-        HashSet<Post>recommendPost = new HashSet<>();
-
-        log.info("[matching] 매칭 알고리즘 시작. userID:{}, userMbti :{}",uid,ud.getMbti());
-
-
-        for (UserDetail i : sameGenderList)
-        {
-            if (i.getMbti().equals(userMbti.getFirstMbti()) || i.getMbti().equals(userMbti.getSecondMbti()) || i.getMbti().equals(userMbti.getThirdMbti()) || i.getMbti().equals(userMbti.getFourthMbti()))
-            {
-                sameMbtiList.add(i);
-            }
-            else
-            {
-                continue;
-            }
-        }
-
-        for (UserDetail x : sameMbtiList) {
-            User temp_user = userRepository.findByUserDetail_UserDetailId(x.getUserDetailId()).orElse(null);
-            if(temp_user == null ||temp_user.getPost()==null)
-            {
-                continue;
-            }else{
-                Post post = postRepository.findBypostId(temp_user.getPost().getPostId()).orElse(null);
-                recommendPost.add(post);
-            }
-        }
-
-        while(recommendPost.size() < 4)
-        {
-            log.info("[matching] recommend_post의 갯수가 4개이하여서 추가 등록 로직 동작");
-            for (UserDetail userDetail : sameGenderList) {
-                User sameGenderUser = userRepository.findByUserDetail_UserDetailId(userDetail.getUserDetailId()).orElse(null);
-                log.info("[matching] same_gender_user id :{}",sameGenderUser);
-
-                if(sameGenderUser == null || sameGenderUser.getPost() == null || user.getId() == sameGenderUser.getId())
-                {
-                    continue;
-                }else {
-                    Post post = postRepository.findBypostId(sameGenderUser.getPost().getPostId()).orElse(null);
-                    log.info("[matching] 추천 게시물에 추가할 게시물 ok : {}",post.getPostId());
-                    recommendPost.add(post);
-                }
-            }
-        }
-        return recommendPost;
-    }
-
-    @Override
-    public int mathingPoint(Long userId, Long otherUserId)
-    {
-        int mathingScore = 0;
-        UserDetail userDetail = userRepository.findById(userId).orElse(null).getUserDetail();
-        UserDetail otherUserDetail = userRepository.findById(otherUserId).orElse(null).getUserDetail();
-
-        String myLifeCycle = userDetail.getLife_cycle();
-        String otherLifeCycle = otherUserDetail.getLife_cycle();
-
-        if(myLifeCycle.equals(otherLifeCycle))
-        {
-            mathingScore += 30;
-        }else
-        {
-            mathingScore += 15;
-        }
-
-        String mySmoking = userDetail.getSmoking();
-        String otherSmoking = otherUserDetail.getSmoking();
-
-        if(mySmoking.equals(otherSmoking))
-        {
-            mathingScore+=40;
-        }else if(mySmoking.equals("싫어요") && otherSmoking.equals("좋아요"))
-        {
-            mathingScore += 0;
-        }else {
-            mathingScore += 20;
-        }
-
-        String myPet = userDetail.getPet();
-        String otherPet = otherUserDetail.getPet();
-
-        if(myPet.equals(otherPet))
-        {
-            mathingScore+=30;
-        }else if(myPet.equals("싫어요") && otherPet.equals("좋아요"))
-        {
-            mathingScore += 0;
-        }else {
-            mathingScore += 15;
-        }
-
-        log.info("[mathingScore] {}의 유저와 {} 유저의 매칭 점수 결과 : {}",userId,otherUserId,mathingScore);
-
-        return mathingScore;
-    }
-
-
-
 }

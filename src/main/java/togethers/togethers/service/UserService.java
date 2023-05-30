@@ -3,6 +3,7 @@ package togethers.togethers.service;
 import togethers.togethers.dto.login.*;
 import togethers.togethers.dto.mypage.UserDetailSaveDto;
 import togethers.togethers.dto.mypage.UserDetailUpdateDto;
+import togethers.togethers.dto.recommend.RecommendUserDto;
 import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
 import togethers.togethers.entity.UserDetail;
@@ -38,8 +39,6 @@ public interface UserService {
 
     public boolean updatePassword(PasswordUpdatedDto passwordUpdatedDto);
 
-    public HashSet<Post> matching(String userId);
 
-    public int mathingPoint(Long userId, Long otherUserId);
 
 }

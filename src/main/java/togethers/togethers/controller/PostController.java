@@ -27,6 +27,7 @@ import togethers.togethers.dto.post.PostSearchDto;
 import togethers.togethers.entity.*;
 import togethers.togethers.service.NotificationService;
 import togethers.togethers.service.PostService;
+import togethers.togethers.service.RecommendService;
 import togethers.togethers.service.UserService;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
+    private final RecommendService recommendService;
     private final NotificationService notificationService;
 
     private AreaEnum[] area = AreaEnum.values();
@@ -207,7 +209,7 @@ public class PostController {
             User user = (User)principal;
             userNickname = user.getNickname();
             List<NotificationDto> notification = notificationService.findNotification(user.getId());
-            int mathingScore = userService.mathingPoint(user.getId(), writer.getId());
+            int mathingScore = recommendService.mathingPoint(user.getId(), writer.getId());
 
             logger.info("[post_detailPost] 게시물 세부사항 로직 동작. 사용자 로그인 완료 postId :{}, userId : {}",postId,userNickname);
 

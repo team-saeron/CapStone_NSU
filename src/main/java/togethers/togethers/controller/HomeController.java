@@ -18,6 +18,7 @@ import togethers.togethers.entity.Post;
 import togethers.togethers.entity.User;
 import togethers.togethers.service.NotificationService;
 import togethers.togethers.service.PostService;
+import togethers.togethers.service.RecommendService;
 import togethers.togethers.service.UserService;
 
 import java.util.ArrayList;
@@ -29,8 +30,7 @@ import java.util.List;
 public class HomeController {
 
     private final PostService postService;
-    private final UserService userService;
-
+    private final RecommendService recommendService;
     private final NotificationService notificationService;
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -58,7 +58,7 @@ public class HomeController {
             {
                 model.addAttribute("userDetail" , true);
                 List<RecommendPostDto>recommendPostDto = new ArrayList<>();
-                HashSet<Post> matching = userService.matching(user.getUid());
+                HashSet<Post> matching = recommendService.matching(user.getUid());
 
                 if (matching.size()>=4)
                 {
